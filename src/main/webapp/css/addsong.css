@@ -1,0 +1,14 @@
+input[type=text] {
+    width: 100%;
+    padding: 3% 2%;
+    margin: 8% 0%;
+    box-sizing: border-box;
+}
+
+textarea {
+    align-content: center;
+    width: 70%;
+    height: 150px;
+    padding-bottom: 5%;
+}
+

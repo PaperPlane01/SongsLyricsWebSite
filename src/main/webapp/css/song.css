@@ -1,0 +1,76 @@
+.song {
+    width: 100%;
+    text-align: center;
+}
+
+.song-name {
+    font-family: Verdana;
+    padding-bottom: 2%;
+    font-size: 140%;
+    text-align: center;
+}
+.song-lyrics {
+    width: 100%;
+}
+
+.song-part {
+    padding-bottom: 2%;
+    font-family: Verdana;
+    font-size: 120%;
+    text-align: center;
+}
+
+.line {
+    font-family: Verdana;
+    font-size: 100%;
+    width: inherit;
+    text-align: left;
+}
+
+.line:hover {
+    background-color: #f1f1f1;
+}
+
+.song-video {
+    padding-bottom: 5%;
+}
+
+
+
+@media screen and (min-width: 1240px)  {
+    .line {
+        margin-left: 40%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .line {
+        margin-left: 2%;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 700px){
+    .line {
+        margin-left: 5%;
+    }
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px){
+    .line {
+        margin-left: 25%;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1240px){
+    .line {
+        margin-left: 30%;
+    }
+}
+
+
+
+
+
+
+
+

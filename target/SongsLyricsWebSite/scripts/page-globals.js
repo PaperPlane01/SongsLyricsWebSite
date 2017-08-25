@@ -1,0 +1,4 @@
+PageGlobals = {
+  songs : [],
+  currentLocale : "",
+};
