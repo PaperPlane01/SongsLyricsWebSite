@@ -1,5 +1,8 @@
 package kz.javalab.songslyricswebsite.command;
 
+import kz.javalab.songslyricswebsite.command.localebasedcommand.GetLabelCommand;
+import kz.javalab.songslyricswebsite.command.localebasedcommand.LoginCommand;
+
 /**
  * Created by PaperPlane on 07.08.2017.
  */
@@ -31,12 +34,6 @@ public enum CommandEnum {
     LOGIN {
         {
             this.command = new LoginCommand();
-        }
-    },
-
-    MYPROFILE {
-        {
-            this.command = new MyProfileCommand();
         }
     },
 
@@ -85,6 +82,18 @@ public enum CommandEnum {
     CHANGELANGUAGE {
         {
             this.command = new ChangeLanguageCommand();
+        }
+    },
+
+    PROFILE {
+        {
+            this.command = new ProfileCommand();
+        }
+    },
+
+    GETLABEL {
+        {
+            this.command = new GetLabelCommand();
         }
     };
 

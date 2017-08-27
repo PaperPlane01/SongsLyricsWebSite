@@ -1,9 +1,10 @@
 package kz.javalab.songslyricswebsite.command;
 
-import com.sun.deploy.net.HttpRequest;
-import kz.javalab.songslyricswebsite.model.song.Song;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyrics;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyricsComposite;
+
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
+import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
 import kz.javalab.songslyricswebsite.service.SongsService;
 
@@ -22,28 +23,39 @@ public class SongCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int songID = Integer.valueOf(request.getParameter("songID"));
+        try {
+            int songID = Integer.valueOf(request.getParameter("songID"));
 
-        SongsService songsService = new SongsService();
+            SongsService songsService = new SongsService();
 
-        Song song = songsService.getSongByID(songID);
-        SongLyrics songLyrics = song.getLyrics();
-        String songTitle = song.getTitle();
-        String youTubeLink = songsService.getYouTubeLinkBySongID(songID);
-        Boolean isApproved = songsService.checkIfSongApproved(songID);
+            Song song = null;
+            try {
+                song = songsService.getSongByID(songID);
+                SongLyrics songLyrics = song.getLyrics();
+                String songTitle = song.getTitle();
+                String youTubeLink = songsService.getYouTubeLinkBySongID(songID);
+                Boolean isApproved = songsService.checkIfSongApproved(songID);
 
-        List<SongLyrics> lyricsPartsAsList = new ArrayList<>();
+                List<SongLyrics> lyricsPartsAsList = new ArrayList<>();
 
-        ((SongLyricsComposite) songLyrics).getComponents().forEach(part -> lyricsPartsAsList.add(part));
+                ((SongLyricsComposite) songLyrics).getComponents().forEach(part -> lyricsPartsAsList.add(part));
 
-        request.setAttribute("songTitle", songTitle);
-        request.setAttribute("listOfLyricsParts", lyricsPartsAsList);
-        request.setAttribute("youTubeLink", youTubeLink);
-        request.setAttribute("isApproved", isApproved);
-        request.setAttribute("songID", songID);
+                request.setAttribute("songTitle", songTitle);
+                request.setAttribute("listOfLyricsParts", lyricsPartsAsList);
+                request.setAttribute("youTubeLink", youTubeLink);
+                request.setAttribute("isApproved", isApproved);
+                request.setAttribute("songID", songID);
 
-        String page = ConfigurationManager.getProperty("path.page.song");
+                String page = ConfigurationManager.getProperty("path.page.song");
+                request.getRequestDispatcher(page).forward(request, response);
+            } catch (NoSuchSongException e) {
+                String page = ConfigurationManager.getProperty("path.page.nosuchsong");
+                request.getRequestDispatcher(page).forward(request, response);
+            }
 
-        request.getRequestDispatcher(page).forward(request, response);
+        } catch (NumberFormatException ex) {
+            String page = ConfigurationManager.getProperty("path.page.nosuchsong");
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 }

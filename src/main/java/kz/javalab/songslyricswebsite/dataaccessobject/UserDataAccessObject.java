@@ -1,9 +1,9 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
+import kz.javalab.songslyricswebsite.entity.password.Password;
+import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.entity.user.UserType;
 
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
-import kz.javalab.songslyricswebsite.model.password.Password;
-import kz.javalab.songslyricswebsite.model.user.User;
-import kz.javalab.songslyricswebsite.model.user.UserType;
+import kz.javalab.songslyricswebsite.service.UserService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,15 +52,27 @@ public class UserDataAccessObject {
      * @param user User to be checked.
      * @return <Code>True</Code> if database contains such user, <Code>False</Code> if not.
      */
-    public boolean checkIfUserExists(User user, Connection connection) {
+    public boolean checkIfUserExists(User user, Connection connection, int parameterOfChecking) {
         boolean result = false;
 
+        if (parameterOfChecking == UserService.CHECK_BY_USERNAME) {
+            result = checkIfUserExistsByUserName(user.getUsername(), connection);
+        } else if (parameterOfChecking == UserService.CHECK_BY_USER_ID) {
+            result = checkIfUserExistsByUserID(user.getID(), connection);
+        }
+
+        return result;
+    }
+
+    private boolean checkIfUserExistsByUserName(String username, Connection connection) {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_name = BINARY ?";
 
+        boolean result = false;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
-            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(1, username);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -70,6 +82,29 @@ public class UserDataAccessObject {
 
             resultSet.close();
             preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private boolean checkIfUserExistsByUserID(int userID, Connection connection) {
+        String checkingUserQuery = "SELECT user_id FROM users\n" +
+                "WHERE user_id = ?";
+        int userIDParameter = 1;
+
+        boolean result = false;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
+            preparedStatement.setInt(userIDParameter, userID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                result = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -130,7 +165,7 @@ public class UserDataAccessObject {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                userID = resultSet.getInt("user_id");
+                userID = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.USER_ID);
             }
 
             resultSet.close();
@@ -140,6 +175,34 @@ public class UserDataAccessObject {
         }
 
         return userID;
+    }
+
+    public String getUserNameByUserID(int userID, Connection connection) {
+        String userName = new String();
+
+        String getUsrNameQuery = "SELECT user_name FROM users\n" +
+                "WHERE user_id = ?";
+
+        int userIDParameter = 1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(getUsrNameQuery);
+
+            preparedStatement.setInt(userIDParameter, userID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                userName = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_NAME);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userName;
     }
 
     /**
@@ -160,7 +223,7 @@ public class UserDataAccessObject {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                hashedPassword = resultSet.getString("hashed_password");
+                hashedPassword = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.HASHED_PASSWORD);
             }
 
             resultSet.close();

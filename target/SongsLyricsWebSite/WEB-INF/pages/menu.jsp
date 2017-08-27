@@ -1,6 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="kz.javalab.songslyricswebsite.model.user.UserType" %>
+<%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <div class="navbar-default navbar-fixed-top" role="navigation">
@@ -32,7 +32,7 @@
 
             <c:choose>
                 <c:when test="${not empty sessionScope.user}">
-                    <li><a href="/controller?command=myprofile" class="my-profile">
+                    <li><a href="/controller?command=profile&userID=${sessionScope.user.getID()}" class="my-profile">
                         <fmt:bundle basename="labels">
                             <fmt:message key="labels.myprofile"/>
                         </fmt:bundle>

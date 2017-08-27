@@ -1,8 +1,9 @@
 package kz.javalab.songslyricswebsite.command;
 
-import kz.javalab.songslyricswebsite.model.song.Song;
-import kz.javalab.songslyricswebsite.model.song.artist.Artist;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyrics;
+import kz.javalab.songslyricswebsite.exception.SongAddingException;
+import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
 import kz.javalab.songslyricswebsite.service.SongReader;
 import kz.javalab.songslyricswebsite.service.SongsService;
@@ -58,11 +59,19 @@ public class AddSongCommand implements ActionCommand{
 
         String youTubeLink = request.getParameter("youTubeLink");
 
-        songsService.addSongToDatabase(song, youTubeLink);
+        String page = new String();
 
-        String page = ConfigurationManager.getProperty("path.page.songhasbeenadded");
+        try {
+            songsService.addSongToDatabase(song, youTubeLink);
+            page = ConfigurationManager.getProperty("path.page.songhasbeenadded");
+            request.getRequestDispatcher(page).forward(request, response);
+        } catch (SongAddingException e) {
+            e.printStackTrace();
+        }
 
-        request.getRequestDispatcher(page).forward(request, response);
+        page = ConfigurationManager.getProperty("path.page.songhasbeenadded");
+
+
 
     }
 }

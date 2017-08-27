@@ -45,7 +45,7 @@ $(document).ready(function () {
     $("#song-name-select").on('change', function () {
         var selectedSongName = $(this).find("option:selected").val();
         enableGoToSongButton();
-        var songID = getCurrentSongID(selectedSongName);
+        var songID = getSelectedSongID(selectedSongName);
         $("#go-to-song-button").attr("href", "/controller?command=song&songID=" + songID);
     });
 

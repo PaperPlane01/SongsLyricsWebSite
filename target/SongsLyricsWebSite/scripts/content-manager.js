@@ -14,11 +14,8 @@ function showLoginResult(responseData) {
 function displayArtistsLetters(responseData) {
     var element = document.getElementById("artist-letter-select");
 
-    var label = "Choose artist letter";
+    var label = PageGlobals.getLabel("labels.chooseartistletter");
 
-    if (PageGlobals.currentLocale == "ru_RU") {
-        label = "Выберите букву исполнителя";
-    }
     element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
     $.each(responseData, function (index, letter) {
@@ -31,11 +28,7 @@ function displayArtistsLetters(responseData) {
 function displayArtists(responseData) {
     var element = document.getElementById("artist-name-select");
 
-    var label = "Choose artist name";
-
-    if (PageGlobals.currentLocale == "ru_RU") {
-        label = "Выберите исполнителя";
-    }
+    var label = PageGlobals.getLabel("labels.chooseartistname");
 
     element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -50,13 +43,9 @@ function displayArtists(responseData) {
 function displaySongs(responseData) {
     var element = document.getElementById("song-name-select");
 
-    songs = [];
+    PageGlobals.songs.length = 0;
 
-    var label = "Choose song";
-
-    if (PageGlobals.currentLocale == "ru_RU") {
-        label = "Выберите песню";
-    }
+    var label = PageGlobals.getLabel("labels.choosesong")
 
     element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -93,11 +82,11 @@ function disableGoToSongButton() {
     $('.selectpicker').selectpicker('refresh');
 }
 
-function getCurrentSongID(songName) {
+function getSelectedSongID(songName) {
     var songID;
 
     for (var index = 0; index < PageGlobals.songs.length; index++) {
-        if (PageGlobals.songs[index].name = songName) {
+        if (PageGlobals.songs[index].name == songName) {
             songID = PageGlobals.songs[index].ID;
         }
     }

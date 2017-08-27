@@ -1,45 +1,64 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Администратор
-  Date: 02.08.2017
-  Time: 20:14
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<fmt:setLocale value="${requestScope.language}"/>
+<html lang="${requestScope.language}">
 <head>
     <title>Add new song</title>
-    <script src="/scripts/jquery-3.2.1.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/body.css">
-    <link rel="stylesheet" href="/css/menu.css">
+    <jsp:include page="scripts-and-css.jsp"/>
 </head>
 <body>
 <div class="container">
-<div class="row">
-    <div class="col-xs-12">
-        <jsp:include page="menu.jsp"></jsp:include>
-    </div>
-</div>
     <div class="row">
         <div class="col-xs-12">
-            <form name="addNewSong" method="post" action="/controller?command=addsong">
-                Song artist:<br>
-                <input type="text" name="songArtist"/><br>
-                Song featured artists:<br>
-                <input type="text" name="songFeaturedArtists"/><br>
-                Song name:<br>
-                <input type="text" name="songName"/><br>
-                Song genres:<br>
-                <input type="text" name="songGenres"/><br>
-                YouTube link:<br>
-                <input type="text" name="youTubeLink"/>
-                Song lyrics:<br>
-                <textarea name="songLyrics"></textarea><br>
-                <input type="submit" value="Submit"/><br>
-            </form>
+            <jsp:include page="menu.jsp"></jsp:include>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label for="artist-name">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.songartist"/>
+                    </fmt:bundle>:
+                </label>
+                <input type="text" class="form-control" id="artist-name">
+            </div>
+
+            <div class="form-group">
+                <label for="featured-artists">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.songfeaturedartists"/>
+                    </fmt:bundle>:
+                </label>
+                <input type="text" class="form-control" id="featured-artists">
+            </div>
+
+            <div class="form-group">
+                <label for="song-name">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.songname"/>
+                    </fmt:bundle>:
+                </label>
+                <input type="text" class="form-control" id="song-name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="song-lyrics">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.songlyrics"/>
+                    </fmt:bundle>:
+                </label>
+                <textarea class="form-control" id="song-lyrics"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-default" id="add-song">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.addsong"/>
+                    </fmt:bundle>
+                </button>
+            </div>
         </div>
     </div>
 </div>

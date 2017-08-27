@@ -6,10 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="kz.javalab.songslyricswebsite.model.user.UserType" %>
+<%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${requestScope.language}"/>
+<fmt:setLocale value="${sessionScope.language}"/>
 <html lang="${sessionScope.language}">
 <head>
     <title>${requestScope.songTitle}</title>

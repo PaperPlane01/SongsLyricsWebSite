@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.command;
 
-import kz.javalab.songslyricswebsite.model.user.User;
-import kz.javalab.songslyricswebsite.model.user.UserType;
+import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
 import kz.javalab.songslyricswebsite.service.SongsService;
 

@@ -1,7 +1,8 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
-import kz.javalab.songslyricswebsite.model.song.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.artist.Artist;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -140,10 +141,10 @@ public class ArtistDataAccessObject {
 
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(getArtistIDQuery);
-                preparedStatement.setString(1,artist.getName());
+                preparedStatement.setString(1, artist.getName());
                 ResultSet resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     id = resultSet.getInt(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_ID);
                 }
 

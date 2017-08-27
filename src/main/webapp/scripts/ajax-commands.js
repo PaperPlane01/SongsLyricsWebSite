@@ -101,4 +101,29 @@ function changeLanguage(locale) {
     )
 }
 
+function getLabel(labelKey, locale) {
+
+    var labelContent = "";
+
+    $.ajax(
+        {
+            url : 'controller',
+            async : false,
+            method : "post",
+            data : {
+                command : 'getlabel',
+                labelKey : labelKey,
+                locale : locale
+            },
+
+            success : function (responseLabel) {
+                console.log(responseLabel);
+                labelContent = responseLabel;
+            }
+        }
+    );
+
+    return labelContent;
+}
+
 

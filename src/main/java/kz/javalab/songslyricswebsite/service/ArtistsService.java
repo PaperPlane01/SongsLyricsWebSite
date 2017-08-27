@@ -2,7 +2,8 @@ package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.dataaccessobject.ArtistDataAccessObject;
-import kz.javalab.songslyricswebsite.model.song.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.artist.Artist;
+
 
 import java.sql.Connection;
 import java.util.List;

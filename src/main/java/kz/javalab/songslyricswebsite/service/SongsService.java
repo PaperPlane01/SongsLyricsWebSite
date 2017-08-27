@@ -3,8 +3,10 @@ package kz.javalab.songslyricswebsite.service;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.dataaccessobject.ArtistDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongDataAccessObject;
-import kz.javalab.songslyricswebsite.model.song.Song;
-import kz.javalab.songslyricswebsite.model.song.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
+import kz.javalab.songslyricswebsite.exception.SongAddingException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,11 +21,17 @@ public class SongsService {
     private SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
     private ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
-    public Song getSongByID(int songID) {
+    public Song getSongByID(int songID) throws NoSuchSongException {
         Connection connection = ConnectionPool.getInstance().getConnection();
-        Song song = songDataAccessObject.getSongByID(songID, connection);
-        ConnectionPool.getInstance().returnConnection(connection);
-        return song;
+
+        if (songDataAccessObject.checkIfSongExists(songID, connection)) {
+            Song song = songDataAccessObject.getSongByID(songID, connection);
+            ConnectionPool.getInstance().returnConnection(connection);
+            return song;
+        } else {
+            throw new NoSuchSongException();
+        }
+
     }
 
     public Map<Integer, String> getSongIDsWithTitles(boolean approved) {
@@ -43,7 +51,7 @@ public class SongsService {
         return youTubeLink;
     }
 
-    public void addSongToDatabase(Song song, String youTubeLink) {
+    public void addSongToDatabase(Song song, String youTubeLink) throws SongAddingException {
        Connection connection = ConnectionPool.getInstance().getConnection();
 
         try {
@@ -69,6 +77,8 @@ public class SongsService {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+
+            throw new SongAddingException();
         }
 
         ConnectionPool.getInstance().returnConnection(connection);

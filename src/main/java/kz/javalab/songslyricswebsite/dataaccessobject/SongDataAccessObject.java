@@ -1,13 +1,13 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
-import com.sun.org.apache.regexp.internal.RE;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
-import kz.javalab.songslyricswebsite.model.song.Song;
-import kz.javalab.songslyricswebsite.model.song.artist.Artist;
-import kz.javalab.songslyricswebsite.model.song.lyrics.Line;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyrics;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyricsComposite;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyricsPartType;
+
+
+import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import kz.javalab.songslyricswebsite.entity.lyrics.Line;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
+import kz.javalab.songslyricswebsite.entity.song.Song;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,6 +37,7 @@ public class SongDataAccessObject {
 
         return song;
     }
+
 
     private Song getSongBySongID(int songID, boolean withLyrics, Connection connection) {
         Song song = new Song();
@@ -106,6 +107,30 @@ public class SongDataAccessObject {
         }
 
         return hasFeaturedArtists;
+    }
+
+    public boolean checkIfSongExists(int songID, Connection connection) {
+        boolean result = false;
+
+        String checkSongQuery = "SELECT song_id FROM songs\n" +
+                "WHERE song_id = ?";
+        int songIDParameter = 1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery);
+
+            preparedStatement.setInt(songIDParameter, songID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                result = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     public List<Song> getSongsByArtist(Artist artist, Connection connection) {

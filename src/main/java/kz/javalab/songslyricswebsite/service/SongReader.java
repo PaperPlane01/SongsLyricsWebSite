@@ -1,10 +1,8 @@
 package kz.javalab.songslyricswebsite.service;
 
-import kz.javalab.songslyricswebsite.model.song.Song;
-import kz.javalab.songslyricswebsite.model.song.lyrics.Line;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyrics;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyricsComposite;
-import kz.javalab.songslyricswebsite.model.song.lyrics.SongLyricsPartType;
+import kz.javalab.songslyricswebsite.entity.lyrics.Line;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 
 import java.util.Arrays;
 import java.util.List;
