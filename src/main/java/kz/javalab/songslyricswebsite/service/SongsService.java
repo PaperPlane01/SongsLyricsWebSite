@@ -7,6 +7,7 @@ import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.exception.SongAddingException;
+import kz.javalab.songslyricswebsite.exception.SuchSongAlreadyExistsException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,7 +32,6 @@ public class SongsService {
         } else {
             throw new NoSuchSongException();
         }
-
     }
 
     public Map<Integer, String> getSongIDsWithTitles(boolean approved) {
@@ -44,6 +44,7 @@ public class SongsService {
         return songIDsWithTitles;
     }
 
+
     public String getYouTubeLinkBySongID(int songID) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         String youTubeLink =  songDataAccessObject.getYouTubeLinkBySongID(songID, connection);
@@ -51,11 +52,15 @@ public class SongsService {
         return youTubeLink;
     }
 
-    public void addSongToDatabase(Song song, String youTubeLink) throws SongAddingException {
+    public void addSongToDatabase(Song song, String youTubeLink) throws SongAddingException, SuchSongAlreadyExistsException {
        Connection connection = ConnectionPool.getInstance().getConnection();
 
         try {
             connection.setAutoCommit(false);
+
+            if (checkIfSongExists(song, connection)) {
+                throw new SuchSongAlreadyExistsException();
+            }
             artistDataAccessObject.addArtistToDatabase(song.getArtist(), connection);
             int artistID = artistDataAccessObject.getArtistID(song.getArtist());
 
@@ -79,10 +84,14 @@ public class SongsService {
             }
 
             throw new SongAddingException();
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
         }
 
-        ConnectionPool.getInstance().returnConnection(connection);
+    }
 
+    private boolean checkIfSongExists(Song song, Connection connection) {
+        return songDataAccessObject.checkIfSongExists(song, connection);
     }
 
     public List<Song> getSongsByArtist(Artist artist) {

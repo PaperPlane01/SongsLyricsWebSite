@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.command;
 
+import kz.javalab.songslyricswebsite.command.localebasedcommand.AddSongCommand;
 import kz.javalab.songslyricswebsite.command.localebasedcommand.GetLabelCommand;
 import kz.javalab.songslyricswebsite.command.localebasedcommand.LoginCommand;
 

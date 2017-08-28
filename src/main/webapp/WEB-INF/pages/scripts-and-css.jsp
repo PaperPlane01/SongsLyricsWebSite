@@ -8,9 +8,6 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-<script src="scripts/page-globals.js"></script>
-<script src="scripts/events-handling.js"></script>
-<script src="scripts/ajax-commands.js"></script>
-<script src="scripts/content-manager.js"></script>
+<script src="/scripts/core.js"></script>
 <link rel="stylesheet" href="/css/body.css"/>
 <link rel="stylesheet" href="/css/menu.css"/>

@@ -109,6 +109,40 @@ public class SongDataAccessObject {
         return hasFeaturedArtists;
     }
 
+    public boolean checkIfSongExists(Song song, Connection connection) {
+        String songName = song.getName();
+        String artistName = song.getArtist().getName();
+
+        boolean result = true;
+
+        String checkSongQuery = "SELECT song_id\n" +
+                "FROM songs INNER JOIN artists\n" +
+                "ON songs.artist_id = artists.artist_id\n" +
+                "WHERE (song_name = ?) AND (artist_name = ?)";
+
+        int songNameParameter = 1;
+        int artistNameParameter = 2;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery);
+            preparedStatement.setString(songNameParameter, songName);
+            preparedStatement.setString(artistNameParameter, artistName);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.next()) {
+                result = false;
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     public boolean checkIfSongExists(int songID, Connection connection) {
         boolean result = false;
 
