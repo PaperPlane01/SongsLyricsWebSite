@@ -12,7 +12,6 @@ import java.io.IOException;
  */
 public class MyProfileCommand implements ActionCommand {
 
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = ConfigurationManager.getProperty("path.page.myprofile");

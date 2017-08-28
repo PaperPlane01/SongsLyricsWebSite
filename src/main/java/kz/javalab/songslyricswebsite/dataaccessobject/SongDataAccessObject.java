@@ -39,6 +39,13 @@ public class SongDataAccessObject {
     }
 
 
+    /**
+     * Returns <Close>Song</Close> instance stored in database by its id.
+     * @param songID ID of the song.
+     * @param withLyrics Indicates if song's lyrics should also be retrieved from databse.
+     * @param connection Connection to be used.
+     * @return Song retrieved from database.
+     */
     private Song getSongBySongID(int songID, boolean withLyrics, Connection connection) {
         Song song = new Song();
 
@@ -172,7 +179,8 @@ public class SongDataAccessObject {
         List<Song> songs = new ArrayList<>();
 
         String getSongsByArtistID = "SELECT song_id FROM songs\n" +
-                "WHERE artist_id = ?";
+                "WHERE artist_id = ?\n" +
+                "ORDER BY song_name";
 
         int artistIDParameter = 1;
 
@@ -198,7 +206,9 @@ public class SongDataAccessObject {
 
         List<Song> featuredSongs = getSongsFeaturedByArtist(artist, connection);
 
-        featuredSongs.forEach(song -> songs.add(song));
+        if (!featuredSongs.isEmpty()) {
+            featuredSongs.forEach(song -> songs.add(song));
+        }
 
         return songs;
     }
@@ -512,7 +522,7 @@ public class SongDataAccessObject {
             String songLyricsQuery = "SELECT song_part, content\n" +
                     "FROM websitedatabase.lines\n" +
                     "WHERE song_id = ?\n" +
-                    "ORDER BY line_id;";
+                    "ORDER BY line_position;";
 
             int songIDParameter = 1;
 
@@ -723,21 +733,27 @@ public class SongDataAccessObject {
      * @param connection Connection to be used.
      */
     private void addSongLyricsToDatabase(Song song, Connection connection) {
-        String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part)\n" +
-                "VALUES (?, ?, ?)";
+        String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
+                "VALUES (?, ?, ?, ?)";
 
         int songIDParameter = 1;
         int contentParameter = 2;
         int songPartParameter = 3;
+        int linePositionParameter = 4;
 
-        song.getLyrics().getComponents().forEach(songPart -> {
-            songPart.getComponents().forEach(line -> {
+        int linePosition = 0;
+
+        for (SongLyrics songPart : song.getLyrics().getComponents()) {
+            linePosition++;
+
+            for (SongLyrics line : songPart.getComponents()) {
                 try {
                     PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
                     preparedStatement.setInt(songIDParameter, song.getID());
                     preparedStatement.setString(contentParameter, line.toString());
                     preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
+                    preparedStatement.setInt(linePositionParameter, linePosition);
 
                     preparedStatement.execute();
 
@@ -745,8 +761,9 @@ public class SongDataAccessObject {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            });
-        });
+            }
+        }
+
     }
 
     /**

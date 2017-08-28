@@ -30,7 +30,8 @@ public class ArtistDataAccessObject {
         List<Artist> artists = new ArrayList<>();
 
         String getArtistsByLetterQuery = "SELECT * FROM artists\n" +
-                "WHERE artist_letter = ?\n";
+                "WHERE artist_letter = ?\n" +
+                "ORDER BY artist_name";
 
         int artistLetterParameter = 1;
 

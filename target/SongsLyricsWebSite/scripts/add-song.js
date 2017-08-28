@@ -1,7 +1,6 @@
 //This feature is swarming of bugs and needs to be updated ASAP!
 $(document).ready(function () {
     let labelsManager = new LabelsManager();
-    let pageGlobals = new PageGlobals();
 
     $("#add-bridge-button").on('click', function () {
         addTag(Tags.BRIDGE);
@@ -38,28 +37,177 @@ $(document).ready(function () {
     let youTubeVideoID = "";
     let songLyrics = "";
 
-    $("#artist-name").on('change', function () {
+
+    $("#artist-name").on('input', function () {
         artistName = $("#artist-name").val();
+
+        console.log("artist name is being changed");
+
+        if (artistName.trim().length == 0) {
+            showArtistNameValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#artist-name-message").css('display', 'none');
+
+            if (!validateArtistName(artistName)) {
+                showArtistNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#artist-name-message").css('display', 'none');
+            }
+        }
+
     });
 
-    $("#featured-artists").on('change', function () {
+    $("#artist-name").on('focusout', function () {
+        artistName = $("#artist-name").val();
+
+        if (artistName.trim().length == 0) {
+            showArtistNameValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#artist-name-message").css('display', 'none');
+
+            if (!validateArtistName(artistName)) {
+                showArtistNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#artist-name-message").css('display', 'none');
+            }
+        }
+    });
+
+    $("#featured-artists").on('input', function () {
         featuredArtists = $("#featured-artists").val();
+
+        if (!validateFeaturedArtists(featuredArtists)) {
+            showFeaturedArtistsValidationMessage();
+        } else {
+            $("#featured-artists-message").css('display', 'block');
+        }
     });
 
-    $("#song-name").on('change', function () {
+    $("#featured-artists").on('focusout', function () {
+        featuredArtists = $("#featured-artists").val();
+
+        if (!validateFeaturedArtists(featuredArtists)) {
+            showFeaturedArtistsValidationMessage();
+        } else {
+            $("#featured-artists-message").css('display', 'block');
+        }
+    });
+
+    $("#song-name").on('input', function () {
         songName = $("#song-name").val();
+
+        if (songName.trim().length == 0) {
+            showSongNameValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#song-name-message").css('display', 'none');
+
+            if (!validateSongName(songName)) {
+                showSongNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#song-name-message").css('display', 'none');
+            }
+        }
     });
 
-    $("#song-genres").on('change', function () {
+    $("#song-name").on('focusout', function () {
+        songName = $("#song-name").val();
+
+        if (songName.trim().length == 0) {
+            showSongNameValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#song-name-message").css('display', 'none');
+
+            if (!validateSongName(songName)) {
+                showSongNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#song-name-message").css('display', 'none');
+            }
+        }
+    });
+
+    $("#song-genres").on('input', function () {
         songGenres = $("#song-genres").val();
+
+        if (!validateGenres(songGenres)) {
+            showGenresValidationMessage();
+        } else {
+            $("#song-genres-message").css('display', 'none');
+        }
     });
 
-    $("#youtube-video-id").on('change', function () {
-        youTubeVideoID = $("#song-youtube-video-id-message").val();
+    $("#song-genres").on("focusout", function () {
+        songGenres = $("#song-genres").val();
+
+        if (!validateGenres(songGenres)) {
+            showGenresValidationMessage();
+        } else {
+            $("#song-genres-message").css('display', 'none');
+        }
+    });
+
+    $("#youtube-video-id").on('input', function () {
+        youTubeVideoID = $("#youtube-video-id").val();
+
+        if (!validateYouTubeVideoID(youTubeVideoID)) {
+            showYouTubeVideoIDValidationMessage();
+        } else {
+            $("#song-youtube-video-id-message").css('display', 'none');
+        }
+    });
+
+    $("#youtube-video-id").on('focusout', function () {
+        youTubeVideoID = $("#youtube-video-id").val();
+
+        if (!validateYouTubeVideoID(youTubeVideoID)) {
+            showYouTubeVideoIDValidationMessage();
+        } else {
+            $("#song-youtube-video-id-message").css('display', 'none');
+        }
+    });
+
+    $("#song-lyrics").on('input', function () {
+        songLyrics = $("#song-lyrics").val();
+
+        if (songLyrics.trim().length == 0) {
+            showSongLyricsValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#song-lyrics-message").css('display', 'none');
+            if (!validateSongLyrics(songLyrics)) {
+                showSongLyricsValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#song-lyrics-message").css('display', 'none');
+            }
+        }
+    });
+
+    $("#song-lyrics").on('focusout', function () {
+        songLyrics = $("#song-lyrics").val();
+
+        if (songLyrics.trim().length == 0) {
+            showSongLyricsValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#song-lyrics-message").css('display', 'none');
+            if (!validateSongLyrics(songLyrics)) {
+                showSongLyricsValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#song-lyrics-message").css('display', 'none');
+            }
+        }
     });
 
     $("#song-lyrics").on('change', function () {
         songLyrics = $("#song-lyrics").val();
+
+        if (songLyrics.trim().length == 0) {
+            showSongLyricsValidationMessage(ValidationMessageParameters.EMPTY_FIELD);
+        } else {
+            $("#song-lyrics-message").css('display', 'none');
+            if (!validateSongLyrics(songLyrics)) {
+                showSongLyricsValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
+            } else {
+                $("#song-lyrics-message").css('display', 'none');
+            }
+        }
     });
 
     $("#add-song").on('click', function () {
@@ -76,7 +224,7 @@ $(document).ready(function () {
                             if (validateSongLyrics(songLyrics)) {
                                 sendSong(songName, artistName, featuredArtists, songGenres, songLyrics, youTubeVideoID);
                             } else {
-                                showSongLyricsValidationMessage();
+                                showSongLyricsValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
                             }
                         } else {
                             showYouTubeVideoIDValidationMessage();
@@ -85,48 +233,91 @@ $(document).ready(function () {
                         showGenresValidationMessage();
                     }
                 } else {
-                    showSongNameValidationMessage();
+                    showSongNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
                 }
             } else {
                 showFeaturedArtistsValidationMessage();
             }
         } else {
-            showArtistNameValidationMessage();
+            showArtistNameValidationMessage(ValidationMessageParameters.VALIDATION_ERROR);
         }
     });
 
-    let showArtistNameValidationMessage = function () {
-        let message = labelsManager.getLabelContent("labels.errors.artistnamevalidation", pageGlobals.currentLocale);
-        $("#artist-name-message").css('display', 'block');
-        $("#artist-name-message").html("<span style = \"color:red\">" + message + "</span>");
+    let showArtistNameValidationMessage = function (messageParameter) {
+
+        let message = "";
+
+        switch (messageParameter){
+            case ValidationMessageParameters.EMPTY_FIELD:
+                message = labelsManager.getLabelContent("labels.errors.emptyartistname", PageGlobals.currentLocale);
+                $("#artist-name-message").css('display', 'block');
+                $("#artist-name-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+            case ValidationMessageParameters.VALIDATION_ERROR:
+                message = labelsManager.getLabelContent("labels.errors.artistnamevalidation", PageGlobals.currentLocale);
+                $("#artist-name-message").css('display', 'block');
+                $("#artist-name-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+            default:
+                break;
+        }
     };
 
     let showFeaturedArtistsValidationMessage = function () {
-        let message = labelsManager.getLabelContent("labels.errors.featuredartistsvalidation", pageGlobals.currentLocale);
+        let message = labelsManager.getLabelContent("labels.errors.featuredartistsvalidation", PageGlobals.currentLocale);
         $("#featured-artists-message").css('display', 'block');
         $("#featured-artists-message").html("<span style = \"color:red\">" + message + "</span>");
+
     };
 
-    let showSongNameValidationMessage = function () {
-      let message = labelsManager.getLabelContent("labels.errors.songnamevalidation", pageGlobals.currentLocale);
-      $("#song-name-message").css('display', 'block');
-      $("#song-name-message").html("<span style = \"color:red\">" + message + "</span>");
+    let showSongNameValidationMessage = function (messageParameter) {
+
+        let message = "";
+
+        switch (messageParameter){
+            case ValidationMessageParameters.EMPTY_FIELD:
+                message = labelsManager.getLabelContent("labels.errors.emptysongname", PageGlobals.currentLocale);
+                $("#song-name-message").css('display', 'block');
+                $("#song-name-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+            case ValidationMessageParameters.VALIDATION_ERROR:
+                message = labelsManager.getLabelContent("labels.errors.songnamevalidation", PageGlobals.currentLocale);
+                $("#song-name-message").css('display', 'block');
+                $("#song-name-message").html("<span style = \"color:red\">" + message + "</span>")
+                break;
+            default:
+                break;
+        }
+
     };
 
     let showGenresValidationMessage = function () {
-        let message = labelsManager.getLabelContent("labels.errors.songgenresvalidation", pageGlobals.currentLocale);
-        $("#song-name-message").css('display', 'block');
-        $("#song-name-message").html("<span style = \"color:red\">" + message + "</span>");
+        let message = labelsManager.getLabelContent("labels.errors.songgenresvalidation", PageGlobals.currentLocale);
+        $("#song-genres-message").css('display', 'block');
+        $("#song-genres-message").html("<span style = \"color:red\">" + message + "</span>");
     };
 
-    let showSongLyricsValidationMessage = function () {
-        let message = labelsManager.getLabelContent("labels.errors.songlyricsvalidation", pageGlobals.currentLocale);
-        $("#song-lyrics-message").css('display', 'block');
-        $("#song-lyrics-message").html("<span style = \"color:red\">" + message + "</span>");
+    let showSongLyricsValidationMessage = function (messageParameter) {
+        let message = "";
+
+        switch (messageParameter) {
+            case ValidationMessageParameters.EMPTY_FIELD:
+                message = labelsManager.getLabelContent("labels.errors.emptylyrics", PageGlobals.currentLocale);
+                $("#song-lyrics-message").css('display', 'block');
+                $("#song-lyrics-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+            case ValidationMessageParameters.VALIDATION_ERROR:
+                message = labelsManager.getLabelContent("labels.errors.songlyricsvalidation", PageGlobals.currentLocale);
+                $("#song-lyrics-message").css('display', 'block');
+                $("#song-lyrics-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+            default:
+                break;
+        }
     };
     
     let showYouTubeVideoIDValidationMessage = function () {
-        let message = labelsManager.getLabelContent("labels.errors.songyoutubevideoidvalidation", pageGlobals.currentLocale);
+        let message = labelsManager.getLabelContent("labels.errors.songyoutubevideoidvalidation", PageGlobals.currentLocale);
         $("#song-youtube-video-id-message").css('display', 'block');
         $("#song-youtube-video-id-message").html("<span style = \"color:red\">" + message + "</span>");
     };
@@ -140,6 +331,12 @@ $(document).ready(function () {
         $("#song-lyrics").val($('#song-lyrics').val() + '\n');
         $("#song-lyrics").val($('#song-lyrics').val() + '\n');
         $("#song-lyrics").val($('#song-lyrics').val() + '[/]');
+
+        $("#song-lyrics").focus();
+
+        $('html, body').animate({
+            scrollTop: $("#song-lyrics").offset().top
+        }, 2000);
 
         console.log('tag added', tag)
     };
@@ -268,14 +465,24 @@ $(document).ready(function () {
                   youTubeLink : youTubeLink
               },
 
-              success : function (errorMessage) {
-                  showMessage(errorMessage);
+              success : function (response) {
+                  handleResponse(response);
               }
           }
       )
     };
 
-    let showMessage = function (message) {
+    let handleResponse = function (response) {
+        if (response.status == "FAILURE") {
+            showFailureMessage(response.message);
+        }
+
+        if (response.status == "SUCCESS") {
+            $(".song-adding-panel").html("<h3>" + response.message + "</h3>");
+        }
+    };
+
+    let showFailureMessage = function (message) {
         $("#message").css('display', ' block');
         $("#message").html("<span style = \"color:red\">" + message + "</span>");
     };
@@ -289,7 +496,6 @@ $(document).ready(function () {
         BRIDGE : "[BRIDGE]",
         OTHER : "[OTHER]",
         CLOSING_TAG : "[/]",
-
     };
 
     let isTag = function (value) {
@@ -302,5 +508,10 @@ $(document).ready(function () {
         });
 
         return result;
-    }
+    };
+
+    let ValidationMessageParameters = {
+        EMPTY_FIELD  : 4,
+        VALIDATION_ERROR : 8
+    };
 });

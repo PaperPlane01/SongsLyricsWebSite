@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    let pageGlobals = new PageGlobals();
-    pageGlobals.currentLocale = $("html").attr('lang');
+    PageGlobals.currentLocale = $("html").attr('lang');
     $('.selectpicker').selectpicker();
 
     let loginManager = new LoginManager();
@@ -45,14 +44,14 @@ $(document).ready(function () {
 
     $("#song-name-select").on('change', function () {
         let selectedSong = $(this).find("option:selected").val();
-        let selectedSongID = pageGlobals.getSelectedSongID(selectedSong);
+        let selectedSongID = PageGlobals.getSelectedSongID(selectedSong);
         $("#go-to-song-button").attr('href', '/controller?command=song&songID=' + selectedSongID);
 
         pageElementsManager.enableGoToSongButton();
     });
 
     $("#english-language-select").on('click', function () {
-        let locale = "en_EN";
+        let locale = "en_US";
         languageManager.changeLanguage(locale);
     });
 
@@ -134,7 +133,7 @@ $(document).ready(function () {
         this.displayArtistsLetters = function (artistsLetters) {
             let element = document.getElementById("artist-letter-select");
 
-            let label = pageGlobals.labelsManager.getLabelContent("labels.chooseartistletter", pageGlobals.locale);
+            let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistletter", PageGlobals.locale);
 
             element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -164,7 +163,7 @@ $(document).ready(function () {
         this.displayArtists = function (artists) {
             let element = document.getElementById("artist-name-select");
 
-            let label = pageGlobals.labelsManager.getLabelContent("labels.chooseartistname", pageGlobals.locale);
+            let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistname", PageGlobals.locale);
 
             element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -194,15 +193,15 @@ $(document).ready(function () {
         this.displaySongs = function (songs) {
             let element = document.getElementById("song-name-select");
 
-            pageGlobals.songs.length = 0;
+            PageGlobals.songs.length = 0;
 
-            let label = pageGlobals.labelsManager.getLabelContent("labels.choosesong", pageGlobals.locale);
+            let label = PageGlobals.labelsManager.getLabelContent("labels.choosesong", PageGlobals.locale);
 
             element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
             $.each(songs, function (index, song) {
                 $("#song-name-select").append("<option id=\"" + song.ID + "\">" + song.name + "</option>");
-                pageGlobals.songs.push(song);
+                PageGlobals.songs.push(song);
             });
 
             $('.selectpicker').selectpicker('refresh');
@@ -247,12 +246,12 @@ $(document).ready(function () {
 
 });
 
-function PageGlobals() {
-    this.songs = [];
-    this.currentLocale = "";
-    this.labelsManager = new LabelsManager();
+PageGlobals = {
+    songs : [],
+    currentLocale : "",
+    labelsManager : new LabelsManager(),
 
-    this.getSelectedSongID = function (selectedSongName) {
+    getSelectedSongID : function (selectedSongName) {
         var songID;
 
         for (var index = 0; index < this.songs.length; index++) {
@@ -262,9 +261,9 @@ function PageGlobals() {
         }
 
         return songID;
-    };
+    },
 
-}
+};
 
 function LabelsManager() {
     this.keys = [];

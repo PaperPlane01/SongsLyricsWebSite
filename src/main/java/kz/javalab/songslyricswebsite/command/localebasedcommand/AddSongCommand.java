@@ -2,7 +2,6 @@ package kz.javalab.songslyricswebsite.command.localebasedcommand;
 
 import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
-import kz.javalab.songslyricswebsite.command.localebasedcommand.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.exception.LyricsParsingException;
 import kz.javalab.songslyricswebsite.exception.SongAddingException;
 import kz.javalab.songslyricswebsite.entity.song.Song;
@@ -17,10 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by PaperPlane on 19.08.2017.
@@ -34,6 +30,8 @@ public class AddSongCommand extends LocaleBasedCommand implements ActionCommand 
         Song song = new Song();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
         String message = new String();
+
+        Map<String, String> responseMap = new LinkedHashMap<>();
 
         String songName = request.getParameter("songName");
         String artistName = request.getParameter("songArtist");
@@ -74,53 +72,60 @@ public class AddSongCommand extends LocaleBasedCommand implements ActionCommand 
                                     songLyrics = songReader.buildLyricsFromString(songLyricsAsString);
                                     song.setLyrics(songLyrics);
 
-                                    String page = new String();
-
                                     try {
                                         songsService.addSongToDatabase(song, youTubeLink);
-                                        page = ConfigurationManager.getProperty("path.page.songhasbeenadded");
-                                        request.getRequestDispatcher(page).forward(request, response);
+                                        responseMap.put("status", "SUCCESS");
+                                        responseMap.put("message", resourceBundle.getString("labels.songhasbeenadded"));;
+                                        sendJsonMessage(responseMap, response);
                                     } catch (SongAddingException e) {
                                         e.printStackTrace();
-                                        message = resourceBundle.getString("labels.errors.errorwhileadding");
-                                        sendJsonMessage(message, request, response);
+                                        responseMap.put("status", "FAILURE");
+                                        responseMap.put("message", resourceBundle.getString("labels.errors.errorwhileadding"));;
+                                        sendJsonMessage(responseMap, response);
                                     } catch (SuchSongAlreadyExistsException e) {
-                                        message = resourceBundle.getString("labels.suchsongalreadyexists");
-                                        sendJsonMessage(message, request, response);
+                                        responseMap.put("status", "FAILURE");
+                                        responseMap.put("message", resourceBundle.getString("labels.suchsongalreadyexists"));;
+                                        sendJsonMessage(responseMap, response);
                                     }
                                 } catch (LyricsParsingException e) {
                                     e.printStackTrace();
                                 }
                             } else {
-                                message = resourceBundle.getString("labels.errors.songyoutubevideoidvalidation");
-                                sendJsonMessage(message, request, response);
+                                responseMap.put("status", "FAILURE");
+                                responseMap.put("message", resourceBundle.getString("labels.errors.songyoutubevideoidvalidation"));;
+                                sendJsonMessage(responseMap, response);
                             }
                         } else {
-                            message = resourceBundle.getString("labels.errors.songlyricsvalidation");
-                            sendJsonMessage(message, request, response);
+                            responseMap.put("status", "FAILURE");
+                            responseMap.put("message", resourceBundle.getString("labels.errors.songlyricsvalidation"));
+                            sendJsonMessage(responseMap, response);
                         }
                     } else {
-                        message = resourceBundle.getString("labels.errors.songgenresvalidation");
-                        sendJsonMessage(message, request, response);
+                        responseMap.put("status", "FAILURE");
+                        responseMap.put("message", resourceBundle.getString("labels.errors.songgenresvalidation"));
+                        sendJsonMessage(responseMap, response);
                     }
                 } else {
-                    message = resourceBundle.getString("labels.errors.featuredartistsvalidation");
-                    sendJsonMessage(message, request, response);
+                    responseMap.put("status", "FAILURE");
+                    responseMap.put("message", resourceBundle.getString("labels.errors.featuredartistsvalidation"));
+                    sendJsonMessage(responseMap, response);
                 }
             } else {
-                message = resourceBundle.getString("labels.errors.artistnamevalidation");
-                sendJsonMessage(message, request, response);
+                responseMap.put("status", "FAILURE");
+                responseMap.put("message", resourceBundle.getString("labels.errors.artistnamevalidation"));
+                sendJsonMessage(responseMap, response);
             }
         } else {
-            message = resourceBundle.getString("labels.errors.songnamevalidation");
-            sendJsonMessage(message, request, response);
+            responseMap.put("status", "FAILURE");
+            responseMap.put("message", resourceBundle.getString("labels.errors.songnamevalidation"));
+            sendJsonMessage(responseMap, response);
         }
 
 
     }
 
-    private void sendJsonMessage(String message, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = new Gson().toJson(message);
+    private void sendJsonMessage(Map<String, String> responseMap, HttpServletResponse response) throws IOException {
+        String json = new Gson().toJson(responseMap);
 
         response.setContentType("application/json");
         response.getWriter().write(json);
@@ -208,5 +213,10 @@ public class AddSongCommand extends LocaleBasedCommand implements ActionCommand 
             result = false;
             return  result;
         }
+    }
+
+    @Override
+    protected Locale getLocaleFromRequest(HttpServletRequest request) {
+        return super.getLocaleFromRequest(request);
     }
 }

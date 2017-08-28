@@ -30,6 +30,7 @@ public class SongsService {
             ConnectionPool.getInstance().returnConnection(connection);
             return song;
         } else {
+            ConnectionPool.getInstance().returnConnection(connection);
             throw new NoSuchSongException();
         }
     }
