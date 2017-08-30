@@ -57,20 +57,28 @@ public class SongsService {
        Connection connection = ConnectionPool.getInstance().getConnection();
 
         try {
+            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SongAddingException();
+        }
+
+        try {
             connection.setAutoCommit(false);
 
             if (checkIfSongExists(song, connection)) {
                 throw new SuchSongAlreadyExistsException();
             }
+
             artistDataAccessObject.addArtistToDatabase(song.getArtist(), connection);
-            int artistID = artistDataAccessObject.getArtistID(song.getArtist());
+            int artistID = artistDataAccessObject.getArtistID(song.getArtist(), connection);
 
             song.getArtist().setID(artistID);
 
             if (song.hasFeaturedArtists()) {
                 song.getFeaturedArtists().forEach(featuredArtist -> {
                     artistDataAccessObject.addArtistToDatabase(featuredArtist, connection);
-                    featuredArtist.setID(artistDataAccessObject.getArtistID(featuredArtist));
+                    featuredArtist.setID(artistDataAccessObject.getArtistID(featuredArtist, connection));
                 });
             }
 
@@ -97,7 +105,7 @@ public class SongsService {
 
     public List<Song> getSongsByArtist(Artist artist) {
         Connection connection = ConnectionPool.getInstance().getConnection();
-        artist.setID(artistDataAccessObject.getArtistID(artist));
+        artist.setID(artistDataAccessObject.getArtistID(artist, connection));
         List<Song> songsByArtist =  songDataAccessObject.getSongsByArtist(artist, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return songsByArtist;

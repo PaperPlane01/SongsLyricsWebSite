@@ -35,14 +35,6 @@
     padding-bottom: 5%;
 }
 
-
-
-@media screen and (min-width: 1240px)  {
-    .line {
-        margin-left: 40%;
-    }
-}
-
 @media screen and (max-width: 500px){
     .line {
         margin-left: 2%;
@@ -59,11 +51,30 @@
     .line {
         margin-left: 25%;
     }
+    .song-video {
+        margin-left: 20%;
+    }
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1240px){
+@media screen and (min-width: 1000px) and (max-width: 1240px) {
     .line {
-        margin-left: 30%;
+        margin-left: 40%;
+        width: 40%;
+    }
+
+    .song-video {
+        margin-left: 20%;
+    }
+}
+
+@media screen and (min-width: 1240px)  {
+    .line {
+        margin-left: 40%;
+        width: 40%;
+    }
+
+    .song-video {
+        margin-left: 20%;
     }
 }
 

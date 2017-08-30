@@ -6,7 +6,6 @@ $(document).ready(function () {
     let logoutManager = new LogoutManager();
     let quickSongAccessManager = new QuickSongAccessManager();
     let languageManager = new LanguageManager();
-    let pageElementsManager = new PageElementsManager();
 
     quickSongAccessManager.loadArtistsLetters();
 
@@ -26,28 +25,28 @@ $(document).ready(function () {
         loginManager.doLogin(username, password);
     });
 
-    $(".logout").on('click', function () {
+    $("#logout").on('click', function () {
         logoutManager.doLogout();
     });
 
     $("#artist-letter-select").on('change', function () {
         let selectedLetter = $(this).find("option:selected").val();
         quickSongAccessManager.loadArtistsByLetter(selectedLetter);
-        pageElementsManager.enableArtistSelection();
+        quickSongAccessManager.enableArtistSelection();
     });
 
     $("#artist-name-select").on('change', function () {
         let selectedArtist = $(this).find("option:selected").val();
         quickSongAccessManager.loadSongsOfArtist(selectedArtist);
-        pageElementsManager.enableSongSelection();
+        quickSongAccessManager.enableSongSelection();
     });
 
     $("#song-name-select").on('change', function () {
         let selectedSong = $(this).find("option:selected").val();
-        let selectedSongID = PageGlobals.getSelectedSongID(selectedSong);
+        let selectedSongID = quickSongAccessManager.getSelectedSongID(selectedSong);
         $("#go-to-song-button").attr('href', '/controller?command=song&songID=' + selectedSongID);
 
-        pageElementsManager.enableGoToSongButton();
+        quickSongAccessManager.enableGoToSongButton();
     });
 
     $("#english-language-select").on('click', function () {
@@ -60,210 +59,209 @@ $(document).ready(function () {
         languageManager.changeLanguage(locale);
     });
 
-    function LoginManager  () {
-        let self = this;
-
-        this.doLogin = function (username, password) {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : 'login',
-                        username : username,
-                        password : password
-                    },
-
-                    success : function (responseData) {
-                        $("#message").css('display', 'block');
-                        self.handleLoginResult(responseData);
-                    }
-                }
-            )
-        };
-
-        this.handleLoginResult = function (responseData) {
-            let message = responseData.message;
-
-            if (responseData.status === 'SUCCESS'){
-                $('#message').html("<span style = \"color:green\">" + message + "</span>");
-                location.reload();
-            } else if (responseData.status === 'FAILURE'){
-                console.log('failure!');
-                let reason = responseData.reason;
-                $('#message').html("<span style = \"color:red\">" + message + ": " + reason + "</span>")
-            }
-        }
-    }
-
-    function LogoutManager () {
-        this.doLogout = function () {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : 'logout'
-                    },
-
-                    success : function () {
-                        location.reload();
-                    }
-                }
-            )
-        }
-    }
-
-    function QuickSongAccessManager  () {
-        let self = this;
-
-        this.loadArtistsLetters = function () {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : 'artistsletters'
-                    },
-
-                    success : function (artistsLetters) {
-                        self.displayArtistsLetters(artistsLetters);
-                    }
-                }
-            )
-        };
-
-        this.displayArtistsLetters = function (artistsLetters) {
-            let element = document.getElementById("artist-letter-select");
-
-            let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistletter", PageGlobals.locale);
-
-            element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
-
-            $.each(artistsLetters, function (index, letter) {
-                $('#artist-letter-select').append("<option>" + letter + "</option>");
-            });
-
-            $('.selectpicker').selectpicker('refresh');
-        };
-
-        this.loadArtistsByLetter = function (letter) {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : "artists",
-                        letter : letter
-                    },
-
-                    success : function (artists) {
-                        self.displayArtists(artists);
-                    }
-                }
-            )
-        };
-
-        this.displayArtists = function (artists) {
-            let element = document.getElementById("artist-name-select");
-
-            let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistname", PageGlobals.locale);
-
-            element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
-
-            $.each(artists, function (index, artist) {
-                $("#artist-name-select").append("<option>" + artist.name + "</option>");
-            });
-
-            $('.selectpicker').selectpicker('refresh');
-        };
-
-        this.loadSongsOfArtist = function (artistName) {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : "songs",
-                        artistName : artistName
-                    },
-
-                    success : function (responseData) {
-                        self.displaySongs(responseData);
-                    }
-                }
-            )
-        };
-
-        this.displaySongs = function (songs) {
-            let element = document.getElementById("song-name-select");
-
-            PageGlobals.songs.length = 0;
-
-            let label = PageGlobals.labelsManager.getLabelContent("labels.choosesong", PageGlobals.locale);
-
-            element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
-
-            $.each(songs, function (index, song) {
-                $("#song-name-select").append("<option id=\"" + song.ID + "\">" + song.name + "</option>");
-                PageGlobals.songs.push(song);
-            });
-
-            $('.selectpicker').selectpicker('refresh');
-        };
-    }
-
-    function LanguageManager () {
-        this.changeLanguage = function (locale) {
-            $.post(
-                {
-                    url : 'controller',
-                    data : {
-                        command : "changelanguage",
-                        language : locale
-                    },
-
-                    success : function () {
-                        location.reload();
-                    }
-                }
-            )
-        }
-    }
-
-    function PageElementsManager  () {
-        this.enableArtistSelection = function () {
-            $('#artist-name-select').removeAttr('disabled');
-            $('.selectpicker').selectpicker('refresh');
-        };
-
-        this.enableSongSelection = function () {
-            $('#song-name-select').removeAttr('disabled');
-            $('.selectpicker').selectpicker('refresh');
-        };
-
-        this.enableGoToSongButton = function () {
-            $('#go-to-song-button').removeAttr('disabled');
-            $('.selectpicker').selectpicker('refresh');
-        }
-    }
-
-
 });
 
 PageGlobals = {
-    songs : [],
     currentLocale : "",
-    labelsManager : new LabelsManager(),
+    labelsManager : new LabelsManager()
+};
 
-    getSelectedSongID : function (selectedSongName) {
-        var songID;
+function LoginManager  () {
+    let self = this;
 
-        for (var index = 0; index < this.songs.length; index++) {
-            if (this.songs[index].name === selectedSongName) {
+    this.doLogin = function (username, password) {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : 'login',
+                    username : username,
+                    password : password
+                },
+
+                success : function (responseData) {
+                    self.handleLoginResult(responseData);
+                }
+            }
+        )
+    };
+
+    this.handleLoginResult = function (responseData) {
+        let message = responseData.message;
+
+        $("#login-message").css('display', 'block');
+
+        if (responseData.status === 'SUCCESS'){
+            $('#login-message').html("<span style = \"color:green\">" + message + "</span>");
+            location.reload();
+        } else if (responseData.status === 'FAILURE'){
+            let reason = responseData.reason;
+            $('#login-message').html("<span style = \"color:red\">" + message + ": " + reason + "</span>")
+        }
+    }
+}
+
+function LogoutManager () {
+    this.doLogout = function () {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : 'logout'
+                },
+
+                success : function () {
+                    location.reload();
+                }
+            }
+        )
+    }
+}
+
+function QuickSongAccessManager  () {
+    this.songs = [];
+
+    let self = this;
+
+    this.loadArtistsLetters = function () {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : 'artistsletters'
+                },
+
+                success : function (artistsLetters) {
+                    self.displayArtistsLetters(artistsLetters);
+                }
+            }
+        )
+    };
+
+    this.displayArtistsLetters = function (artistsLetters) {
+        let element = document.getElementById("artist-letter-select");
+
+        let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistletter", PageGlobals.locale);
+
+        element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
+
+        $.each(artistsLetters, function (index, letter) {
+            $('#artist-letter-select').append("<option>" + letter + "</option>");
+        });
+
+        $('.selectpicker').selectpicker('refresh');
+    };
+
+    this.loadArtistsByLetter = function (letter) {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : "artists",
+                    letter : letter
+                },
+
+                success : function (artists) {
+                    self.displayArtists(artists);
+                }
+            }
+        )
+    };
+
+    this.displayArtists = function (artists) {
+        let element = document.getElementById("artist-name-select");
+
+        let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistname", PageGlobals.locale);
+
+        element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
+
+        $.each(artists, function (index, artist) {
+            $("#artist-name-select").append("<option>" + artist.name + "</option>");
+        });
+
+        $('.selectpicker').selectpicker('refresh');
+    };
+
+    this.loadSongsOfArtist = function (artistName) {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : "songs",
+                    artistName : artistName
+                },
+
+                success : function (responseData) {
+                    self.displaySongs(responseData);
+                }
+            }
+        )
+    };
+
+    this.displaySongs = function (songs) {
+        let element = document.getElementById("song-name-select");
+
+        let self = this;
+
+        this.songs.length = 0;
+
+        let label = PageGlobals.labelsManager.getLabelContent("labels.choosesong", PageGlobals.locale);
+
+        element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
+
+        $.each(songs, function (index, song) {
+            $("#song-name-select").append("<option id=\"" + song.ID + "\">" + song.name + "</option>");
+            self.songs.push(song);
+        });
+
+        $('.selectpicker').selectpicker('refresh');
+    };
+
+    this.getSelectedSongID = function (songName) {
+        let songID;
+
+        for (let index = 0; index < this.songs.length; index++) {
+            if (this.songs[index].name === songName) {
                 songID = this.songs[index].ID;
             }
         }
 
         return songID;
-    },
+    };
 
-};
+    this.enableArtistSelection = function () {
+        $('#artist-name-select').removeAttr('disabled');
+        $('.selectpicker').selectpicker('refresh');
+    };
+
+    this.enableSongSelection = function () {
+        $('#song-name-select').removeAttr('disabled');
+        $('.selectpicker').selectpicker('refresh');
+    };
+
+    this.enableGoToSongButton = function () {
+        $('#go-to-song-button').removeAttr('disabled');
+        $('.selectpicker').selectpicker('refresh');
+    }
+}
+
+function LanguageManager () {
+    this.changeLanguage = function (locale) {
+        $.post(
+            {
+                url : 'controller',
+                data : {
+                    command : "changelanguage",
+                    language : locale
+                },
+
+                success : function () {
+                    location.reload();
+                }
+            }
+        )
+    }
+}
 
 function LabelsManager() {
     this.keys = [];
@@ -288,7 +286,7 @@ function LabelsManager() {
     this.getStoredLabelByKey = function (key) {
         let label;
 
-        for (var index = 0; index < self.labels.length; index++) {
+        for (let index = 0; index < self.labels.length; index++) {
             if (self.labels[index].key === key) {
                 label = self.labels[index];
                 console.log('label found!');
@@ -325,7 +323,7 @@ function LabelsManager() {
     this.isKeyReceived = function (key) {
         let result = false;
 
-        for (var index = 0; index < self.keys.length; index++) {
+        for (let index = 0; index < self.keys.length; index++) {
             if (key === self.keys[index]) {
                 result = true;
                 break;

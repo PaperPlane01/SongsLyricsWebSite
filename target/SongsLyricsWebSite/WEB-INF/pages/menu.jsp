@@ -46,7 +46,7 @@
                         </a> </li>
                     </c:if>
 
-                    <li><a href="#" class="logout">
+                    <li><a href="#" id="logout">
                         <fmt:bundle basename="labels">
                             <fmt:message key="labels.logout"/>
                         </fmt:bundle>
@@ -62,15 +62,12 @@
                     </a></li>
 
                     <li>
-                        <div class="showing-login-form-button" style="display: block">
-                            <button type="button" class="btn-primary" data-toggle="modal" data-target="#loginmodal">
-                                <fmt:bundle basename="labels">
-                                    <fmt:message key="labels.login"/>
-                                </fmt:bundle>
-                            </button>
-                        </div>
+                        <button type="button" class="btn btn-default" id="login-showing-form-button" data-toggle="modal" data-target="#loginmodal">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.login"/>
+                            </fmt:bundle>
+                        </button>
                     </li>
-
 
                 </c:otherwise>
             </c:choose>
@@ -120,7 +117,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="loginmodal">Close</button>
-                <div id="message" style="display: none;"></div>
+                <div id="login-message" style="display: none;"></div>
             </div>
         </div>
     </div>

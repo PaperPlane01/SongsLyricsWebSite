@@ -130,10 +130,7 @@ public class ArtistDataAccessObject {
      * @param artist Artist whose ID is to be retrieved.
      * @return ID of the specific artist
      */
-    public int getArtistID(Artist artist) {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        Connection connection = connectionPool.getConnection();
-
+    public int getArtistID(Artist artist, Connection connection) {
         int id = 0;
 
         if (checkIfArtistExists(artist, connection)) {
@@ -156,7 +153,6 @@ public class ArtistDataAccessObject {
             }
         }
 
-        connectionPool.returnConnection(connection);
         return id;
     }
 

@@ -2,6 +2,15 @@
     position: fixed;
 }
 
+#login-showing-form-button {
+    margin-top: 6%;
+    margin-right: 15px;
+    background-color: #73d3b5;
+    color: #f6faff;
+    width: 100px;
+    border-radius: 20px;
+}
+
 #change-language-button {
     margin-top: 6%;
 }

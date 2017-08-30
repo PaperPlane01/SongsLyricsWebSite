@@ -8,6 +8,7 @@ import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.exception.SongAddingException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -120,7 +121,7 @@ public class SongDataAccessObject {
         String songName = song.getName();
         String artistName = song.getArtist().getName();
 
-        boolean result = true;
+        boolean result = false;
 
         String checkSongQuery = "SELECT song_id\n" +
                 "FROM songs INNER JOIN artists\n" +
@@ -137,8 +138,8 @@ public class SongDataAccessObject {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (!resultSet.next()) {
-                result = false;
+            if (resultSet.next()) {
+                result = true;
             }
 
             resultSet.close();
@@ -329,7 +330,7 @@ public class SongDataAccessObject {
      * Allows to save all the information about the song (song name, artists, featured artists, song genres and lyrics) into database.
      * @param song Song to be inserted into database.
      */
-    public void addSongToDatabase(Song song, String youTubeLink, Connection connection) {
+    public void addSongToDatabase(Song song, String youTubeLink, Connection connection) throws SongAddingException {
         addDataToSongsTable(song, connection);
         addSongGenresToDatabase(song, connection);
         addSongGenreMatchesToDatabase(song, connection);
@@ -608,15 +609,15 @@ public class SongDataAccessObject {
             int doesntHaveFeaturingValue = 0;
 
             PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
-            preparedStatement.setInt(songIDParameter, lastID + 1);
+            preparedStatement.setInt(songIDParameter, song.getID());
             preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
             preparedStatement.setString(songNameParameter, song.getName());
             preparedStatement.setInt(isApprovedParameter, isApprovedValue);
 
             if (song.hasFeaturedArtists()) {
-                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
-            } else {
                 preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
+            } else {
+                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
             }
 
             preparedStatement.execute();
@@ -732,7 +733,7 @@ public class SongDataAccessObject {
      * @param song Song which lyrics are to be inserted into database.
      * @param connection Connection to be used.
      */
-    private void addSongLyricsToDatabase(Song song, Connection connection) {
+    private void addSongLyricsToDatabase(Song song, Connection connection) throws SongAddingException {
         String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
                 "VALUES (?, ?, ?, ?)";
 
@@ -744,9 +745,9 @@ public class SongDataAccessObject {
         int linePosition = 0;
 
         for (SongLyrics songPart : song.getLyrics().getComponents()) {
-            linePosition++;
 
             for (SongLyrics line : songPart.getComponents()) {
+                linePosition++;
                 try {
                     PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
@@ -760,6 +761,7 @@ public class SongDataAccessObject {
                     preparedStatement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    throw new SongAddingException();
                 }
             }
         }
