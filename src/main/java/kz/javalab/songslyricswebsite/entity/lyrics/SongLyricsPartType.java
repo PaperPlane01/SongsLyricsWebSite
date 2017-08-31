@@ -15,6 +15,10 @@ public enum SongLyricsPartType {
     OTHER,
     LINE;
 
+    public String toString() {
+        return toString("en_US");
+    }
+
     public String toString(String locale) {
         String result = "";
 

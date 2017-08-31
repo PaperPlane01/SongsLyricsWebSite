@@ -1,6 +1,7 @@
 package kz.javalab.songslyricswebsite.util;
 
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.exception.LyricsParsingException;
@@ -20,6 +21,7 @@ public class LyricsParser {
     private final String HOOK = "[HOOK]";
     private final String BRIDGE = "[BRIDGE]";
     private final String OUTRO = "[OUTRO]";
+    private final String OTHER = "[OTHER]";
     private final String EMPTY_LINE = "";
     private final String CLOSING_TAG = "[/]";
 
@@ -61,6 +63,10 @@ public class LyricsParser {
                     lyricsPart = new SongLyricsComposite();
                     lyricsPart.setType(SongLyricsPartType.OUTRO);
                     break;
+                case OTHER:
+                    lyricsPart = new SongLyricsComposite();
+                    lyricsPart.setType(SongLyricsPartType.OTHER);
+                    break;
                 case CLOSING_TAG:
                     songLyrics.add(lyricsPart);
                     lyricsPart = null;
@@ -76,6 +82,59 @@ public class LyricsParser {
         }
 
         return songLyrics;
+    }
+
+    public String unparseLyrics(SongLyrics songLyrics) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (SongLyrics lyricsPart : songLyrics.getComponents()) {
+            switch (lyricsPart.getType()) {
+                case HOOK:
+                    stringBuilder.append(HOOK);
+                    stringBuilder.append("\n");
+                    break;
+                case INTRO:
+                    stringBuilder.append(INTRO);
+                    stringBuilder.append("\n");
+                    break;
+                case OUTRO:
+                    stringBuilder.append(OUTRO);
+                    stringBuilder.append("\n");
+                    break;
+                case VERSE:
+                    stringBuilder.append(VERSE);
+                    stringBuilder.append("\n");
+                    break;
+                case BRIDGE:
+                    stringBuilder.append(BRIDGE);
+                    stringBuilder.append("\n");
+                    break;
+                case CHORUS:
+                    stringBuilder.append(CHORUS);
+                    stringBuilder.append("\n");
+                    break;
+                case OTHER:
+                    stringBuilder.append(OTHER);
+                    stringBuilder.append("\n");
+                    break;
+                case LINE:
+                    stringBuilder.append(lyricsPart.toString());
+                    stringBuilder.append("\n");
+                    break;
+                default: break;
+            }
+
+            for (SongLyrics line : lyricsPart.getComponents()) {
+                stringBuilder.append(line.toString());
+                stringBuilder.append("\n");
+            }
+
+            stringBuilder.append(CLOSING_TAG);
+            stringBuilder.append("\n");
+        }
+
+        return stringBuilder.toString();
+
     }
 
     private boolean validateLyrics(String lyricsAsText) {

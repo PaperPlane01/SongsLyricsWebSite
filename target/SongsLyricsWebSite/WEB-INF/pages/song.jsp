@@ -31,6 +31,13 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="song">
+                    <c:if test="${not empty sessionScope.user}">
+                        <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+                            <a class="btn btn-default" href="/controller?command=editsong&songID=${requestScope.songID}">
+                                Edit song
+                            </a>
+                        </c:if>
+                    </c:if>
                     <div class="song-name">
                         <c:out value="${requestScope.songTitle}"/>
                     </div>

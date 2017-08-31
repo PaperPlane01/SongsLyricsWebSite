@@ -1,6 +1,7 @@
 package kz.javalab.songslyricswebsite.command;
 
 import kz.javalab.songslyricswebsite.command.localebasedcommand.AddSongCommand;
+import kz.javalab.songslyricswebsite.command.localebasedcommand.ApplySongChangesCommand;
 import kz.javalab.songslyricswebsite.command.localebasedcommand.GetLabelCommand;
 import kz.javalab.songslyricswebsite.command.localebasedcommand.LoginCommand;
 
@@ -95,6 +96,18 @@ public enum CommandEnum {
     GETLABEL {
         {
             this.command = new GetLabelCommand();
+        }
+    },
+
+    EDITSONG {
+        {
+            this.command = new EditSongCommand();
+        }
+    },
+
+    APPLYSONGCHANGES {
+        {
+            this.command = new ApplySongChangesCommand();
         }
     };
 

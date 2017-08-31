@@ -6,6 +6,7 @@
 <head>
     <title>Add new song</title>
     <jsp:include page="scripts-and-css.jsp"/>
+    <script src="/scripts/song-validation.js"></script>
     <script src="/scripts/add-song.js"></script>
     <link rel="stylesheet" href="/css/addsong.css">
 </head>

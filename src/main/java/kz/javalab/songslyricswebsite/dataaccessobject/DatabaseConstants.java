@@ -25,7 +25,7 @@ public class DatabaseConstants {
         }
 
         public static class GenresOfSongsTable {
-            public static final String MATCHING_ID = "matching_id";
+            public static final String MATCH_ID = "match_id";
             public static final String SONG_ID = SongsTable.SONG_ID;
             public static final String GENRE_ID = GenresTable.GENRE_ID;
         }
