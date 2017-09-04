@@ -1,15 +1,14 @@
 package kz.javalab.songslyricswebsite.command.localebasedcommand;
 
 import com.google.gson.Gson;
-import com.sun.xml.internal.ws.org.objectweb.asm.Label;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidPasswordException;
 import kz.javalab.songslyricswebsite.exception.InvalidUserNameException;
 
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
-import kz.javalab.songslyricswebsite.resource.LabelsManager;
+import kz.javalab.songslyricswebsite.exception.WrongPasswordException;
+import kz.javalab.songslyricswebsite.exception.WrongUsernameException;
 import kz.javalab.songslyricswebsite.service.UserService;
 
 import javax.servlet.ServletException;
@@ -30,7 +29,7 @@ public class LoginCommand extends LocaleBasedCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("logging in");
         ResourceBundle labels = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
-        Map<String, String> responseMap = new LinkedHashMap<String, String>();
+        Map<String, String> responseMap = new LinkedHashMap<>();
 
         String userName = request.getParameter("username");
         Password password = new Password();
@@ -54,7 +53,7 @@ public class LoginCommand extends LocaleBasedCommand implements ActionCommand {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
-        } catch (InvalidPasswordException e) {
+        } catch (WrongPasswordException e) {
             responseMap.put("status", "FAILURE");
             responseMap.put("message", labels.getString("labels.loginfailed"));
             responseMap.put("reason", labels.getString("labels.wrongpassword"));
@@ -64,7 +63,7 @@ public class LoginCommand extends LocaleBasedCommand implements ActionCommand {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
-        } catch (InvalidUserNameException e) {
+        } catch (WrongUsernameException e) {
             responseMap.put("status", "FAILURE");
             responseMap.put("message", labels.getString("labels.loginfailed"));
             responseMap.put("reason", labels.getString("labels.wrongusername"));

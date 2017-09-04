@@ -388,6 +388,7 @@ public class SongsService {
                 connection.rollback();
             } catch (SQLException e1) {
                 e1.printStackTrace();
+                throw new SongAddingException();
             }
 
             throw new SongAddingException();

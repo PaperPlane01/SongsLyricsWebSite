@@ -7,15 +7,11 @@
             <fmt:message key="labels.welcome"/>
         </fmt:bundle> ${sessionScope.user.getUsername()}
     </title>
-   <jsp:include page="scripts-and-css.jsp"/>
+   <jsp:include page="css.jsp"/>
 </head>
 <body>
+<jsp:include page="menu.jsp"/>
 <div class="container-fluid">
-    <div class="row">
-        <div class="coll-sm-6 col-md-4 col-lg-3">
-            <jsp:include page="menu.jsp"/>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="quick-acсess.jsp"/>
@@ -29,6 +25,7 @@
             <h3>${sessionScope.user.getUserType()}</h3>
         </div>
     </div>
+    <jsp:include page="scripts.jsp"/>
 </div>
 </body>
 </html>

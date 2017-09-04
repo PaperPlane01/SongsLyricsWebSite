@@ -8,18 +8,12 @@
             <fmt:message key="labels.editsong"/>
         </fmt:bundle>
     </title>
-    <jsp:include page="scripts-and-css.jsp"/>
-    <script src="/scripts/song-validation.js"></script>
-    <script src="/scripts/edit-song.js"></script>
+    <jsp:include page="css.jsp"/>
     <link rel="stylesheet" href="/css/edit-song.css"/>
 </head>
 <body>
+<jsp:include page="menu.jsp"/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <jsp:include page="menu.jsp"/>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="quick-acсess.jsp"/>
@@ -169,6 +163,9 @@
             </div>
         </div>
     </div>
+    <jsp:include page="scripts.jsp"/>
+    <script src="/scripts/song-validation.js"></script>
+    <script src="/scripts/edit-song.js"></script>
 </div>
 </body>
 </html>

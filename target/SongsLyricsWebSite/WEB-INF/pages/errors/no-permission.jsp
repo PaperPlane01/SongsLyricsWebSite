@@ -15,7 +15,7 @@
             <fmt:message key="labels.errors.accessdenied"/>
         </fmt:bundle>
     </title>
-    <jsp:include page="../scripts-and-css.jsp"/>
+    <jsp:include page="../css.jsp"/>
 </head>
 <body>
 <div class="container">
@@ -38,6 +38,7 @@
             </h3>
         </div>
     </div>
+    <jsp:include page="../scripts.jsp"/>
 </div>
 </body>
 </html>

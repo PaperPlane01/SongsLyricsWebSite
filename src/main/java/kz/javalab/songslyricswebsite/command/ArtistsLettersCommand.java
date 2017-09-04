@@ -19,7 +19,11 @@ public class ArtistsLettersCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArtistsService artistsService = new ArtistsService();
 
-        String json = (new Gson()).toJson(artistsService.getArtistsLetters());
+        List<Character> artistsLetters = artistsService.getArtistsLetters();
+
+        System.out.println(artistsLetters);
+
+        String json = (new Gson()).toJson(artistsLetters);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

@@ -2,13 +2,11 @@
 <html>
 <head>
     <title>${requestScope.profileOwner.getUsername()}</title>
-    <jsp:include page="scripts-and-css.jsp"/>
+    <jsp:include page="css.jsp"/>
 </head>
 <body>
-<div class="row">
-    <div class="coll-sm-6 col-md-4 col-lg-3">
-        <jsp:include page="menu.jsp"/>
-    </div>
+<jsp:include page="menu.jsp"/>
+<div class="container">
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="quick-acсess.jsp"/>
@@ -23,5 +21,6 @@
         </div>
     </div>
 </div>
+<jsp:include page="scripts.jsp"/>
 </body>
 </html>

@@ -5,22 +5,18 @@
 <fmt:setLocale value="${sessionScope.language}"/>
 <html lang="${sessionScope.language}">
   <head>
-    <title>Songs Lyrics Website</title>
-    <title>${requestScope.songTitle}</title>
-    <jsp:include page="/WEB-INF/pages/scripts-and-css.jsp"/>
+    <title>Song Lyrics Website</title>
+    <jsp:include page="/WEB-INF/pages/css.jsp"/>
   </head>
   <body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3 col-lg-3">
-        <jsp:include page="/WEB-INF/pages/menu.jsp"/>
-      </div>
-    </div>
-    </div>
+  <jsp:include page="/WEB-INF/pages/menu.jsp"/>
+  <div class="container">
     <div class="row">
       <div class="col-xs-12">
         <jsp:include page="/WEB-INF/pages/quick-acсess.jsp"/>
       </div>
     </div>
+  </div>
+  <jsp:include page="/WEB-INF/pages/scripts.jsp"/>
   </body>
 </html>

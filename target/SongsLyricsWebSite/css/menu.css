@@ -1,16 +1,27 @@
-.navbar-default {
-    position: fixed;
+.navbar {
+    background-color: #3f80b5! important;
+    font-size: 25px;
 }
 
-#login-showing-form-button {
-    margin-top: 6%;
+.nav-item {
+    border-radius: 20px;
+}
+.navbar .dropdown-menu a:hover {
+    color: black !important;
+}
+
+#showing-singup-form-button {
     margin-right: 15px;
-    background-color: #73d3b5;
+    background-color: #2BBBAD;
     color: #f6faff;
-    width: 100px;
+    width: 200px;
     border-radius: 20px;
 }
 
-#change-language-button {
-    margin-top: 6%;
+#showing-login-form-button{
+    margin-right: 15px;
+    background-color: #2BBBAD;
+    color: #f6faff;
+    width: 200px;
+    border-radius: 20px;
 }

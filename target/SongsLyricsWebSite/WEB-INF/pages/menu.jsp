@@ -1,123 +1,190 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <fmt:setLocale value="${sessionScope.language}"/>
-<div class="navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-expand-lg navbar-dark">
 
-    <div class="navbar navbar-header">
-        <span class="navbar-brand" id="web-site-name">Songs Lyrics Website</span>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toogle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-    </div>
+    <a class="navbar-brand" href="#">Song Lyrics Website</a>
 
-    <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
-            <li><a href="#">
-                <fmt:bundle basename="labels">
-                    <fmt:message key="labels.search"/>
-                </fmt:bundle>
-            </a></li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <li><a href="/controller?command=newsong">
-                <fmt:bundle basename="labels">
-                    <fmt:message key="labels.addsong"/>
-                </fmt:bundle>
-            </a></li>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/controller?command=newsong">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.addsong"/>
+                    </fmt:bundle>
+                </a>
+            </li>
 
             <c:choose>
                 <c:when test="${not empty sessionScope.user}">
-                    <li><a href="/controller?command=profile&userID=${sessionScope.user.getID()}" class="my-profile">
-                        <fmt:bundle basename="labels">
-                            <fmt:message key="labels.myprofile"/>
-                        </fmt:bundle>
-                    </a> </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/controller?command=profile&userID=${sessionScope.user.getID()}" id="my-profile">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.myprofile"/>
+                            </fmt:bundle>
+                        </a>
+                    </li>
 
                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-                        <li><a href="/controller?command=notapprovedsongs">
-                            <fmt:bundle basename="labels">
-                                <fmt:message key="labels.songstoapprove"/>
-                            </fmt:bundle>
-                        </a> </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/controller?command=notapprovedsongs">
+                                <fmt:bundle basename="labels">
+                                    <fmt:message key="labels.songstoapprove"/>
+                                </fmt:bundle>
+                            </a>
+                        </li>
                     </c:if>
 
-                    <li><a href="#" id="logout">
-                        <fmt:bundle basename="labels">
-                            <fmt:message key="labels.logout"/>
-                        </fmt:bundle>
-                    </a> </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.logout"/>
+                            </fmt:bundle>
+                        </a>
+                    </li>
                 </c:when>
 
                 <c:otherwise>
-                    <li><a href="/controller?command=registration">
-                        <fmt:bundle basename="labels">
-                            <fmt:message key="labels.singup"/>
-                        </fmt:bundle>
-                    </a></li>
 
                     <li>
-                        <button type="button" class="btn btn-default" id="login-showing-form-button" data-toggle="modal" data-target="#loginmodal">
+                        <button type="button" class="btn btn-primary btn-lg" id="showing-singup-form-button" data-toggle="modal" data-target="#modal-register">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.singup"/>
+                            </fmt:bundle>
+                        </button>
+                    </li>
+
+                    <li>
+                        <button type="button" class="btn btn-primary btn-lg" id="showing-login-form-button" data-toggle="modal" data-target="#modal-login">
                             <fmt:bundle basename="labels">
                                 <fmt:message key="labels.login"/>
                             </fmt:bundle>
                         </button>
                     </li>
-
                 </c:otherwise>
             </c:choose>
 
-            <li>
-                <div class="dropdown">
-                    <button class="btn btn-default" type="button" id="change-language-button" data-toggle="dropdown">
-                        <span class="caret"></span>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.selectlanguage"/>
+                    </fmt:bundle>
+                </a>
+                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" id="english-language-select" href="#">
                         <fmt:bundle basename="labels">
-                            <fmt:message key="labels.selectlanguage"/>
-                        </fmt:bundle>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        <li><a href="#" id="english-language-select"><fmt:bundle basename="labels">
                             <fmt:message key="labels.englishlanguage"/>
-                        </fmt:bundle></a></li>
-                        <li><a href="#" id="russian-language-select"><fmt:bundle basename="labels">
+                        </fmt:bundle>
+                    </a>
+                    <a class="dropdown-item" id="russian-language-select" href="#">
+                        <fmt:bundle basename="labels">
                             <fmt:message key="labels.russianlanguage"/>
-                        </fmt:bundle></a></li>
-                    </ul>
+                        </fmt:bundle>
+                    </a>
                 </div>
             </li>
+
         </ul>
+    </div>
+
+</nav>
+
+<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-user"></i> Log in</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="md-form form-sm">
+                    <i class="fa fa-envelope prefix"></i>
+                    <input type="text" id="username" class="form-control">
+                    <label for="username"><fmt:bundle basename="labels"><fmt:message key="labels.enterusername"/></fmt:bundle></label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <i class="fa fa-lock prefix"></i>
+                    <input type="password" id="password" class="form-control">
+                    <label for="password"><fmt:bundle basename="labels"><fmt:message key="labels.enterpassword"/></fmt:bundle></label>
+                </div>
+
+                <div class="text-center mt-2">
+                    <button class="btn btn-info" id="login-button"><fmt:bundle basename="labels"><fmt:message key="labels.login"/></fmt:bundle> <i class="fa fa-sign-in ml-1"></i></button>
+                </div>
+
+                <div id="login-message"></div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="options text-center text-md-right mt-1">
+                    <p>
+                        <fmt:bundle basename="labels">
+                            <fmt:message key="labels.notamember"/>
+                        </fmt:bundle>
+                        <a href="/controller?commang=registration">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.singup"/>
+                            </fmt:bundle>
+                        </a>
+                    </p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal"><fmt:bundle basename="labels">
+                    <fmt:message key="labels.close"/>
+                </fmt:bundle></button>
+            </div>
+        </div>
     </div>
 </div>
 
-
-<div class="modal fade" id="loginmodal">
-    <div class="modal-dialog">
+<div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3>
-                    <fmt:bundle basename="labels">
-                        <fmt:message key="labels.enterusernameandpassword"/>
-                    </fmt:bundle>
-                </h3>
-            </div>
 
+            <div class="modal-header light-blue darken-3 white-text">
+                <h4 class="title"><i class="fa fa-user-plus"></i> Register</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
-                <form>
-                    <input type="text" name="username" id="username" placeholder="<fmt:bundle basename="labels"><fmt:message key="labels.enterusername"/></fmt:bundle>"/>
-                    <input type="password" name="password" id="password" placeholder="<fmt:bundle basename="labels"><fmt:message key="labels.enterpassword"/></fmt:bundle>"/>
-                    <input type="button" id="login-button" value="<fmt:bundle basename="labels"><fmt:message key="labels.login"/></fmt:bundle>"/>
-                </form>
-            </div>
+                <div class="md-form form-sm">
+                    <i class="fa fa-envelope prefix"></i>
+                    <input type="text" id="username-for-signup" class="form-control">
+                    <label for="username-for-signup">Your username</label>
+                </div>
 
+                <div class="md-form form-sm">
+                    <i class="fa fa-lock prefix"></i>
+                    <input type="password" id="password-for-sign-up" class="form-control">
+                    <label for="password-for-sign-up">Your password</label>
+                </div>
+
+                <div class="md-form form-sm">
+                    <i class="fa fa-lock prefix"></i>
+                    <input type="password" id="repeat-password-for-sign-up" class="form-control">
+                    <label for="repeat-password-for-sign-up">Repeat password</label>
+                </div>
+
+                <div class="text-center mt-2">
+                    <button class="btn btn-info" id="sign-up-button">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+                </div>
+
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="loginmodal">Close</button>
-                <div id="login-message" style="display: none;"></div>
+                <div class="options text-center text-md-right mt-1">
+                    <p>Already have an account? <a href="#">Log In</a></p>
+                </div>
+                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

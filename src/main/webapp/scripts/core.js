@@ -49,6 +49,12 @@ $(document).ready(function () {
         quickSongAccessManager.enableGoToSongButton();
     });
 
+    $("#go-to-song-button").on('click', function () {
+        if (!$(this).is('disabled')) {
+            window.location.href = $(this).attr('href');
+        }
+    });
+
     $("#english-language-select").on('click', function () {
         let locale = "en_US";
         languageManager.changeLanguage(locale);
@@ -132,6 +138,7 @@ function QuickSongAccessManager  () {
                 },
 
                 success : function (artistsLetters) {
+                    console.log(artistsLetters);
                     self.displayArtistsLetters(artistsLetters);
                 }
             }
@@ -146,10 +153,12 @@ function QuickSongAccessManager  () {
         element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
         $.each(artistsLetters, function (index, letter) {
+            console.log(letter);
             $('#artist-letter-select').append("<option>" + letter + "</option>");
         });
 
         $('.selectpicker').selectpicker('refresh');
+
     };
 
     this.loadArtistsByLetter = function (letter) {
@@ -180,6 +189,7 @@ function QuickSongAccessManager  () {
         });
 
         $('.selectpicker').selectpicker('refresh');
+
     };
 
     this.loadSongsOfArtist = function (artistName) {
@@ -215,6 +225,7 @@ function QuickSongAccessManager  () {
         });
 
         $('.selectpicker').selectpicker('refresh');
+
     };
 
     this.getSelectedSongID = function (songName) {
@@ -231,17 +242,14 @@ function QuickSongAccessManager  () {
 
     this.enableArtistSelection = function () {
         $('#artist-name-select').removeAttr('disabled');
-        $('.selectpicker').selectpicker('refresh');
     };
 
     this.enableSongSelection = function () {
         $('#song-name-select').removeAttr('disabled');
-        $('.selectpicker').selectpicker('refresh');
     };
 
     this.enableGoToSongButton = function () {
         $('#go-to-song-button').removeAttr('disabled');
-        $('.selectpicker').selectpicker('refresh');
     }
 }
 

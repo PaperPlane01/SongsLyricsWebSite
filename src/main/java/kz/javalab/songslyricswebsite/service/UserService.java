@@ -46,17 +46,17 @@ public class UserService {
         connectionPool.returnConnection(connection);
     }
 
-    public void doLogin(User user) throws InvalidPasswordException, InvalidUserNameException{
+    public void doLogin(User user) throws WrongPasswordException, WrongUsernameException {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         if (!checkIfUserExists(user, CHECK_BY_USERNAME, connection)) {
             ConnectionPool.getInstance().returnConnection(connection);
-            throw new InvalidUserNameException();
+            throw new WrongUsernameException();
         }
 
-        if (!checkIfPasswordValidates(user.getUsername(), user.getPassword(), connection)) {
+        if (!checkIfPasswordCorrect(user.getUsername(), user.getPassword(), connection)) {
             ConnectionPool.getInstance().returnConnection(connection);
-            throw new InvalidPasswordException();
+            throw new WrongPasswordException();
         }
     }
 
@@ -66,8 +66,8 @@ public class UserService {
         return userExists;
     }
 
-    private boolean checkIfPasswordValidates(String userName, Password password, Connection connection) {
-        boolean passwordValidates = userDataAccessObject.checkIfPasswordValidates(userName, password, connection);
+    private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
+        boolean passwordValidates = userDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return passwordValidates;
     }

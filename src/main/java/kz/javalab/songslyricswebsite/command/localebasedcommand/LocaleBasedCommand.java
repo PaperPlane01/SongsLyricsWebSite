@@ -2,13 +2,19 @@ package kz.javalab.songslyricswebsite.command.localebasedcommand;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Locale;
 
 /**
  * Created by PaperPlane on 27.08.2017.
  */
 public abstract class LocaleBasedCommand implements ActionCommand {
+
+    @Override
+    public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
     protected Locale getLocaleFromRequest(HttpServletRequest request) {
         String languageAttribute = (String) request.getSession().getAttribute("language");

@@ -114,11 +114,11 @@ public class UserDataAccessObject {
 
     /**
      * Checks if password is correct.
-     * @param userName
-     * @param password
+     * @param userName Username of user to be checked.
+     * @param password Password to be checked.
      * @return
      */
-    public boolean checkIfPasswordValidates(String userName, Password password, Connection connection) {
+    public boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
         boolean result = false;
 
         int userID = getUserIDByUserName(userName, connection);
@@ -133,7 +133,7 @@ public class UserDataAccessObject {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String hashedPasswordFromDatabase = resultSet.getString("hashed_password");
+                String hashedPasswordFromDatabase = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.HASHED_PASSWORD);
                 result = password.getHashedPassword().trim().equals(hashedPasswordFromDatabase.trim());
             }
 

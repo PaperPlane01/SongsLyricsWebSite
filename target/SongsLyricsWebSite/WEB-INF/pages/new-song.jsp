@@ -5,9 +5,7 @@
 <html lang="${sessionScope.language}">
 <head>
     <title>Add new song</title>
-    <jsp:include page="scripts-and-css.jsp"/>
-    <script src="/scripts/song-validation.js"></script>
-    <script src="/scripts/add-song.js"></script>
+    <jsp:include page="css.jsp"/>
     <link rel="stylesheet" href="/css/addsong.css">
 </head>
 <body>
@@ -156,5 +154,8 @@
         </div>
     </div>
 </div>
+<jsp:include page="scripts.jsp"/>
+<script src="/scripts/song-validation.js"></script>
+<script src="/scripts/add-song.js"></script>
 </body>
 </html>

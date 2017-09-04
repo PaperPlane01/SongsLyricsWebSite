@@ -5,7 +5,7 @@
 <head>
     <title>List of songs</title>
     <script src="/scripts/jquery-3.2.1.js"></script>
-    <jsp:include page="scripts-and-css.jsp"/>
+    <jsp:include page="css.jsp"/>
 </head>
 <body>
 <div class="container-fluid">

@@ -13,16 +13,12 @@
 <html lang="${sessionScope.language}">
 <head>
     <title>${requestScope.songTitle}</title>
-    <jsp:include page="scripts-and-css.jsp"/>
+    <jsp:include page="css.jsp"/>
     <link rel="stylesheet" href="/css/song.css"/>
 </head>
 <body>
+<jsp:include page="menu.jsp"/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <jsp:include page="menu.jsp"/>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="quick-acсess.jsp"/>
@@ -53,46 +49,38 @@
                             </div>
                         </c:forEach>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
-                            <div class="song-video">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${requestScope.youTubeLink}"></iframe>
-                                </div>
-                            </div>
+                    <div class="song-video">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${requestScope.youTubeLink}"></iframe>
                         </div>
                     </div>
 
                     <c:choose>
                         <c:when test="${requestScope.isApproved}">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="song-approved">
-                                        <b>
-                                            <fmt:bundle basename="labels">
-                                                <fmt:message key="labels.approvedsong"/>
-                                            </fmt:bundle>
-                                        </b>
-                                    </div>
+                            <div class="col-xs-12">
+                                <div class="song-approved">
+                                    <b>
+                                        <fmt:bundle basename="labels">
+                                            <fmt:message key="labels.approvedsong"/>
+                                        </fmt:bundle>
+                                    </b>
                                 </div>
                             </div>
                         </c:when>
 
                         <c:otherwise>
-                            <div class="row">
-                                <div class="col-sx-12">
-                                    <div class="song-not-approved">
-                                        <b></b>
-                                        <c:if test="${not empty sessionScope.user}">
-                                            <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-                                                <form method="post" action="/controller">
-                                                    <input type="hidden" name="command" value="approvesong"/>
-                                                    <input type="hidden" name="songID" value="${requestScope.songID}"/>
-                                                    <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
-                                                </form>
-                                            </c:if>
+                            <div class="col-sx-12">
+                                <div class="song-not-approved">
+                                    <b></b>
+                                    <c:if test="${not empty sessionScope.user}">
+                                        <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+                                            <form method="post" action="/controller">
+                                                <input type="hidden" name="command" value="approvesong"/>
+                                                <input type="hidden" name="songID" value="${requestScope.songID}"/>
+                                                <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
+                                            </form>
                                         </c:if>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </c:otherwise>
@@ -101,5 +89,6 @@
         </div>
     </div>
 </div>
+<jsp:include page="scripts.jsp"></jsp:include>
 </body>
 </html>
