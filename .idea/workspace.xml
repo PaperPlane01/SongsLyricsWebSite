@@ -11,8 +11,132 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48f9b468-bc73-4c89-833e-0c4d18ebd106" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/bootstrap-select.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/jquery-3.2.1.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ar_AR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ar_AR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-bg_BG.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-bg_BG.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-cro_CRO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-cro_CRO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-cs_CZ.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-cs_CZ.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-da_DK.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-da_DK.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-de_DE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-de_DE.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-es_CL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-es_CL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-es_ES.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-es_ES.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-et_EE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-eu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-eu.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fa_IR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fa_IR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fi_FI.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fi_FI.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fr_FR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-fr_FR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-hu_HU.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-hu_HU.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-id_ID.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-id_ID.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-it_IT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-it_IT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ko_KR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ko_KR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-lt_LT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-lt_LT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-nb_NO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-nb_NO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-nl_NL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-nl_NL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pl_PL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pl_PL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pt_BR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pt_BR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pt_PT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-pt_PT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ro_RO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ro_RO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sk_SK.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sk_SK.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sl_SI.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sl_SI.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sv_SE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-sv_SE.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-tr_TR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-tr_TR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ua_UA.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-ua_UA.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-zh_CN.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-zh_CN.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-zh_TW.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-zh_TW.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ar_AR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ar_AR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-bg_BG.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-bg_BG.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-cro_CRO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-cro_CRO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-cs_CZ.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-cs_CZ.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-da_DK.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-da_DK.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-de_DE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-de_DE.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-es_CL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-es_CL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-es_ES.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-es_ES.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-et_EE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-eu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-eu.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fa_IR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fa_IR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fi_FI.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fi_FI.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fr_FR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-fr_FR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-hu_HU.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-hu_HU.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-id_ID.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-id_ID.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-it_IT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-it_IT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ko_KR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ko_KR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-lt_LT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-lt_LT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-nb_NO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-nb_NO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-nl_NL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-nl_NL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pl_PL.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pl_PL.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pt_BR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pt_BR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pt_PT.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-pt_PT.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ro_RO.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ro_RO.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sk_SK.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sk_SK.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sl_SI.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sl_SI.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sv_SE.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-sv_SE.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-tr_TR.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-tr_TR.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ua_UA.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-ua_UA.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-zh_CN.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-zh_CN.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-zh_TW.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/bootstrap-select/js/i18n/defaults-zh_TW.min.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/bootstrap-select.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/jquery-3.2.1.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite.war" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite.war" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -45,7 +169,7 @@
       <file leaf-file-name="LocaleBasedCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/localebasedcommand/LocaleBasedCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
+            <state relative-caret-position="153">
               <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -56,35 +180,12 @@
       </file>
       <file leaf-file-name="labels.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/labels.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="51" column="33" lean-forward="false" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
           <provider editor-type-id="ResourceBundle">
             <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="core.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/core.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2108">
-              <caret line="124" column="1" lean-forward="false" selection-start-line="124" selection-start-column="1" selection-end-line="124" selection-end-column="1" />
-              <folding>
-                <marker date="1504483884494" expanded="true" signature="3054:3065" ph="..." />
-                <marker date="1504483884494" expanded="true" signature="3280:3289" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GetLabelCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/localebasedcommand/GetLabelCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="19" column="112" lean-forward="true" selection-start-line="19" selection-start-column="112" selection-end-line="19" selection-end-column="112" />
+            <state relative-caret-position="867">
+              <caret line="51" column="33" lean-forward="false" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -92,21 +193,21 @@
       </file>
       <file leaf-file-name="labels_ru_RU.properties" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties">
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-375">
+            <state relative-caret-position="68">
               <caret line="4" column="82" lean-forward="false" selection-start-line="4" selection-start-column="82" selection-end-line="4" selection-end-column="82" />
               <folding />
             </state>
-          </provider>
-          <provider editor-type-id="ResourceBundle">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="no-permission.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-permission.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="573">
+            <state relative-caret-position="680">
               <caret line="40" column="4" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="40" />
               <folding />
             </state>
@@ -116,7 +217,7 @@
       <file leaf-file-name="no-such-song.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-such-song.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
+            <state relative-caret-position="697">
               <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="36" />
               <folding />
             </state>
@@ -126,36 +227,51 @@
       <file leaf-file-name="no-such-user.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-such-user.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
+            <state relative-caret-position="697">
               <caret line="41" column="36" lean-forward="false" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="registration-failed.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="registration-failed.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/registration-failed.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+              <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="song-validation.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/song-validation.js">
+      <file leaf-file-name="bootstrap.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/bootstrap/js/bootstrap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-716">
+            <state relative-caret-position="-41551">
+              <caret line="1356" column="0" lean-forward="false" selection-start-line="1356" selection-start-column="0" selection-end-line="1356" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mdb.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/mdb/js/mdb.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-242266">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
-                <marker date="1504128602111" expanded="true" signature="1516:1525" ph="..." />
-                <marker date="1504128602111" expanded="true" signature="3124:3133" ph="..." />
-                <marker date="1504128602111" expanded="true" signature="4315:4324" ph="..." />
-                <marker date="1504128602111" expanded="true" signature="5482:5491" ph="..." />
-                <marker date="1504128602111" expanded="true" signature="6461:6470" ph="..." />
-                <marker date="1504128602111" expanded="true" signature="12126:12135" ph="..." />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scripts.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/scripts.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="57" lean-forward="false" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -300,7 +416,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="39" />
     <option name="y" value="217" />
     <option name="width" value="1915" />
@@ -323,6 +439,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -445,49 +562,6 @@
             <path>
               <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
               <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="scripts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="errors" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -535,7 +609,6 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -858,12 +931,13 @@
       <workItem from="1504367040113" duration="12982000" />
       <workItem from="1504433343653" duration="1288000" />
       <workItem from="1504468383253" duration="348000" />
-      <workItem from="1504478767503" duration="4196000" />
+      <workItem from="1504478767503" duration="4694000" />
+      <workItem from="1504486760928" duration="369000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="529670000" />
+    <option name="totallyTimeSpent" value="530537000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -875,10 +949,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27056277" sideWeight="0.104477614" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27056277" sideWeight="0.108208954" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -896,12 +970,12 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27056277" sideWeight="0.8955224" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27056277" sideWeight="0.89179105" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22547974" sideWeight="0.7670623" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22547974" sideWeight="0.75816023" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22547974" sideWeight="0.23293768" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22547974" sideWeight="0.24183977" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -968,21 +1042,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/mdb/css/mdb.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/bootstrap/js/npm.js" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/bootstrap/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5">
-          <caret line="1356" column="37" lean-forward="false" selection-start-line="1356" selection-start-column="31" selection-end-line="1356" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/bootstrap-select/js/i18n/defaults-eu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1049,19 +1109,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="30" lean-forward="false" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/labels_en_US.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
           <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/new-song.jsp">
@@ -1091,7 +1150,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="15" column="37" lean-forward="false" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1113,7 +1171,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1128,7 +1185,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="527">
           <caret line="39" column="46" lean-forward="false" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1143,7 +1199,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="36" column="29" lean-forward="true" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1202,7 +1257,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="42" column="27" lean-forward="false" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1210,7 +1264,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
           <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1226,7 +1279,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="20" lean-forward="false" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1234,7 +1286,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
           <caret line="52" column="5" lean-forward="false" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1258,15 +1309,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="23" lean-forward="false" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/scripts.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="57" lean-forward="false" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1274,14 +1316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-716">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1504128602111" expanded="true" signature="1516:1525" ph="..." />
-            <marker date="1504128602111" expanded="true" signature="3124:3133" ph="..." />
-            <marker date="1504128602111" expanded="true" signature="4315:4324" ph="..." />
-            <marker date="1504128602111" expanded="true" signature="5482:5491" ph="..." />
-            <marker date="1504128602111" expanded="true" signature="6461:6470" ph="..." />
-            <marker date="1504128602111" expanded="true" signature="12126:12135" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1299,14 +1333,14 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/localebasedcommand/GetLabelCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="19" column="112" lean-forward="true" selection-start-line="19" selection-start-column="112" selection-end-line="19" selection-end-column="112" />
+          <caret line="19" column="112" lean-forward="false" selection-start-line="19" selection-start-column="112" selection-end-line="19" selection-end-column="112" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/localebasedcommand/LocaleBasedCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
+        <state relative-caret-position="153">
           <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1315,30 +1349,30 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/labels.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="867">
           <caret line="51" column="33" lean-forward="false" selection-start-line="51" selection-start-column="33" selection-end-line="51" selection-end-column="33" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties">
       <provider editor-type-id="ResourceBundle">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-375">
+        <state relative-caret-position="68">
           <caret line="4" column="82" lean-forward="false" selection-start-line="4" selection-start-column="82" selection-end-line="4" selection-end-column="82" />
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-permission.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
+        <state relative-caret-position="680">
           <caret line="40" column="4" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="40" />
           <folding />
         </state>
@@ -1346,7 +1380,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-such-song.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
+        <state relative-caret-position="697">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="36" />
           <folding />
         </state>
@@ -1354,7 +1388,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/no-such-user.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
+        <state relative-caret-position="697">
           <caret line="41" column="36" lean-forward="false" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
           <folding />
         </state>
@@ -1363,7 +1397,33 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/errors/registration-failed.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="21" lean-forward="true" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <caret line="3" column="21" lean-forward="false" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/bootstrap/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-41551">
+          <caret line="1356" column="0" lean-forward="false" selection-start-line="1356" selection-start-column="0" selection-end-line="1356" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/mdb/js/mdb.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242266">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/scripts.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="57" lean-forward="false" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
           <folding />
         </state>
       </provider>
