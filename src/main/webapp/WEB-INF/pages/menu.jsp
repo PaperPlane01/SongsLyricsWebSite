@@ -100,7 +100,9 @@
         <div class="modal-content">
 
             <div class="modal-header light-blue darken-3 white-text">
-                <h4 class="title"><i class="fa fa-user"></i> Log in</h4>
+                <h4 class="title"><i class="fa fa-user"></i><fmt:bundle basename="labels">
+                    <fmt:message key="labels.login"/>
+                </fmt:bundle></h4>
                 <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -131,7 +133,7 @@
                         <fmt:bundle basename="labels">
                             <fmt:message key="labels.notamember"/>
                         </fmt:bundle>
-                        <a href="/controller?commang=registration">
+                        <a href="/controller?command=registration">
                             <fmt:bundle basename="labels">
                                 <fmt:message key="labels.singup"/>
                             </fmt:bundle>
@@ -157,23 +159,28 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div id="username-message" style="display: none"></div>
                 <div class="md-form form-sm">
                     <i class="fa fa-envelope prefix"></i>
                     <input type="text" id="username-for-signup" class="form-control">
                     <label for="username-for-signup">Your username</label>
                 </div>
 
+                <div id="password-message" style="display: none"></div>
                 <div class="md-form form-sm">
                     <i class="fa fa-lock prefix"></i>
                     <input type="password" id="password-for-sign-up" class="form-control">
                     <label for="password-for-sign-up">Your password</label>
                 </div>
 
+                <div id="second-password-message" style="display: none"></div>
                 <div class="md-form form-sm">
                     <i class="fa fa-lock prefix"></i>
                     <input type="password" id="repeat-password-for-sign-up" class="form-control">
                     <label for="repeat-password-for-sign-up">Repeat password</label>
                 </div>
+
+                <div id="sign-up-message" style="display: none"></div>
 
                 <div class="text-center mt-2">
                     <button class="btn btn-info" id="sign-up-button">Sign up <i class="fa fa-sign-in ml-1"></i></button>

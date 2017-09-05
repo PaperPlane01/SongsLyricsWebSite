@@ -57,31 +57,27 @@
 
                     <c:choose>
                         <c:when test="${requestScope.isApproved}">
-                            <div class="col-xs-12">
-                                <div class="song-approved">
-                                    <b>
-                                        <fmt:bundle basename="labels">
-                                            <fmt:message key="labels.approvedsong"/>
-                                        </fmt:bundle>
-                                    </b>
-                                </div>
+                            <div class="song-approved">
+                                <b>
+                                    <fmt:bundle basename="labels">
+                                        <fmt:message key="labels.approvedsong"/>
+                                    </fmt:bundle>
+                                </b>
                             </div>
                         </c:when>
 
                         <c:otherwise>
-                            <div class="col-sx-12">
-                                <div class="song-not-approved">
-                                    <b></b>
-                                    <c:if test="${not empty sessionScope.user}">
-                                        <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-                                            <form method="post" action="/controller">
-                                                <input type="hidden" name="command" value="approvesong"/>
-                                                <input type="hidden" name="songID" value="${requestScope.songID}"/>
-                                                <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
-                                            </form>
-                                        </c:if>
+                            <div class="song-not-approved">
+                                <b></b>
+                                <c:if test="${not empty sessionScope.user}">
+                                    <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+                                        <form method="post" action="/controller">
+                                            <input type="hidden" name="command" value="approvesong"/>
+                                            <input type="hidden" name="songID" value="${requestScope.songID}"/>
+                                            <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
+                                        </form>
                                     </c:if>
-                                </div>
+                                </c:if>
                             </div>
                         </c:otherwise>
                     </c:choose>

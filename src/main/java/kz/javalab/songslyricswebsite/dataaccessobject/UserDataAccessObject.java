@@ -38,7 +38,6 @@ public class UserDataAccessObject {
             preparedStatement.setString(2, user.getUsername());
             preparedStatement.setString(3, user.getPassword().getHashedPassword());
             preparedStatement.setString(4, "COMMON");
-            System.out.println(user.getPassword().getHashedPassword());
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {

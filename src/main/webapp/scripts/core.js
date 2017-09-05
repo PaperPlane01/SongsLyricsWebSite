@@ -6,6 +6,9 @@ $(document).ready(function () {
     let logoutManager = new LogoutManager();
     let quickSongAccessManager = new QuickSongAccessManager();
     let languageManager = new LanguageManager();
+    let signUpValidator = new SignUpValidator();
+    let signUpValidatorView = new SignUpValidatorView();
+    let signUpManager = new SignUpManager();
 
     quickSongAccessManager.loadArtistsLetters();
 
@@ -65,6 +68,56 @@ $(document).ready(function () {
         languageManager.changeLanguage(locale);
     });
 
+    $("#username-for-signup").on('input', function () {
+        let userName = $("#username-for-signup").val();
+        signUpValidator.validateUserName(userName);
+        signUpValidatorView.displayUserNameValidationResult(signUpValidator.userNameValidationResult);
+    });
+
+    $("#username-for-signup").on('focusout', function () {
+        let userName = $("#username-for-signup").val();
+        signUpValidator.validateUserName(userName);
+        signUpValidatorView.displayUserNameValidationResult(signUpValidator.userNameValidationResult);
+    });
+
+    $("#password-for-sign-up").on('input', function () {
+        let password = $("#password-for-sign-up").val();
+        signUpValidator.validatePassword(password);
+        signUpValidatorView.displayPasswordValidationResult(signUpValidator.passwordValidationResult);
+    });
+
+    $("#password-for-sign-up").on('focusout', function () {
+        let password = $("#password-for-sign-up").val();
+        signUpValidator.validatePassword(password);
+        signUpValidatorView.displayPasswordValidationResult(signUpValidator.passwordValidationResult);
+    });
+
+    $("#repeat-password-for-sign-up").on('input', function () {
+        let password = $("#password-for-sign-up").val();
+        let secondPassword = $("#repeat-password-for-sign-up").val();
+        signUpValidator.validateSecondPassword(password, secondPassword);
+        signUpValidatorView.displaySecondPasswordValidationResult(signUpValidator.secondPasswordValidationResult);
+    });
+
+    $("#repeat-password-for-sign-up").on('focusout', function () {
+        let password = $("#password-for-sign-up").val();
+        let secondPassword = $("#repeat-password-for-sign-up").val();
+        signUpValidator.validateSecondPassword(password, secondPassword);
+        signUpValidatorView.displaySecondPasswordValidationResult(signUpValidator.secondPasswordValidationResult);
+    });
+
+    $("#sign-up-button").on('click', function () {
+        let userName = $("#username-for-signup").val();
+        let password = $("#password-for-sign-up").val();
+        let secondPassword = $("#repeat-password-for-sign-up").val();
+
+        if (signUpValidator.validateInputs(userName, password, secondPassword)) {
+            signUpValidatorView.hideErrorMessage();
+            signUpManager.register(userName, password, secondPassword);
+        } else {
+            signUpValidatorView.showErrorMessage();
+        }
+    })
 });
 
 PageGlobals = {
@@ -121,6 +174,239 @@ function LogoutManager () {
                 }
             }
         )
+    }
+}
+
+function SignUpValidator() {
+    this.result = 0;
+    this.userNameValidationResult = 0;
+    this.passwordValidationResult = 0;
+    this.secondPasswordValidationResult = 0;
+
+    let self = this;
+
+    this.validateUserName = function (userName) {
+        if (userName.length === 0) {
+            this.userNameValidationResult = SignUpValidationResults.EMPTY_USERNAME;
+            return;
+        }
+
+        if (userName.length < 3) {
+            this.userNameValidationResult = SignUpValidationResults.TOO_SHORT_USERNAME;
+            return;
+        }
+
+        if (userName.length > 25) {
+            this.userNameValidationResult = SignUpValidationResults.TOO_LONG_USERNAME;
+            return;
+        }
+
+        if (!this._isUserNameValid(userName)) {
+            this.userNameValidationResult = SignUpValidationResults.INVALID_USERNAME;
+            return;
+        }
+
+        this.userNameValidationResult = SignUpValidationResults.USERNAME_SUCCESS;
+        console.log("success!");
+
+    };
+
+    this.validatePassword = function (password,) {
+        if (password.length === 0) {
+            this.passwordValidationResult = SignUpValidationResults.EMPTY_PASSWORD;
+            return;
+        }
+
+        if (password.length < 5) {
+            this.passwordValidationResult = SignUpValidationResults.TOO_SHORT_PASSWORD;
+            return;
+        }
+
+        if (password.length > 20) {
+            this.passwordValidationResult = SignUpValidationResults.TOO_LONG_PASSWORD;
+            return;
+        }
+
+        if (!this._isPasswordValid(password)) {
+            this.passwordValidationResult = SignUpValidationResults.INVALID_PASSWORD;
+            return;
+        }
+
+        this.passwordValidationResult = SignUpValidationResults.PASSWORD_SUCCESS;
+    };
+
+    this.validateSecondPassword = function (password, secondPassword) {
+        if (password !== secondPassword) {
+            this.secondPasswordValidationResult = SignUpValidationResults.PASSWORDS_ARENT_EQUAL;
+        } else {
+            this.secondPasswordValidationResult = SignUpValidationResults.SECOND_PASSWORD_SUCCESS;
+        }
+    };
+
+    this._isUserNameValid = function (userName) {
+        let regExp = new RegExp("[a-zA-Zа-яА-Я_.#$%^&]*");
+        return regExp.test(userName);
+    };
+
+    this._isPasswordValid = function (password) {
+        let regExp = new RegExp("[a-zA-Zа-яА-Я_.#$%^&]*");
+        return regExp.test(password);
+    };
+
+    this.validateInputs = function (userName, password, secondPassword) {
+        self.validateUserName(userName);
+        self.validatePassword(password);
+        self.validateSecondPassword(password, secondPassword);
+        return (self.userNameValidationResult === SignUpValidationResults.USERNAME_SUCCESS)
+            && (self.passwordValidationResult === SignUpValidationResults.PASSWORD_SUCCESS)
+            && (self.secondPasswordValidationResult === SignUpValidationResults.SECOND_PASSWORD_SUCCESS);
+    }
+}
+
+function SignUpValidatorView() {
+    this.displayUserNameValidationResult = function (result) {
+        if (result === SignUpValidationResults.USERNAME_SUCCESS) {
+            $("#username-message").css('display', 'none');
+            return;
+        }
+
+        if (result === SignUpValidationResults.EMPTY_USERNAME) {
+            $("#username-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.emptyusername", PageGlobals.currentLocale);
+            $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.TOO_SHORT_USERNAME) {
+            $("#username-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.tooshortusername", PageGlobals.currentLocale);
+            $("username-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.TOO_LONG_USERNAME) {
+            $("#username-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.toolongusername", PageGlobals.currentLocale);
+            $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.INVALID_USERNAME) {
+            $("#username-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidusername", PageGlobals.currentLocale);
+            $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+    };
+
+    this.displayPasswordValidationResult = function (result) {
+        if (result === SignUpValidationResults.PASSWORD_SUCCESS) {
+            $("#password-message").css('display', 'none');
+            return;
+        }
+
+        if (result === SignUpValidationResults.EMPTY_PASSWORD) {
+            $("#password-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.emptypassword", PageGlobals.currentLocale);
+            $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.TOO_SHORT_PASSWORD) {
+            $("#password-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.tooshortpassword", PageGlobals.currentLocale);
+            $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.TOO_LONG_PASSWORD) {
+            $("#password-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.toolongpassword", PageGlobals.currentLocale);
+            $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+
+        if (result === SignUpValidationResults.INVALID_PASSWORD) {
+            $("#password-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidpassword", PageGlobals.currentLocale);
+            $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+    };
+
+    this.displaySecondPasswordValidationResult = function (result) {
+        if (result === SignUpValidationResults.SECOND_PASSWORD_SUCCESS) {
+            $("#second-password-message").css('display', 'none');
+            return;
+        }
+
+        if (result === SignUpValidationResults.PASSWORDS_ARENT_EQUAL) {
+            $("#second-password-message").css('display', 'block');
+            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.passwordsarentequal", PageGlobals.currentLocale);
+            $("#second-password-message").html("<span style = \"color:red\">" + message + "</span>");
+            return;
+        }
+    };
+
+    this.showErrorMessage = function () {
+        $("#sign-up-message").css('display', 'block');
+        let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidfields", PageGlobals.currentLocale);
+        $("#sign-up-message").html("<span style = \"color:red\">" + message + "</span>");
+    };
+
+    this.hideErrorMessage = function () {
+        $("#sign-up-message").css('display', 'none');
+    }
+}
+
+let SignUpValidationResults = {
+    SUCCESS : 1,
+    EMPTY_USERNAME : 2,
+    TOO_SHORT_USERNAME : 3,
+    TOO_LONG_USERNAME : 4,
+    INVALID_USERNAME : 5,
+    EMPTY_PASSWORD : 6,
+    TOO_SHORT_PASSWORD : 7,
+    TOO_LONG_PASSWORD : 8,
+    INVALID_PASSWORD : 9,
+    PASSWORDS_ARENT_EQUAL : 10,
+    USERNAME_SUCCESS : 11,
+    PASSWORD_SUCCESS: 12,
+    SECOND_PASSWORD_SUCCESS : 13,
+};
+
+function SignUpManager() {
+    let self = this;
+
+    this.register = function (userName, password, secondPassword) {
+        $.post(
+            {
+                url : 'controller',
+                data: {
+                    command : 'register',
+                    userName : userName,
+                    password : password,
+                    secondPassword : secondPassword
+                },
+
+                success : function (responseData) {
+                    self._handleSignUpResults(responseData);
+                }
+
+            }
+        )
+    };
+
+    this._handleSignUpResults = function (responseData) {
+        let message = responseData.message;
+
+        if (responseData.status === "SUCCESS") {
+            $("#sign-up-message").html("<span style = \"color:green\">" + message + "</span>");
+        }
+
+        if (responseData.status === "FAILURE") {
+            $('#sign-up-message').html("<span style = \"color:red\">" + message + "</span>")
+        }
     }
 }
 

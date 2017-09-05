@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
 /**
  * Created by PaperPlane on 30.08.2017.
  */
-public class ApplySongChangesCommand extends LocaleBasedCommand implements ActionCommand {
 
     public ApplySongChangesCommand() {
 

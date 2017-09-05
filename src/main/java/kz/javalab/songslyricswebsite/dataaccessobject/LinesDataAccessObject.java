@@ -19,7 +19,7 @@ public class LinesDataAccessObject {
 
     }
 
-    public void alterLine(int lineID, Line newLine, Connection connection) throws SongAlteringException {
+    public void alterLine(int lineID, Line newLine, Connection connection) {
         String alterLineQuery = "UPDATE websitedatabase.lines\n" +
                 "SET content = ?\n" +
                 "WHERE line_id = ?";
@@ -37,7 +37,6 @@ public class LinesDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SongAlteringException();
         }
     }
 

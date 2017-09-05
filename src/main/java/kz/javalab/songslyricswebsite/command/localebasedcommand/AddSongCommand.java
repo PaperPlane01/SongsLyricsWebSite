@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * Created by PaperPlane on 19.08.2017.
  */
-public class AddSongCommand extends LocaleBasedCommand implements ActionCommand {
+public class AddSongCommand extends LocaleBasedCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

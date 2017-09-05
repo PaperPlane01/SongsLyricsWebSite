@@ -46,6 +46,13 @@ public class DatabaseConstants {
             public static final String YOUTUBE_LINK = "youtube_link";
         }
 
+        public static class SongsRatingsTable {
+            public static final String VOTE_ID = "vote_id";
+            public static final String USER_ID = UsersTable.USER_ID;
+            public static final String SONG_ID = SongsTable.SONG_ID;
+            public static final String RATING = "rating";
+        }
+
         public static class UsersTable {
             public static final String USER_ID = "user_id";
             public static final String USER_NAME = "user_name";

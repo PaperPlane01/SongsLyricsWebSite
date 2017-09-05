@@ -1,12 +1,9 @@
 package kz.javalab.songslyricswebsite.command.localebasedcommand;
 
-import com.google.gson.Gson;
-import kz.javalab.songslyricswebsite.command.ActionCommand;
+import com.google.gson.Gson;;
+
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
-import kz.javalab.songslyricswebsite.exception.InvalidPasswordException;
-import kz.javalab.songslyricswebsite.exception.InvalidUserNameException;
-
 import kz.javalab.songslyricswebsite.exception.WrongPasswordException;
 import kz.javalab.songslyricswebsite.exception.WrongUsernameException;
 import kz.javalab.songslyricswebsite.service.UserService;
@@ -23,11 +20,14 @@ import java.util.ResourceBundle;
 /**
  * Created by PaperPlane on 08.08.2017.
  */
-public class LoginCommand extends LocaleBasedCommand implements ActionCommand {
+public class LoginCommand extends LocaleBasedCommand {
+
+    public LoginCommand() {
+
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("logging in");
         ResourceBundle labels = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
         Map<String, String> responseMap = new LinkedHashMap<>();
 

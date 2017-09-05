@@ -16,7 +16,7 @@
 
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <filter-class>kz.javalab.songslyricswebsite.controller.CharactersEncodingFilter</filter-class>
+    <filter-class>kz.javalab.songslyricswebsite.filter.CharactersEncodingFilter</filter-class>
   </filter>
 
   <filter-mapping>
@@ -26,7 +26,7 @@
 
   <filter>
     <filter-name>LanguageFilter</filter-name>
-    <filter-class>kz.javalab.songslyricswebsite.controller.LanguageFilter</filter-class>
+    <filter-class>kz.javalab.songslyricswebsite.filter.LanguageFilter</filter-class>
   </filter>
 
   <filter-mapping>

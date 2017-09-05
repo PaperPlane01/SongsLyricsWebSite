@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 /**
  * Created by PaperPlane on 27.08.2017.
  */
-public class GetLabelCommand extends LocaleBasedCommand implements ActionCommand {
+public class GetLabelCommand extends LocaleBasedCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

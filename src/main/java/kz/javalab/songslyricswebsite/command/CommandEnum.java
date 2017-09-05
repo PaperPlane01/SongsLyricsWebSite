@@ -1,9 +1,6 @@
 package kz.javalab.songslyricswebsite.command;
 
-import kz.javalab.songslyricswebsite.command.localebasedcommand.AddSongCommand;
-import kz.javalab.songslyricswebsite.command.localebasedcommand.ApplySongChangesCommand;
-import kz.javalab.songslyricswebsite.command.localebasedcommand.GetLabelCommand;
-import kz.javalab.songslyricswebsite.command.localebasedcommand.LoginCommand;
+import kz.javalab.songslyricswebsite.command.localebasedcommand.*;
 
 /**
  * Created by PaperPlane on 07.08.2017.
@@ -24,12 +21,6 @@ public enum CommandEnum {
     REGISTER {
         {
             this.command = new RegisterCommand();
-        }
-    },
-
-    REGISTRATION {
-        {
-            this.command = new RegistrationCommand();
         }
     },
 

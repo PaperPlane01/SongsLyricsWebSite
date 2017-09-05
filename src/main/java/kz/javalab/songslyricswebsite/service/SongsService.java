@@ -189,9 +189,8 @@ public class SongsService {
      * Compares genres of song received from the user and song stored in database, and applies changes (if any).
      * @param alteredSong Song received from user.
      * @param oldSong Song stored in database.
-     * @throws SongAlteringException
      */
-    private void alterLines(Song alteredSong, Song oldSong, Connection connection) throws SongAlteringException {
+    private void alterLines(Song alteredSong, Song oldSong, Connection connection) {
         List<Line> alteredLines = SongHelper.getLines(alteredSong);
         List<Line> oldLines = SongHelper.getLines(oldSong);
 
@@ -355,7 +354,7 @@ public class SongsService {
        ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
         try {
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SongAddingException();
@@ -444,5 +443,63 @@ public class SongsService {
         boolean approved = songDataAccessObject.checkIfSongApprovedBySongID(songID, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return approved;
+    }
+
+    public void rateSong(int userID, int songID, int rating) {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        try {
+            connection.setAutoCommit(false);
+            songsRatingsDataAccessObject.rateSong(userID, songID, rating, connection);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
+    }
+
+    public boolean checkIfUserRatedSong(int userID, int songID) {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        boolean result = songsRatingsDataAccessObject.checkIfUserRatedSong(userID, songID, connection);
+        ConnectionPool.getInstance().returnConnection(connection);
+        return result;
+    }
+
+    public void alterSongRating(int userID, int songID, int newRating) {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        try {
+            connection.setAutoCommit(false);
+            songsRatingsDataAccessObject.alterSongRating(userID, songID, newRating, connection);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
+    }
+
+    public double getAverageRatingOfSong(int songID) {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        double averageRating = songsRatingsDataAccessObject.getAverageRatingOfSong(songID, connection);
+
+        ConnectionPool.getInstance().returnConnection(connection);
+        return averageRating;
     }
 }
