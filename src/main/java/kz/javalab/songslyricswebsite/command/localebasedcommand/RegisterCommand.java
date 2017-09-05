@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by PaperPlane on 12.08.2017.
  */
+public class RegisterCommand extends LocaleBasedCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
