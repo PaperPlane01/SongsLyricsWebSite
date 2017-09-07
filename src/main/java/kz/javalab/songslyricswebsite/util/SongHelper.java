@@ -23,11 +23,11 @@ public class SongHelper {
     public static List<Line> getLines(Song song) {
         List<Line> lines = new ArrayList<>();
 
-        song.getLyrics().getComponents().forEach(songPart -> {
-            songPart.getComponents().forEach(line -> {
+        for (SongLyrics songPart : song.getLyrics().getComponents()) {
+            for (SongLyrics line : songPart.getComponents()) {
                 lines.add((Line) line);
-            });
-        });
+            }
+        }
 
         return lines;
     }

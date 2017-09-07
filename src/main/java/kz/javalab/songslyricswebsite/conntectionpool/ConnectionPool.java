@@ -3,7 +3,6 @@ package kz.javalab.songslyricswebsite.conntectionpool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 
@@ -136,17 +135,23 @@ public class ConnectionPool {
      * @param connection Connection to be returned.
      */
     public void returnConnection(Connection connection) {
+
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         connections.add(connection);
     }
 
     public void closeConnections() {
-        connections.forEach(connection -> {
+        for (Connection connection : connections) {
             try {
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        });
+        }
     }
 
 }

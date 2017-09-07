@@ -195,6 +195,7 @@ public class SongRetriever {
         boolean result = false;
 
         if (youTubeVideoID == null) {
+            //YouTube link is not necessary.
             result = true;
             return result;
         }

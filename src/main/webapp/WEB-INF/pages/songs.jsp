@@ -13,19 +13,19 @@
         <div class="col-xs-12">
             <jsp:include page="menu.jsp"/>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="list-of-songs">
-                    <ul>
-                        <c:forEach items="${requestScope.songsIDsAndTitles}" var="entry">
-                            <li><a href="/controller?command=song&songID=${entry.key}"}><c:out value="${entry.value}"></c:out></a> </li>
-                        </c:forEach>
-                    </ul>
-                </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="list-of-songs">
+                <ul>
+                    <c:forEach items="${requestScope.songsIDsAndTitles}" var="entry">
+                        <li><a href="/controller?command=song&songID=${entry.key}"}><c:out value="${entry.value}"></c:out></a> </li>
+                    </c:forEach>
+                </ul>
             </div>
         </div>
     </div>
-
+</div>
 </div>
 </body>
 </html>

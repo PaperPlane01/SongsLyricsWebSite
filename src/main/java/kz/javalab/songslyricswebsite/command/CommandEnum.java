@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.command;
 
-import kz.javalab.songslyricswebsite.command.localebasedcommand.*;
+import kz.javalab.songslyricswebsite.command.*;
+import kz.javalab.songslyricswebsite.command.impl.*;
+import kz.javalab.songslyricswebsite.command.impl.localebasedcommand.*;
 
 /**
  * Created by PaperPlane on 07.08.2017.
@@ -99,6 +101,12 @@ public enum CommandEnum {
     APPLYSONGCHANGES {
         {
             this.command = new ApplySongChangesCommand();
+        }
+    },
+
+    RATESONG {
+        {
+            this.command = new RateSongCommand();
         }
     };
 

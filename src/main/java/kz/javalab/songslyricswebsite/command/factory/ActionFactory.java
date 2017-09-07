@@ -3,7 +3,7 @@ package kz.javalab.songslyricswebsite.command.factory;
 import com.sun.deploy.net.HttpRequest;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.command.CommandEnum;
-import kz.javalab.songslyricswebsite.command.EmptyCommand;
+import kz.javalab.songslyricswebsite.command.impl.EmptyCommand;
 
 import javax.servlet.http.HttpServletRequest;
 

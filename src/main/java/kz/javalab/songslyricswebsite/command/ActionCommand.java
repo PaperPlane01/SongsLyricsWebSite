@@ -10,5 +10,6 @@ import java.io.IOException;
  * Created by PaperPlane on 07.08.2017.
  */
 public interface ActionCommand {
+
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }

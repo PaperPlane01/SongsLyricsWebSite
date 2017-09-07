@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Администратор
-  Date: 05.08.2017
-  Time: 1:41
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -81,10 +74,53 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
+
+                    <c:if test="${not empty sessionScope.user}">
+
+                        <div class="song-rating-select">
+                            <select class="selectpicker" id="rating-of-song">
+                                <option id="rate-song" data-hidden="true">
+                                    <c:choose>
+                                        <c:when test="${requestScope.userHasRatedSong}">
+                                            <fmt:bundle basename="labels">
+                                                <fmt:message key="labels.yourrating"/>
+                                            </fmt:bundle> ${requestScope.userRatingOfSong}
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <fmt:bundle basename="labels">
+                                                <fmt:message key="labels.ratesong"/>
+                                            </fmt:bundle>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+
+                        <a class="btn btn-default" id="rate-song-button">
+                            <fmt:bundle basename="labels">
+                                <fmt:message key="labels.rate"/>
+                            </fmt:bundle>
+                        </a>
+
+                        <div id="song-rating-message" style="display: none"></div>
+                    </c:if>
                 </div>
         </div>
     </div>
 </div>
-<jsp:include page="scripts.jsp"></jsp:include>
+<c:if test="${not empty sessionScope.user}">
+    <div id="user-id" style="display: none">${sessionScope.user.getID()}</div>
+    <div id="song-id" style="display: none;">${requestScope.songID}</div>
+</c:if>
+<jsp:include page="scripts.jsp"/>
+<c:if test="${not empty sessionScope.user}">
+    <script src="/scripts/song-rating.js"></script>
+</c:if>
 </body>
 </html>

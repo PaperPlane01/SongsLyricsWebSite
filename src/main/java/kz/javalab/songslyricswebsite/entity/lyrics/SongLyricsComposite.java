@@ -46,7 +46,9 @@ public class SongLyricsComposite implements SongLyrics {
     public String toString() {
        StringBuilder stringBuilder = new StringBuilder();
 
-       components.forEach(component -> stringBuilder.append(component.toString()));
+       for (SongLyrics component : components) {
+           stringBuilder.append(component.toString());
+       }
 
        return stringBuilder.toString();
     }

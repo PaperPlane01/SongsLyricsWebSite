@@ -3,7 +3,7 @@ import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 
-import kz.javalab.songslyricswebsite.service.UserService;
+import kz.javalab.songslyricswebsite.service.UsersManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,9 +54,9 @@ public class UserDataAccessObject {
     public boolean checkIfUserExists(User user, Connection connection, int parameterOfChecking) {
         boolean result = false;
 
-        if (parameterOfChecking == UserService.CHECK_BY_USERNAME) {
+        if (parameterOfChecking == UsersManager.CHECK_BY_USERNAME) {
             result = checkIfUserExistsByUserName(user.getUsername(), connection);
-        } else if (parameterOfChecking == UserService.CHECK_BY_USER_ID) {
+        } else if (parameterOfChecking == UsersManager.CHECK_BY_USER_ID) {
             result = checkIfUserExistsByUserID(user.getID(), connection);
         }
 
