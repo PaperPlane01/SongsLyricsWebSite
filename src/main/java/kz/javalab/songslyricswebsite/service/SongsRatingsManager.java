@@ -1,11 +1,15 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.dataaccessobject.SongDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
+import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by PaperPlane on 07.09.2017.
@@ -87,5 +91,27 @@ public class SongsRatingsManager {
 
         ConnectionPool.getInstance().returnConnection(connection);
         return averageRating;
+    }
+
+    public Map<Song, Double> getTopTenRatedSongsWithRatings() {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        Map<Song, Double> mapWithSongs = new LinkedHashMap<>();
+
+        Map<Integer, Double> mapWithSongsIDs = songsRatingsDataAccessObject.getTopTenRatedSongsIDsAndRatings(connection);
+
+        for (Map.Entry entry : mapWithSongsIDs.entrySet()) {
+            Integer songID = (Integer) entry.getKey();
+            Double songRating = (Double) entry.getValue();
+
+            Song song = songDataAccessObject.getSongByID(songID, false, connection);
+
+            mapWithSongs.put(song, songRating);
+        }
+
+        return mapWithSongs;
     }
 }

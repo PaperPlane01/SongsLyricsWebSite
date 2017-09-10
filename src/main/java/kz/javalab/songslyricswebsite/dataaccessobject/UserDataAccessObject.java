@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by PaperPlane on 05.08.2017.
  */
-public class UserDataAccessObject {
+public class UserDataAccessObject extends AbstractDataAccessObject {
 
     /**
      * Add new user do database.
@@ -71,16 +71,7 @@ public class UserDataAccessObject {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
-            preparedStatement.setString(1, username);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
-
-            resultSet.close();
-            preparedStatement.close();
+            result = checkEntityExistenceByStringValue(preparedStatement, username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,19 +82,12 @@ public class UserDataAccessObject {
     private boolean checkIfUserExistsByUserID(int userID, Connection connection) {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_id = ?";
-        int userIDParameter = 1;
 
         boolean result = false;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
-            preparedStatement.setInt(userIDParameter, userID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
+            result = checkEntityExistence(preparedStatement, userID);
         } catch (SQLException e) {
             e.printStackTrace();
         }

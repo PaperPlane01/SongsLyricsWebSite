@@ -1,7 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
-import com.google.gson.Gson;;
-
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.WrongPasswordException;
@@ -23,7 +21,6 @@ import java.util.ResourceBundle;
 public class LoginCommand extends LocaleBasedCommand {
 
     public LoginCommand() {
-
     }
 
     @Override
@@ -48,31 +45,19 @@ public class LoginCommand extends LocaleBasedCommand {
             responseMap.put("status", "SUCCESS");
             responseMap.put("message", labels.getString("labels.loginsuccess"));
 
-            String json = new Gson().toJson(responseMap);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+            sendJsonResponse(responseMap, response);
         } catch (WrongPasswordException e) {
             responseMap.put("status", "FAILURE");
             responseMap.put("message", labels.getString("labels.loginfailed"));
             responseMap.put("reason", labels.getString("labels.wrongpassword"));
 
-            String json = new Gson().toJson(responseMap);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+            sendJsonResponse(responseMap, response);
         } catch (WrongUsernameException e) {
             responseMap.put("status", "FAILURE");
             responseMap.put("message", labels.getString("labels.loginfailed"));
             responseMap.put("reason", labels.getString("labels.wrongusername"));
 
-            String json = new Gson().toJson(responseMap);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
+            sendJsonResponse(responseMap, response);
         }
 
     }
@@ -80,5 +65,10 @@ public class LoginCommand extends LocaleBasedCommand {
     @Override
     protected Locale getLocaleFromRequest(HttpServletRequest request) {
         return super.getLocaleFromRequest(request);
+    }
+
+    @Override
+    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
+        super.sendJsonResponse(responseObject, response);
     }
 }

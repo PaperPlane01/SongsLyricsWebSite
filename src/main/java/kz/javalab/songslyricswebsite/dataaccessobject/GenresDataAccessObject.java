@@ -9,8 +9,13 @@ import java.sql.SQLException;
 /**
  * Created by PaperPlane on 30.08.2017.
  */
-public class GenresDataAccessObject {
+public class GenresDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Adds genre to database.
+     * @param genreName Name of the genre to be added.
+     * @param connection Connection to be used.
+     */
     public void addGenreToDatabase(String genreName, Connection connection) {
         String addGenreQuery = "INSERT INTO genres\n" +
                 "(genre_name)\n" +
@@ -34,51 +39,55 @@ public class GenresDataAccessObject {
 
     }
 
+    /**
+     * Adds "song" - "genre" match to the database.
+     * @param songID ID of the song.
+     * @param genreID ID of the genre.
+     * @param connection Connection to be used.
+     */
     public void addSongGenreMatch(int songID, int genreID, Connection connection) {
         String addSongGenreMatchQuery = "INSERT INTO genres_of_songs\n" +
                 "(song_id, genre_id)\n" +
                 "VALUES\n" +
                 "(?, ?)";
-        int songIDParameter = 1;
-        int genreIDParameter = 2;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatchQuery);
 
-            preparedStatement.setInt(songIDParameter, songID);
-            preparedStatement.setInt(genreIDParameter, genreID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, songID, genreID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Marks "song" - "genre" match as deleted.
+     * @param matchID ID of "song" - "genre" match.
+     * @param connection Connection to be used.
+     */
     public void markSongGenreMatchAsDeleted(int matchID, Connection connection) {
         String markAsDeletedQuery = "UPDATE genres_of_songs\n" +
                 "SET match_deleted = ?\n" +
                 "WHERE match_id = ?";
-        int matchDeletedParameter = 1;
-        int matchIDParameter = 2;
 
         int matchDeletedValue = 1;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(markAsDeletedQuery);
 
-            preparedStatement.setInt(matchDeletedParameter, matchDeletedValue);
-            preparedStatement.setInt(matchIDParameter, matchID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, matchDeletedValue, matchID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Returns "song" - "genre" match ID.
+     * @param songID ID of the song.
+     * @param genreID ID of the genre.
+     * @param connection Connection to be used.
+     * @return "song" - "genre" match ID.
+     */
     public int getSongGenreMatchID(int songID, int genreID, Connection connection) {
         int songGenreMatchID = 0;
 
@@ -98,6 +107,9 @@ public class GenresDataAccessObject {
             while (resultSet.next()) {
                 songGenreMatchID = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresOfSongsTable.MATCH_ID);
             }
+
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,25 +117,23 @@ public class GenresDataAccessObject {
         return songGenreMatchID;
     }
 
+    /**
+     * Checks if there is a "song" - "genre" match with specific genre ID and song ID.
+     * @param genreID ID of the genre.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if such "song" - "genre" match exists, <Code>False</Code> if not.
+     */
     public boolean checkIfSongGenreMatchExists(int genreID, int songID, Connection connection) {
         boolean result = false;
 
         String checkSongGenreMatchQuery = "SELECT match_id FROM genres_of_songs\n" +
                 "WHERE song_id = ? and genre_id = ?";
-        int songIDParameter = 1;
-        int genreIDParameter = 2;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkSongGenreMatchQuery);
 
-            preparedStatement.setInt(songIDParameter, songID);
-            preparedStatement.setInt(genreIDParameter, genreID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
+            result = checkEntityExistence(preparedStatement, songID, genreID);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,27 +142,23 @@ public class GenresDataAccessObject {
         return result;
     }
 
+    /**
+     * Checks if there is a genre with specific name.
+     * @param genreName Name of the genre.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if such genre exists, <Code>False</Code> if not.
+     */
     public boolean checkIfGenreExists(String genreName, Connection connection) {
         boolean result = false;
 
         String checkGenreQuery = "SELECT genre_id\n" +
                 "FROM genres\n" +
                 "WHERE genre_name = ?";
-        int genreNameParameter = 1;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery);
 
-            preparedStatement.setString(genreNameParameter, genreName);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
-
-            resultSet.close();
-            preparedStatement.close();
+            result = checkEntityExistenceByStringValue(preparedStatement, genreName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -160,6 +166,12 @@ public class GenresDataAccessObject {
         return  result;
     }
 
+    /**
+     * Returns ID of the genre with specific name.
+     * @param genreName Name of the genre.
+     * @param connection Connection to be used.
+     * @return ID of the genre with specific name.
+     */
     public int getGenreID(String genreName, Connection connection) {
         int genreID = 0;
 

@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
-import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.service.SongsManager;
@@ -85,15 +84,13 @@ public class AddSongCommand extends LocaleBasedCommand {
 
     }
 
-    private void sendJsonResponse(Map<String, String> responseMap, HttpServletResponse response) throws IOException {
-        String json = new Gson().toJson(responseMap);
-
-        response.setContentType("application/json");
-        response.getWriter().write(json);
-    }
-
     @Override
     protected Locale getLocaleFromRequest(HttpServletRequest request) {
         return super.getLocaleFromRequest(request);
+    }
+
+    @Override
+    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
+        super.sendJsonResponse(responseObject, response);
     }
 }

@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
-import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
@@ -62,10 +61,8 @@ public class RateSongCommand extends LocaleBasedCommand {
         return super.getLocaleFromRequest(request);
     }
 
-    private void sendJsonResponse(Map<String, String> responseMap, HttpServletResponse response) throws IOException {
-        String json = new Gson().toJson(responseMap);
-
-        response.setContentType("application/json");
-        response.getWriter().write(json);
+    @Override
+    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
+        super.sendJsonResponse(responseObject, response);
     }
 }

@@ -13,6 +13,13 @@ public class DatabaseConstants {
             public static final String ARTIST_LETTER = "artist_letter";
         }
 
+        public static class CommentsTable {
+            public static final String COMMENT_ID = "comment_id";
+            public static final String SONG_ID = "song_id";
+            public static final String USER_ID = "user_id";
+            public static final String COMMENT_CONTENT = "comment_content";
+        }
+
         public static class FeaturingsTable {
             public static final String FEATURING_ID = "featuring_id";
             public static final String ARTIST_ID = ArtistsTable.ARTIST_ID;

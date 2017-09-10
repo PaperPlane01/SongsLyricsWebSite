@@ -20,7 +20,7 @@ import java.util.*;
  * Created by PaperPlane on 30.07.2017.
  * This class have methods allowing to get, insert and update data related to songs stored in database.
  */
-public class SongDataAccessObject {
+public class SongDataAccessObject extends AbstractDataAccessObject {
 
     public SongDataAccessObject() {
     }
@@ -29,18 +29,11 @@ public class SongDataAccessObject {
         String alterSongNameQuery = "UPDATE songs\n" +
                 "SET song_name = ?\n" +
                 "WHERE song_id = ?";
-        int songNameParameter = 1;
-        int songIDParameter = 2;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(alterSongNameQuery);
 
-            preparedStatement.setString(songNameParameter, newSongName);
-            preparedStatement.setInt(songIDParameter, songID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            updateStringValueByEntityID(preparedStatement, songID, newSongName);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,11 +49,7 @@ public class SongDataAccessObject {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(alterArtistIDQuery);
-            preparedStatement.setInt(artistIDParameter, newArtistID);
-            preparedStatement.setInt(songIDParameter, songID);
-
-            preparedStatement.execute();
-            preparedStatement.close();
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, newArtistID, songID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -71,17 +60,10 @@ public class SongDataAccessObject {
                 "SET youtube_link = ?\n" +
                 "WHERE song_id = ?";
 
-        int youTubeLinkParameter = 1;
-        int songIDParameter = 2;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(alterYouTubeLinkQuery);
 
-            preparedStatement.setString(youTubeLinkParameter, newYouTubeLink);
-            preparedStatement.setInt(songIDParameter, songID);
-
-            preparedStatement.execute();
-            preparedStatement.close();
+            updateStringValueByEntityID(preparedStatement, songID, newYouTubeLink);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,10 +75,7 @@ public class SongDataAccessObject {
      * @param songID ID of the song.
      * @return Song which has a specific ID in database.
      */
-    public Song getSongByID(int songID, Connection connection) {
-
-        boolean withLyrics = true;
-
+    public Song getSongByID(int songID, boolean withLyrics, Connection connection) {
         Song song = getSongBySongID(songID, withLyrics, connection);
 
         return song;
@@ -222,18 +201,11 @@ public class SongDataAccessObject {
 
         String checkSongQuery = "SELECT song_id FROM songs\n" +
                 "WHERE song_id = ?";
-        int songIDParameter = 1;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery);
 
-            preparedStatement.setInt(songIDParameter, songID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
+            result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -574,14 +546,7 @@ public class SongDataAccessObject {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
 
-                int artistIDParameter = 1;
-                int songIDParameter = 2;
-
-                preparedStatement.setInt(artistIDParameter, featuredArtist.getID());
-                preparedStatement.setInt(songIDParameter, song.getID());
-
-                preparedStatement.execute();
-                preparedStatement.close();
+                executePreparedStatementWithMultipleIntegerValues(preparedStatement, featuredArtist.getID(), song.getID());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -645,12 +610,7 @@ public class SongDataAccessObject {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(addYouTubeLinkQuery);
 
-            preparedStatement.setString(youTubeLinkParameter, youTubeLink);
-            preparedStatement.setInt(songIDParameter, songID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            updateStringValueByEntityID(preparedStatement, songID, youTubeLink);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -668,19 +628,9 @@ public class SongDataAccessObject {
         try {
             String checkGenreQuery = "SELECT genre_id FROM genres\n" +
                     "WHERE genre_name = ?";
-            int genreNameParameter = 1;
 
             PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery);
-            preparedStatement.setString(genreNameParameter, genre);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
-
-            resultSet.close();
-            preparedStatement.close();
+            checkEntityExistenceByStringValue(preparedStatement, genre);
         } catch (SQLException e) {
             e.printStackTrace();
         }

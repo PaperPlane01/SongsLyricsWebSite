@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
+import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 
 import javax.servlet.ServletException;
@@ -28,5 +29,12 @@ public abstract class LocaleBasedCommand implements ActionCommand {
         String country = languageAndCountry[countryIndex];
 
         return new Locale(language, country);
+    }
+
+    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
+        String json = new Gson().toJson(responseObject);
+
+        response.setContentType("application/json");
+        response.getWriter().write(json);
     }
 }

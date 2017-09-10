@@ -144,6 +144,9 @@ public class ConnectionPool {
         connections.add(connection);
     }
 
+    /**
+     * Closes all connections of the connection pool.
+     */
     public void closeConnections() {
         for (Connection connection : connections) {
             try {

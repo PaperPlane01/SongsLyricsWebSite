@@ -13,7 +13,7 @@ import java.sql.SQLException;
 /**
  * Created by PaperPlane on 30.08.2017.
  */
-public class LinesDataAccessObject {
+public class LinesDataAccessObject extends AbstractDataAccessObject {
 
     public LinesDataAccessObject() {
 
@@ -23,18 +23,11 @@ public class LinesDataAccessObject {
         String alterLineQuery = "UPDATE websitedatabase.lines\n" +
                 "SET content = ?\n" +
                 "WHERE line_id = ?";
-        int lineContentParameter = 1;
-        int lineIDParameter = 2;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(alterLineQuery);
 
-            preparedStatement.setString(lineContentParameter, newLine.toString());
-            preparedStatement.setInt(lineIDParameter, lineID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            updateStringValueByEntityID(preparedStatement, lineID, newLine.toString());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,20 +83,13 @@ public class LinesDataAccessObject {
         String markLineAsDeletedQuery = "UPDATE websitedatabase.lines\n" +
                 "SET is_deleted = ?\n" +
                 "WHERE line_id = ?";
-        int isDeletedParameter = 1;
-        int lineIDParameter = 2;
 
         int isDeletedValue = 1;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(markLineAsDeletedQuery);
 
-            preparedStatement.setInt(isDeletedParameter, isDeletedValue);
-            preparedStatement.setInt(lineIDParameter, lineID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, lineID);
         } catch (SQLException e) {
             e.printStackTrace();
         }

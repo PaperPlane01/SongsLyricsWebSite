@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by PaperPlane on 17.08.2017.
  */
-public class ArtistDataAccessObject {
+public class ArtistDataAccessObject extends AbstractDataAccessObject {
 
     public ArtistDataAccessObject() {
 
@@ -23,7 +23,7 @@ public class ArtistDataAccessObject {
     /**
      * Retrieves artists whose names are beginning with a specific letter.
      * @param letter First letter of the artists.
-     * @return List of rtists whose names are beginning with a specific letter.
+     * @return List of Artists whose names are beginning with a specific letter.
      */
     public List<Artist> getArtistsByLetter(char letter, Connection connection) {
 
@@ -170,15 +170,7 @@ public class ArtistDataAccessObject {
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkArtistQuery);
-            preparedStatement.setString(1, artist.getName());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
-
-            resultSet.close();
-            preparedStatement.close();
+            result = checkEntityExistenceByStringValue(preparedStatement, artist.getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }

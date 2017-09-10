@@ -4,31 +4,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by PaperPlane on 05.09.2017.
  */
-public class SongsRatingsDataAccessObject {
+public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
 
     public void rateSong(int userID, int songID, int rating, Connection connection) {
         String rateSongQuery = "INSERT INTO songs_ratings\n" +
                 "(user_id, song_id, rating)\n" +
                 "VALUES (?, ?, ?)";
 
-        int userIDParameter = 1;
-        int songIDParameter = 2;
-        int ratingParameter = 3;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(rateSongQuery);
 
-            preparedStatement.setInt(userIDParameter, userID);
-            preparedStatement.setInt(songIDParameter, songID);
-            preparedStatement.setInt(ratingParameter, rating);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, userID, songID, rating);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -40,23 +32,10 @@ public class SongsRatingsDataAccessObject {
         String checkIfUserRatedSongQuery = "SELECT vote_id FROM songs_ratings\n" +
                 "WHERE user_id = ? and song_id = ?\n";
 
-        int userIDParameter = 1;
-        int songIDParameter = 2;
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserRatedSongQuery);
 
-            preparedStatement.setInt(userIDParameter, userID);
-            preparedStatement.setInt(songIDParameter, songID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
-            }
-
-            resultSet.close();
-            preparedStatement.close();
+            result = checkEntityExistence(preparedStatement, userID, songID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -145,6 +124,36 @@ public class SongsRatingsDataAccessObject {
         }
 
         return averageRating;
+    }
+
+    public Map<Integer, Double> getTopTenRatedSongsIDsAndRatings(Connection connection) {
+        Map<Integer, Double> map = new LinkedHashMap<>();
+
+        String query = "SELECT song_id, avg(rating)\n" +
+                "FROM songs_ratings\n" +
+                "GROUP BY song_id\n" +
+                "ORDER BY avg(rating)\n" +
+                "LIMIT 0, 10";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.SONG_ID);
+                double averageRating = resultSet.getDouble("avg(rating)");
+
+                map.put(songID, averageRating);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return map;
     }
 
     private int getVoteID(int userID, int songID, Connection connection) {

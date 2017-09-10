@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
-import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.RegistrationFailedException;
@@ -22,6 +21,9 @@ import java.util.regex.Pattern;
  * Created by PaperPlane on 12.08.2017.
  */
 public class RegisterCommand extends LocaleBasedCommand {
+
+    public RegisterCommand() {
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -138,15 +140,13 @@ public class RegisterCommand extends LocaleBasedCommand {
         return true;
     }
 
-    private void sendJsonResponse(Map<String, String> responseMap, HttpServletResponse response) throws IOException {
-        String json = new Gson().toJson(responseMap);
-
-        response.setContentType("application/json");
-        response.getWriter().write(json);
-    }
-
     @Override
     protected Locale getLocaleFromRequest(HttpServletRequest request) {
         return super.getLocaleFromRequest(request);
+    }
+
+    @Override
+    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
+        super.sendJsonResponse(responseObject, response);
     }
 }

@@ -315,7 +315,7 @@ public class SongsManager {
         SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
 
         if (songDataAccessObject.checkIfSongExists(songID, connection)) {
-            Song song = songDataAccessObject.getSongByID(songID, connection);
+            Song song = songDataAccessObject.getSongByID(songID, true, connection);
             ConnectionPool.getInstance().returnConnection(connection);
             return song;
         } else {
