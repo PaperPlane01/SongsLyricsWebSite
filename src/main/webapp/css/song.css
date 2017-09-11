@@ -35,6 +35,38 @@
     padding-bottom: 5%;
 }
 
+.song-rating-select {
+    float: left;
+ }
+
+#rate-song-button {
+    float: left;
+}
+
+#comments {
+    margin-top: 10px;
+}
+
+.comment {
+    padding-bottom: 10px;
+}
+
+.comment-date {
+    margin-left: 15px;
+}
+
+.comment-id {
+    float: right;
+}
+
+#add-comment-label {
+    margin-top: 10px;
+}
+
+#comment-content {
+    height: 150px;
+}
+
 @media screen and (max-width: 500px){
     .line {
         margin-left: 2%;

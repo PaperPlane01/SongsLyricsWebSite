@@ -67,11 +67,10 @@ public class SongRetriever {
                 throw new InvalidYouTubeVideoIDException();
             }
 
-            this.youTubeLink = youTubeLink;
-
             song.setName(songName);
             song.setID(songID);
             song.setArtist(new Artist(artistName));
+            song.setYouTubeVideoID(youTubeLink);
 
             if (!songFeaturedArtists.trim().isEmpty()) {
                 StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");
@@ -113,10 +112,6 @@ public class SongRetriever {
         } catch (NumberFormatException ex) {
             throw new NoSuchSongException();
         }
-    }
-
-    public String getYouTubeLink() {
-        return youTubeLink;
     }
 
     private boolean validateSongName(String songName) {

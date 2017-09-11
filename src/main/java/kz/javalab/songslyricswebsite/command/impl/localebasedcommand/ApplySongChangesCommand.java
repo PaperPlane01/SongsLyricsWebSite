@@ -34,7 +34,7 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
 
             SongsManager songsManager = new SongsManager();
 
-            songsManager.alterSong(alteredSong.getID(), alteredSong, songRetriever.getYouTubeLink());
+            songsManager.alterSong(alteredSong.getID(), alteredSong);
 
             responseMap.put("status", "SUCCESS");
             responseMap.put("message", "Everything is ok!");

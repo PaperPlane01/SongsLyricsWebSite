@@ -26,11 +26,10 @@ public class SongsManager {
      * Received altered song and commits changes to database.
      * @param songID ID of the song to be altered.
      * @param alteredSong Altered song.
-     * @param newYouTubeLink Altered youTubeLink
      * @throws NoSuchSongException Thrown if there is no song with this ID.
      * @throws SongAlteringException Thrown if some exception occurred when tried to alter song.
      */
-    public void alterSong(int songID, Song alteredSong, String newYouTubeLink) throws NoSuchSongException, SongAlteringException {
+    public void alterSong(int songID, Song alteredSong) throws NoSuchSongException, SongAlteringException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         Song oldSong = getSongByID(songID, connection);
 
@@ -48,18 +47,18 @@ public class SongsManager {
 
             alterLyrics(alteredSong, oldSong, connection);
 
-            alterYouTubeLink(songID, newYouTubeLink, connection);
+            alterYouTubeLink(songID, alteredSong.getYouTubeVideoID(), oldSong.getYouTubeVideoID(), connection);
 
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             try {
                 connection.rollback();
+                throw  new SongAlteringException();
             } catch (SQLException e1) {
                 e1.printStackTrace();
                 throw new SongAlteringException();
             }
-            throw  new SongAlteringException();
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
@@ -290,9 +289,8 @@ public class SongsManager {
      * @param newYouTubeVideoID YouTube video ID received from the user.
      * @param connection Connection to be used.
      */
-    private void alterYouTubeLink(int songID, String newYouTubeVideoID, Connection connection) {
+    private void alterYouTubeLink(int songID, String newYouTubeVideoID, String oldYouTubeVideoID, Connection connection) {
         SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
-        String oldYouTubeVideoID = songDataAccessObject.getYouTubeLinkBySongID(songID, connection);
 
         if (!newYouTubeVideoID.trim().equals(oldYouTubeVideoID)) {
             songDataAccessObject.alterYouTubeLink(songID, newYouTubeVideoID, connection);
@@ -336,16 +334,7 @@ public class SongsManager {
         return songIDsWithTitles;
     }
 
-
-    public String getYouTubeLinkBySongID(int songID) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
-        String youTubeLink =  songDataAccessObject.getYouTubeLinkBySongID(songID, connection);
-        ConnectionPool.getInstance().returnConnection(connection);
-        return youTubeLink;
-    }
-
-    public void addSongToDatabase(Song song, String youTubeLink) throws SongAddingException, SuchSongAlreadyExistsException {
+    public void addSongToDatabase(Song song) throws SongAddingException, SuchSongAlreadyExistsException {
        Connection connection = ConnectionPool.getInstance().getConnection();
 
        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
@@ -371,7 +360,7 @@ public class SongsManager {
                 }
             }
 
-            songDataAccessObject.addSongToDatabase(song, youTubeLink, connection);
+            songDataAccessObject.addSongToDatabase(song, connection);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -427,13 +416,5 @@ public class SongsManager {
             ConnectionPool.getInstance().returnConnection(connection);
         }
 
-    }
-
-    public boolean checkIfSongApproved(int songID) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
-        boolean approved = songDataAccessObject.checkIfSongApprovedBySongID(songID, connection);
-        ConnectionPool.getInstance().returnConnection(connection);
-        return approved;
     }
 }

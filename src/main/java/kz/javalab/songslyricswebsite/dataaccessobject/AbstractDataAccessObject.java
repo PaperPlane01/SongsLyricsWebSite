@@ -23,7 +23,13 @@ public abstract class AbstractDataAccessObject {
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        boolean result = resultSet.next();
+        boolean result = false;
+
+        if (resultSet.next()) {
+            result = true;
+        }
+
+        System.out.println("Result " + result);
 
         resultSet.close();
         preparedStatement.close();

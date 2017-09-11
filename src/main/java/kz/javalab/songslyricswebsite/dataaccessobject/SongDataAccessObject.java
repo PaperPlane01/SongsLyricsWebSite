@@ -92,6 +92,10 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
     private Song getSongBySongID(int songID, boolean withLyrics, Connection connection) {
         Song song = new Song();
 
+        song.setID(songID);
+
+        setDataFromSongsTable(song, connection);
+
         Artist artist = getSongArtistBySongID(songID, connection);
         song.setArtist(artist);
 
@@ -99,11 +103,6 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
             List<Artist> featuredArtists = getListFeaturedArtistsBySongID(songID, connection);
             song.setFeaturedArtists(featuredArtists);
         }
-
-        String songName = getSongNameBySongID(songID, connection);
-        song.setName(songName);
-
-        song.setID(songID);
 
         song.setGenres(getGenresOfSongBySongID(songID, connection));
 
@@ -113,6 +112,40 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
         }
 
         return song;
+    }
+
+    private void setDataFromSongsTable(Song song, Connection connection) {
+        String query = "SELECT * FROM songs\n" +
+                "WHERE song_id = ?";
+
+        int songIDParameter = 1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(songIDParameter, song.getID());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String songName = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.SONG_NAME);
+                boolean approved = false;
+                int approvedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED);
+
+                if (approvedValue == 1) {
+                    approved = true;
+                }
+
+                String youTubeVideoID = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK);
+
+                song.setName(songName);
+                song.setApproved(approved);
+                song.setYouTubeVideoID(youTubeVideoID);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -235,7 +268,6 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
             while (resultSet.next()) {
                 String genre = resultSet.getString(DatabaseConstants.ColumnLabels.GenresTable.GENRE_NAME);
                 genres.add(genre);
-                System.out.println(genre);
             }
 
             resultSet.close();
@@ -367,434 +399,6 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
         return songTitles;
     }
 
-
-    /**
-     * Allows to get Youtube link of the song by its ID.
-     * @param songID ID of the song.
-     * @return Youtube link of the song by its ID.
-     */
-    public String getYouTubeLinkBySongID(int songID, Connection connection) {
-        String youTubeLink = new String();
-
-        try {
-            String songYouTubeLinkQuery = "SELECT youtube_link\n" +
-                    "FROM songs\n" +
-                    "WHERE song_id = ?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(songYouTubeLinkQuery);
-            preparedStatement.setInt(1, songID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                youTubeLink = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return youTubeLink;
-    }
-
-    /**
-     * Allows to save all the information about the song (song name, artists, featured artists, song genres and lyrics) into database.
-     * @param song Song to be inserted into database.
-     */
-    public void addSongToDatabase(Song song, String youTubeLink, Connection connection) throws SongAddingException {
-        addDataToSongsTable(song, connection);
-        addSongGenresToDatabase(song, connection);
-        addSongGenreMatchesToDatabase(song, connection);
-        addFeaturinsgMatchesToDatabase(song, connection);
-        addSongLyricsToDatabase(song, connection);
-
-        if (youTubeLink != null) {
-            if (!youTubeLink.isEmpty()) {
-                addYouTubeLinkToDatabase(song.getID(), youTubeLink, connection);
-            }
-        }
-
-    }
-
-    /**
-     * Adds data related to song into <Code>songs</Code> table.
-     * @param song Song which data is to be added.
-     * @param connection Connection to be used.
-     */
-    private void addDataToSongsTable(Song song, Connection connection) {
-        int lastID = getLastSongID(connection);
-        song.setID(lastID + 1);
-
-        try {
-            String addSongQuery = "INSERT INTO songs (song_id, artist_id, song_name, is_approved, has_featuring)\n" +
-                    "VALUES (?, ?, ?, ?, ?)";
-
-            int songIDParameter = 1;
-            int artistIDParameter = 2;
-            int songNameParameter = 3;
-            int isApprovedParameter = 4;
-            int hasFeaturingParameter = 5;
-
-            int isApprovedValue = 0;
-            int hasFeaturingValue = 1;
-            int doesntHaveFeaturingValue = 0;
-
-            PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
-            preparedStatement.setInt(songIDParameter, song.getID());
-            preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
-            preparedStatement.setString(songNameParameter, song.getName());
-            preparedStatement.setInt(isApprovedParameter, isApprovedValue);
-
-            if (song.hasFeaturedArtists()) {
-                preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
-            } else {
-                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
-            }
-
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    /**
-     * Inserts all genres of the song into database.
-     * @param song Song genres of which are to be inserted.
-     * @param connection Connection to be used.
-     */
-    private void addSongGenresToDatabase(Song song, Connection connection) {
-
-        if (song.getGenres() != null) {
-            if (!song.getGenres().isEmpty()) {
-                song.getGenres().forEach(genre -> {
-                    if (!checkIfGenreExists(genre, connection)) {
-                        addGenreToDatabase(genre, connection);
-                    }
-                });
-            }
-        }
-    }
-
-    /**
-     * Inserts genre into database.
-     * @param genre Genre to be inserted.
-     * @param connection Connection to be used.
-     */
-    private void addGenreToDatabase(String genre, Connection connection) {
-        int lastGenreID = getLastGenreID(connection);
-
-        String addGenreQuery = "INSERT INTO genres (genre_id, genre_name)\n" +
-                "VALUES (?, ?)";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
-
-            int genreIDParameter = 1;
-            int genreNameParameter = 2;
-
-            preparedStatement.setInt(genreIDParameter, lastGenreID + 1);
-            preparedStatement.setString(genreNameParameter, genre);
-
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Inserts all "song-genre" matches into database.
-     * This method uses <Code>songID</Code> parameter, so it should be filled with proper data.
-     * @param song
-     * @param connection Connection to be used.
-     */
-    private void addSongGenreMatchesToDatabase(Song song, Connection connection) {
-        String addSongGenreMatch = "INSERT INTO genres_of_songs (song_id, genre_id)\n" +
-                "VALUES (?, ?)";
-
-        song.getGenres().forEach(genre -> {
-            int genreID = getGenreIDByGenreName(genre, connection);
-
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatch);
-
-                int songIDParameter = 1;
-                int genreIDParameter = 2;
-
-                preparedStatement.setInt(songIDParameter, song.getID());
-                preparedStatement.setInt(genreIDParameter, genreID);
-
-                preparedStatement.execute();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    /**
-     * Inserts all "song-featuring" matches into database.
-     * @param song
-     * @param connection
-     */
-    private void addFeaturinsgMatchesToDatabase(Song song, Connection connection) {
-        String addFeaturingQuery = "INSERT INTO featurings (artist_id, song_id)\n" +
-                "VALUES (?, ?)";
-
-        song.getFeaturedArtists().forEach(featuredArtist -> {
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
-
-                executePreparedStatementWithMultipleIntegerValues(preparedStatement, featuredArtist.getID(), song.getID());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    /**
-     * Inserts lyrics of the song into database.
-     * @param song Song which lyrics are to be inserted into database.
-     * @param connection Connection to be used.
-     */
-    private void addSongLyricsToDatabase(Song song, Connection connection) throws SongAddingException {
-        String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
-                "VALUES (?, ?, ?, ?)";
-
-        int songIDParameter = 1;
-        int contentParameter = 2;
-        int songPartParameter = 3;
-        int linePositionParameter = 4;
-
-        int linePosition = 0;
-
-        for (SongLyrics songPart : song.getLyrics().getComponents()) {
-
-            for (SongLyrics line : songPart.getComponents()) {
-                linePosition++;
-                try {
-                    PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
-
-                    preparedStatement.setInt(songIDParameter, song.getID());
-                    preparedStatement.setString(contentParameter, line.toString());
-                    preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
-                    preparedStatement.setInt(linePositionParameter, linePosition);
-
-                    preparedStatement.execute();
-
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    throw new SongAddingException();
-                }
-            }
-        }
-
-    }
-
-    /**
-     * Adds YouTube link of the specific song to database.
-     * @param songID ID of the song.
-     * @param youTubeLink YouTube link.
-     * @param connection Connection to be used.
-     */
-    private void addYouTubeLinkToDatabase(int songID, String youTubeLink, Connection connection) {
-        String addYouTubeLinkQuery = "UPDATE songs\n" +
-                "SET youtube_link = ?\n" +
-                "WHERE song_id = ?";
-
-        int youTubeLinkParameter = 1;
-        int songIDParameter = 2;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addYouTubeLinkQuery);
-
-            updateStringValueByEntityID(preparedStatement, songID, youTubeLink);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Checks database contains a specific genre.
-     * @param genre Genre to be checked.
-     * @param connection Connection to be used.
-     * @return <Code>True</Code> if genre has already been inserted into database, <Code>False</Code> if not.
-     */
-    private boolean checkIfGenreExists(String genre, Connection connection) {
-        boolean result = false;
-
-        try {
-            String checkGenreQuery = "SELECT genre_id FROM genres\n" +
-                    "WHERE genre_name = ?";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery);
-            checkEntityExistenceByStringValue(preparedStatement, genre);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-
-    /**
-     * Retrieves genre's ID by its name.
-     * @param genre Genre which ID is to be retrieved.
-     * @param connection Connection to be used.
-     * @return ID of the genre.
-     */
-    private int getGenreIDByGenreName(String genre, Connection connection) {
-        int id = 0;
-
-        String getGenreIDQuery = "SELECT genre_id FROM genres\n" +
-                "WHERE genre_name = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getGenreIDQuery);
-            int genreIDParameter = 1;
-
-            preparedStatement.setString(genreIDParameter, genre);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                id = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresTable.GENRE_ID);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return id;
-    }
-
-    /**
-     * Retrieves last genre ID from the database.
-     * @param connection Connection to be used.
-     * @return Last genre ID.
-     */
-    private int getLastGenreID(Connection connection) {
-        int lastID = 0;
-
-        try {
-            String getLastGenreIDQuery = "SELECT max(genre_id) FROM genres";
-            PreparedStatement preparedStatement = connection.prepareStatement(getLastGenreIDQuery);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                lastID = resultSet.getInt("max(genre_id)");
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lastID;
-    }
-
-    /**
-     * Allows to get ID of the specific song.
-     * This method uses artist ID and song name to identify the song, so this fields must be filled with proper data.
-     * @param song Song to be identified.
-     * @return ID of the song.
-     */
-    public int getSongID(Song song, Connection connection) {
-        int songID = 0;
-
-        try {
-            String getSongIDQuery = "SELECT song_id FROM songs\n" +
-                    "WHERE artist_id = ? AND song_name = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(getSongIDQuery);
-            preparedStatement.setInt(1, song.getArtist().getID());
-            preparedStatement.setString(2, song.getName());
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
-                System.out.println(songID);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return songID;
-    }
-
-    /**
-     * Approves song by its ID.
-     * @param songID ID of the song which is to be approved.
-     */
-    public void approveSong(int songID, Connection connection) {
-
-        String approveSongQuery = "UPDATE songs\n" +
-                "SET is_approved = 1\n" +
-                "WHERE song_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery);
-
-            int songIDParameter = 1;
-
-            preparedStatement.setInt(songIDParameter, songID);
-
-            preparedStatement.execute();
-
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    /**
-     * Checks if song is appproved.
-     * @param songID ID of the song to be checked.
-     * @return <Code>True</Code> if song is approved, <Code>False</Code> if not.
-     */
-    public boolean checkIfSongApprovedBySongID (int songID, Connection connection) {
-        boolean result = false;
-
-        String checkIfSongApprovedQuery = "SELECT is_approved\n" +
-                "FROM songs\n" +
-                "WHERE song_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkIfSongApprovedQuery);
-
-            int songIDParameter = 1;
-
-            preparedStatement.setInt(songIDParameter, songID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                if (resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED) == 1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
     /**
      * Allows to get song artist by song ID.
      * @param songID ID of the song.
@@ -833,38 +437,6 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
     }
 
     /**
-     * Allows to get song name by song ID.
-     * @param songID ID of the song.
-     * @param connection Connection to be used.
-     * @return Name of the song retrieved from the database.
-     */
-    private String getSongNameBySongID(int songID, Connection connection) {
-        String songName = new String();
-
-        try {
-            String songNameQuery = "SELECT song_name\n" +
-                    "FROM songs\n" +
-                    "WHERE song_id = ?;";
-
-            PreparedStatement preparedStatement = connection.prepareStatement(songNameQuery);
-            preparedStatement.setInt(1, songID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                songName = resultSet.getString("song_name");
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return songName;
-    }
-
-
-    /**
      * Retrieves song lyrics from database using song ID.
      * @param songID ID of the song.
      * @param connection Connection to be used.
@@ -882,7 +454,7 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
         int isDeletedParameter = 2;
 
         int isDeletedValue = 0;
-        
+
         try {
 
             PreparedStatement preparedStatement = connection.prepareStatement(songLyricsQuery);
@@ -1040,6 +612,305 @@ public class SongDataAccessObject extends AbstractDataAccessObject {
         }
 
         return songLyrics;
+    }
+
+    /**
+     * Allows to save all the information about the song (song name, artists, featured artists, song genres and lyrics) into database.
+     * @param song Song to be inserted into database.
+     */
+    public void addSongToDatabase(Song song, Connection connection) throws SongAddingException {
+        addDataToSongsTable(song, connection);
+        addSongGenresToDatabase(song, connection);
+        addSongGenreMatchesToDatabase(song, connection);
+        addFeaturinsgMatchesToDatabase(song, connection);
+        addSongLyricsToDatabase(song, connection);
+    }
+
+    /**
+     * Adds data related to song into <Code>songs</Code> table.
+     * @param song Song which data is to be added.
+     * @param connection Connection to be used.
+     */
+    private void addDataToSongsTable(Song song, Connection connection) {
+        int lastID = getLastSongID(connection);
+        song.setID(lastID + 1);
+
+        try {
+            String addSongQuery = "INSERT INTO songs (song_id, artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+
+            int songIDParameter = 1;
+            int artistIDParameter = 2;
+            int songNameParameter = 3;
+            int isApprovedParameter = 4;
+            int youTubeLinkParameter = 5;
+            int hasFeaturingParameter = 6;
+
+            int isApprovedValue = 0;
+            int hasFeaturingValue = 1;
+            int doesntHaveFeaturingValue = 0;
+
+            PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
+            preparedStatement.setInt(songIDParameter, song.getID());
+            preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
+            preparedStatement.setString(songNameParameter, song.getName());
+            preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
+            preparedStatement.setInt(isApprovedParameter, isApprovedValue);
+
+            if (song.hasFeaturedArtists()) {
+                preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
+            } else {
+                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
+            }
+
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Inserts all genres of the song into database.
+     * @param song Song genres of which are to be inserted.
+     * @param connection Connection to be used.
+     */
+    private void addSongGenresToDatabase(Song song, Connection connection) {
+
+        if (song.getGenres() != null) {
+            if (!song.getGenres().isEmpty()) {
+                for (String genre : song.getGenres()) {
+                    if (!checkIfGenreExists(genre, connection)) {
+                        addGenreToDatabase(genre, connection);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Inserts genre into database.
+     * @param genre Genre to be inserted.
+     * @param connection Connection to be used.
+     */
+    private void addGenreToDatabase(String genre, Connection connection) {
+        int lastGenreID = getLastGenreID(connection);
+
+        String addGenreQuery = "INSERT INTO genres (genre_id, genre_name)\n" +
+                "VALUES (?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
+
+            int genreIDParameter = 1;
+            int genreNameParameter = 2;
+
+            preparedStatement.setInt(genreIDParameter, lastGenreID + 1);
+            preparedStatement.setString(genreNameParameter, genre);
+
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Inserts all "song-genre" matches into database.
+     * This method uses <Code>songID</Code> parameter, so it should be filled with proper data.
+     * @param song
+     * @param connection Connection to be used.
+     */
+    private void addSongGenreMatchesToDatabase(Song song, Connection connection) {
+        String addSongGenreMatch = "INSERT INTO genres_of_songs (song_id, genre_id)\n" +
+                "VALUES (?, ?)";
+
+        song.getGenres().forEach(genre -> {
+            int genreID = getGenreIDByGenreName(genre, connection);
+
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatch);
+
+                int songIDParameter = 1;
+                int genreIDParameter = 2;
+
+                preparedStatement.setInt(songIDParameter, song.getID());
+                preparedStatement.setInt(genreIDParameter, genreID);
+
+                preparedStatement.execute();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Inserts all "song-featuring" matches into database.
+     * @param song
+     * @param connection
+     */
+    private void addFeaturinsgMatchesToDatabase(Song song, Connection connection) {
+        String addFeaturingQuery = "INSERT INTO featurings (artist_id, song_id)\n" +
+                "VALUES (?, ?)";
+
+        for (Artist featuredArtist : song.getFeaturedArtists()) {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
+
+                executePreparedStatementWithMultipleIntegerValues(preparedStatement, featuredArtist.getID(), song.getID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Inserts lyrics of the song into database.
+     * @param song Song which lyrics are to be inserted into database.
+     * @param connection Connection to be used.
+     */
+    private void addSongLyricsToDatabase(Song song, Connection connection) throws SongAddingException {
+        String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
+                "VALUES (?, ?, ?, ?)";
+
+        int songIDParameter = 1;
+        int contentParameter = 2;
+        int songPartParameter = 3;
+        int linePositionParameter = 4;
+
+        int linePosition = 0;
+
+        for (SongLyrics songPart : song.getLyrics().getComponents()) {
+
+            for (SongLyrics line : songPart.getComponents()) {
+                linePosition++;
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
+
+                    preparedStatement.setInt(songIDParameter, song.getID());
+                    preparedStatement.setString(contentParameter, line.toString());
+                    preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
+                    preparedStatement.setInt(linePositionParameter, linePosition);
+
+                    preparedStatement.execute();
+
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new SongAddingException();
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Checks database contains a specific genre.
+     * @param genre Genre to be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if genre has already been inserted into database, <Code>False</Code> if not.
+     */
+    private boolean checkIfGenreExists(String genre, Connection connection) {
+        boolean result = false;
+
+        try {
+            String checkGenreQuery = "SELECT genre_id FROM genres\n" +
+                    "WHERE genre_name = ?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery);
+            checkEntityExistenceByStringValue(preparedStatement, genre);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+    /**
+     * Retrieves genre's ID by its name.
+     * @param genre Genre which ID is to be retrieved.
+     * @param connection Connection to be used.
+     * @return ID of the genre.
+     */
+    private int getGenreIDByGenreName(String genre, Connection connection) {
+        int id = 0;
+
+        String getGenreIDQuery = "SELECT genre_id FROM genres\n" +
+                "WHERE genre_name = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(getGenreIDQuery);
+            int genreIDParameter = 1;
+
+            preparedStatement.setString(genreIDParameter, genre);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                id = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresTable.GENRE_ID);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return id;
+    }
+
+    /**
+     * Retrieves last genre ID from the database.
+     * @param connection Connection to be used.
+     * @return Last genre ID.
+     */
+    private int getLastGenreID(Connection connection) {
+        int lastID = 0;
+
+        try {
+            String getLastGenreIDQuery = "SELECT max(genre_id) FROM genres";
+            PreparedStatement preparedStatement = connection.prepareStatement(getLastGenreIDQuery);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                lastID = resultSet.getInt("max(genre_id)");
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lastID;
+    }
+
+    /**
+     * Approves song by its ID.
+     * @param songID ID of the song which is to be approved.
+     */
+    public void approveSong(int songID, Connection connection) {
+
+        String approveSongQuery = "UPDATE songs\n" +
+                "SET is_approved = 1\n" +
+                "WHERE song_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery);
+
+            int songIDParameter = 1;
+
+            preparedStatement.setInt(songIDParameter, songID);
+
+            preparedStatement.execute();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**

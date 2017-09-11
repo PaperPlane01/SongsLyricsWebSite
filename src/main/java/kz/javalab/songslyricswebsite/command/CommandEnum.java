@@ -108,6 +108,12 @@ public enum CommandEnum {
         {
             this.command = new RateSongCommand();
         }
+    },
+
+    ADDCOMMENT {
+        {
+            this.command = new AddCommentCommand();
+        }
     };
 
    ActionCommand command;

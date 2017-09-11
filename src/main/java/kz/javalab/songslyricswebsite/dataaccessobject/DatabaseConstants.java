@@ -15,9 +15,10 @@ public class DatabaseConstants {
 
         public static class CommentsTable {
             public static final String COMMENT_ID = "comment_id";
-            public static final String SONG_ID = "song_id";
-            public static final String USER_ID = "user_id";
+            public static final String SONG_ID = SongsTable.SONG_ID;
+            public static final String USER_ID = UsersTable.USER_ID;
             public static final String COMMENT_CONTENT = "comment_content";
+            public static final String TIME = "time";
         }
 
         public static class FeaturingsTable {

@@ -16,6 +16,8 @@ public class Song {
     private List<Artist> featuredArtists = new ArrayList<>();
     private List<String> genres = new ArrayList<>();
     private SongLyrics lyrics = new SongLyricsComposite();
+    private boolean approved;
+    private String youTubeVideoID;
 
     public Song() {
     }
@@ -92,6 +94,21 @@ public class Song {
         this.lyrics = lyrics;
     }
 
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public String getYouTubeVideoID() {
+        return youTubeVideoID;
+    }
+
+    public void setYouTubeVideoID(String youTubeVideoID) {
+        this.youTubeVideoID = youTubeVideoID;
+    }
 
     public String getTitle() {
         StringBuilder stringBuilder = new StringBuilder();

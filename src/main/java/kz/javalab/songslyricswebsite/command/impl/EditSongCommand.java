@@ -44,7 +44,7 @@ public class EditSongCommand implements ActionCommand {
             try {
                 Song song = songsManager.getSongByID(songID);
                 SongLyrics songLyrics = song.getLyrics();
-                String youTubeLink = songsManager.getYouTubeLinkBySongID(songID);
+                String youTubeLink = song.getYouTubeVideoID();
                 StringBuilder featuredArtists = new StringBuilder();
                 StringBuilder songGenres = new StringBuilder();
 

@@ -24,14 +24,13 @@ public class AddSongCommand extends LocaleBasedCommand {
 
         Map<String, String> responseMap = new LinkedHashMap<>();
 
-        String youTubeLink = request.getParameter("youTubeLink");
-
         SongRetriever songRetriever = new SongRetriever();
 
         try {
             song = songRetriever.retrieveSongFromRequest(request);
+            song.setApproved(false);
 
-            songsManager.addSongToDatabase(song, youTubeLink);
+            songsManager.addSongToDatabase(song);
 
             responseMap.put("status", "SUCCESS");
             responseMap.put("message", resourceBundle.getString("labels.songhasbeenadded"));

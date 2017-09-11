@@ -3,12 +3,15 @@ package kz.javalab.songslyricswebsite.entity.comment;
 
 import kz.javalab.songslyricswebsite.entity.user.User;
 
+import java.sql.Timestamp;
+
 public class Comment {
 
     private int ID;
     private User author;
     private int songID;
     private String content;
+    private Timestamp time;
 
     public Comment() {
     }
@@ -50,5 +53,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 }

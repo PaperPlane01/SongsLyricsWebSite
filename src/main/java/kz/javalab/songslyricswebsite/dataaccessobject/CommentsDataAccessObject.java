@@ -4,10 +4,7 @@ import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +20,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @return List of comments of the specific song.
      */
     public List<Comment> getCommentsOfSong(int songID, Connection connection) {
-        String getCommentsQuery = "SELECT comment_id, user_id, comment_content, user_name, user_role\n" +
+        String getCommentsQuery = "SELECT comment_id, comments.user_id, comment_content, time, user_name, user_role\n" +
                 "FROM comments INNER JOIN users\n" +
                 "ON comments.user_id = users.user_id\n" +
                 "WHERE song_id = ?\n" +
@@ -46,6 +43,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
                 int commentID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_ID);
                 String content = resultSet.getString(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_CONTENT);
+                Timestamp timestamp = resultSet.getTimestamp(DatabaseConstants.ColumnLabels.CommentsTable.TIME);
                 int userID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.USER_ID);
                 String userName = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_NAME);
                 String userRole = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_ROLE);
@@ -66,6 +64,8 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
                 comment.setAuthor(commentAuthor);
                 comment.setID(commentID);
+                comment.setSongID(songID);
+                comment.setTime(timestamp);
                 comment.setContent(content);
 
                 comments.add(comment);

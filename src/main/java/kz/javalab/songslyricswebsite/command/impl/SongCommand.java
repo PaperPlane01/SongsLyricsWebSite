@@ -2,11 +2,13 @@ package kz.javalab.songslyricswebsite.command.impl;
 
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
+import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.service.CommentsManager;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
 
@@ -29,14 +31,15 @@ public class SongCommand implements ActionCommand {
             int songID = Integer.valueOf(request.getParameter("songID"));
 
             SongsManager songsManager = new SongsManager();
+            CommentsManager commentsManager = new CommentsManager();
 
             Song song = null;
             try {
                 song = songsManager.getSongByID(songID);
                 SongLyrics songLyrics = song.getLyrics();
                 String songTitle = song.getTitle();
-                String youTubeLink = songsManager.getYouTubeLinkBySongID(songID);
-                Boolean isApproved = songsManager.checkIfSongApproved(songID);
+                String youTubeLink = song.getYouTubeVideoID();
+                Boolean isApproved = song.isApproved();
 
                 List<SongLyrics> lyricsPartsAsList = new ArrayList<>();
 
@@ -49,6 +52,12 @@ public class SongCommand implements ActionCommand {
                 request.setAttribute("youTubeLink", youTubeLink);
                 request.setAttribute("isApproved", isApproved);
                 request.setAttribute("songID", songID);
+
+                if (commentsManager.checkIfSongHasComments(songID)) {
+                    List<Comment> comments = commentsManager.getCommentsOfSong(songID);
+                    System.out.println("comments length: " + comments.size());
+                    request.setAttribute("comments", comments);
+                }
 
                 if (request.getSession().getAttribute("user") != null) {
                     User currentUser = (User) request.getSession().getAttribute("user");

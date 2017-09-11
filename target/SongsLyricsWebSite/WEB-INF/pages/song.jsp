@@ -2,6 +2,7 @@
 <%@ page import="kz.javalab.songslyricswebsite.entity.user.UserType" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tagFiles" tagdir="/WEB-INF/tags" %>
 <fmt:setLocale value="${sessionScope.language}"/>
 <html lang="${sessionScope.language}">
 <head>
@@ -113,6 +114,45 @@
                 </div>
         </div>
     </div>
+    
+    <div class="row">
+        <c:if test="${not empty sessionScope.user}">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div id="comment-adding-panel">
+                    <form>
+                        <div class="form-group">
+                            <label for="comment-content" id="add-comment-label">Add commentary:</label>
+                            <textarea class="form-control" id="comment-content"></textarea>
+                            <a class="btn btn-default" id="add-comment-button">Comment</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </c:if>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <c:choose>
+                <c:when test="${not empty requestScope.comments}">
+
+                    <div id="comments">
+                        <c:forEach var="comment" items="${requestScope.comments}">
+                            <tagFiles:comment id="${comment.getID()}"
+                                              authorID="${comment.getAuthor().getID()}"
+                                              authorName="${comment.getAuthor().getUsername()}"
+                                              content="${comment.getContent()}"
+                                              date="${comment.getTime()}"/>
+                        </c:forEach>
+                    </div>
+
+                </c:when>
+
+                <c:otherwise>
+                    No comments for this song.
+                </c:otherwise>
+            </c:choose>
+
+        </div>
+    </div>
 </div>
 <c:if test="${not empty sessionScope.user}">
     <div id="user-id" style="display: none">${sessionScope.user.getID()}</div>
@@ -121,6 +161,7 @@
 <jsp:include page="scripts.jsp"/>
 <c:if test="${not empty sessionScope.user}">
     <script src="/scripts/song-rating.js"></script>
+    <script src="/scripts/add-comment.js"></script>
 </c:if>
 </body>
 </html>
