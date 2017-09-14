@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class CommentsManager {
 
+    public CommentsManager() {
+    }
+
     public List<Comment> getCommentsOfSong(int songID) {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();

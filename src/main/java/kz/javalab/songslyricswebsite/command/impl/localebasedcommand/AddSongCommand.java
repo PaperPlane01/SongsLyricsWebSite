@@ -16,6 +16,9 @@ import java.util.*;
  */
 public class AddSongCommand extends LocaleBasedCommand {
 
+    public AddSongCommand() {
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SongsManager songsManager = new SongsManager();

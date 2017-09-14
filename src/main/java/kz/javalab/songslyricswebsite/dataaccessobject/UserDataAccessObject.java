@@ -15,6 +15,9 @@ import java.sql.SQLException;
  */
 public class UserDataAccessObject extends AbstractDataAccessObject {
 
+    public UserDataAccessObject() {
+    }
+
     /**
      * Add new user do database.
      * @param user User to be added.
@@ -108,10 +111,11 @@ public class UserDataAccessObject extends AbstractDataAccessObject {
 
         String getPasswordQuery = "SELECT hashed_password FROM users\n" +
                 "WHERE user_id = ?";
+        int userIDParameter = 1;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getPasswordQuery);
-            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(userIDParameter, userID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

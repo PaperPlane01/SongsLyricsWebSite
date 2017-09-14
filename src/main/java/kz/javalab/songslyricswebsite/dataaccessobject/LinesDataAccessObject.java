@@ -16,7 +16,6 @@ import java.sql.SQLException;
 public class LinesDataAccessObject extends AbstractDataAccessObject {
 
     public LinesDataAccessObject() {
-
     }
 
     public void alterLine(int lineID, Line newLine, Connection connection) {

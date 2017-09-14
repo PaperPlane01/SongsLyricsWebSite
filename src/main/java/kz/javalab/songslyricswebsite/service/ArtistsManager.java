@@ -15,7 +15,6 @@ public class ArtistsManager {
     private ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
     public ArtistsManager() {
-
     }
 
     public List<Artist> getArtistsByLetter(char letter) {

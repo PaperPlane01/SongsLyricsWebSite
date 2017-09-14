@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
+    public CommentsDataAccessObject() {
+    }
+
     /**
      * Returns list of comments of the specific song.
      * @param songID ID of the song, comments of which are to be retrieved.

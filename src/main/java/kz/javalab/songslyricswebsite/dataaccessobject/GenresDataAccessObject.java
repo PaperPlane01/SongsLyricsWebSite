@@ -11,6 +11,9 @@ import java.sql.SQLException;
  */
 public class GenresDataAccessObject extends AbstractDataAccessObject {
 
+    public GenresDataAccessObject() {
+    }
+
     /**
      * Adds genre to database.
      * @param genreName Name of the genre to be added.

@@ -22,6 +22,9 @@ import java.util.Map;
  */
 public class SongsManager {
 
+    public SongsManager() {
+    }
+
     /**
      * Received altered song and commits changes to database.
      * @param songID ID of the song to be altered.

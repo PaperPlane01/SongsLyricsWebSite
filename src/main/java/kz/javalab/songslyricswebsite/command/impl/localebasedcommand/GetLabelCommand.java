@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
  */
 public class GetLabelCommand extends LocaleBasedCommand {
 
+    public GetLabelCommand() {
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Locale locale = getLocaleFromRequest(request);

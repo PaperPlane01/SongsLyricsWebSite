@@ -19,6 +19,9 @@ public class UsersManager {
     public static final int CHECK_BY_USERNAME = 1;
     public static final int CHECK_BY_USER_ID = 2;
 
+    public UsersManager() {
+    }
+
     public void registerNewUser(User user) throws SuchUserAlreadyExistsException, RegistrationFailedException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
@@ -60,6 +63,8 @@ public class UsersManager {
             ConnectionPool.getInstance().returnConnection(connection);
             throw new WrongPasswordException();
         }
+
+        ConnectionPool.getInstance().returnConnection(connection);
     }
 
     public void voteForSong(int userID, int songID, int rating) {

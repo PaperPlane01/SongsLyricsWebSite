@@ -16,6 +16,9 @@ import java.util.Map;
  */
 public class SongsRatingsManager {
 
+    public SongsRatingsManager() {
+    }
+
     public void rateSong(int userID, int songID, int rating) throws InvalidRatingValueException {
         if (!validateRatingValue(rating)) {
             throw new InvalidRatingValueException();

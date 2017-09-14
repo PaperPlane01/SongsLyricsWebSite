@@ -10,6 +10,9 @@ import java.sql.SQLException;
  */
 public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
+    public FeaturingsDataAccessObject() {
+    }
+
     public boolean checkIfFeaturingExists(int artistID, int songID, Connection connection) {
         boolean result = false;
 

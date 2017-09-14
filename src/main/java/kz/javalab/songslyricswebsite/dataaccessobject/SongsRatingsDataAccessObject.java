@@ -12,6 +12,9 @@ import java.util.Map;
  */
 public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
 
+    public SongsRatingsDataAccessObject() {
+    }
+
     public void rateSong(int userID, int songID, int rating, Connection connection) {
         String rateSongQuery = "INSERT INTO songs_ratings\n" +
                 "(user_id, song_id, rating)\n" +

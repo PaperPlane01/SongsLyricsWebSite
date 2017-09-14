@@ -124,6 +124,7 @@
                             <label for="comment-content" id="add-comment-label">Add commentary:</label>
                             <textarea class="form-control" id="comment-content"></textarea>
                             <a class="btn btn-default" id="add-comment-button">Comment</a>
+                            <span id="comment-validation-message" style="display: none"></span>
                         </div>
                     </form>
                 </div>
@@ -163,5 +164,19 @@
     <script src="/scripts/song-rating.js"></script>
     <script src="/scripts/add-comment.js"></script>
 </c:if>
+
+<div id="localized-messages" style="display: none">
+    <div id="too-long-comment-message">
+        <fmt:bundle basename="labels">
+            <fmt:message key="labels.errors.commentistoolong"/>
+        </fmt:bundle>
+    </div>
+
+    <div id="empty-comment-message">
+        <fmt:bundle basename="labels">
+            <fmt:message key="labels.errors.commentisempty"/>
+        </fmt:bundle>
+    </div>
+</div>
 </body>
 </html>

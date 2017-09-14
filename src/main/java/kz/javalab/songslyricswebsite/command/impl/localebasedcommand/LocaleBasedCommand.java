@@ -14,6 +14,9 @@ import java.util.Locale;
  */
 public abstract class LocaleBasedCommand implements ActionCommand {
 
+    public LocaleBasedCommand() {
+    }
+
     @Override
     public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 

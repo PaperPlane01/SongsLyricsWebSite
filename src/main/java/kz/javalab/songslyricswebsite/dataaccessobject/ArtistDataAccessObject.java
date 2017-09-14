@@ -17,7 +17,6 @@ import java.util.List;
 public class ArtistDataAccessObject extends AbstractDataAccessObject {
 
     public ArtistDataAccessObject() {
-
     }
 
     /**
