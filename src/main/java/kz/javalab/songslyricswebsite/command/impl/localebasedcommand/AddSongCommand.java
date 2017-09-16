@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
+import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.service.SongsManager;
@@ -80,8 +81,6 @@ public class AddSongCommand extends LocaleBasedCommand {
             responseMap.put("status", "FAILURE");
             responseMap.put("message", resourceBundle.getString("labels.errors.errorwhileadding"));
             sendJsonResponse(responseMap, response);
-        } catch (NoSuchSongException e) {
-            e.printStackTrace();
         }
 
     }

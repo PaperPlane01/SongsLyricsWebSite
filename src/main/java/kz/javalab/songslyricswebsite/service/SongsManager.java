@@ -4,6 +4,7 @@ import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.dataaccessobject.*;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
@@ -14,6 +15,7 @@ import kz.javalab.songslyricswebsite.util.SongHelper;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,10 +76,10 @@ public class SongsManager {
      * @param connection Connection to be used.
      */
     private void alterSongName(Song alteredSong, Song oldSong, Connection connection) {
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         if (!alteredSong.getName().equals(oldSong.getName())) { ;
-            songDataAccessObject.alterSongName(oldSong.getID(), alteredSong.getName(), connection);
+            songsDataAccessObject.alterSongName(oldSong.getID(), alteredSong.getName(), connection);
         }
     }
 
@@ -88,13 +90,13 @@ public class SongsManager {
      * @param connection Connection to be used.
      */
     private void alterArtistID(Song alteredSong, Song oldSong, Connection connection) {
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
         if (!alteredSong.getArtist().getName().trim().equals(oldSong.getArtist().getName().trim())) {
             artistDataAccessObject.addArtistToDatabase(alteredSong.getArtist(), connection);
             alteredSong.getArtist().setID(artistDataAccessObject.getArtistID(alteredSong.getArtist(), connection));
-            songDataAccessObject.alterArtistID(oldSong.getID(), alteredSong.getArtist().getID(), connection);
+            songsDataAccessObject.alterArtistID(oldSong.getID(), alteredSong.getArtist().getID(), connection);
         }
     }
 
@@ -109,30 +111,28 @@ public class SongsManager {
         FeaturingsDataAccessObject featuringsDataAccessObject = new FeaturingsDataAccessObject();
 
         if (alteredSong.hasFeaturedArtists()) {
-            alteredSong.getFeaturedArtists().forEach(artist -> {
-                artistDataAccessObject.addArtistToDatabase(artist, connection);
-                artist.setID(artistDataAccessObject.getArtistID(artist, connection));
-            });
-
-            alteredSong.getFeaturedArtists().forEach(artist -> {
-                if (!featuringsDataAccessObject.checkIfFeaturingExists(artist.getID(), alteredSong.getID(), connection)) {
-                    featuringsDataAccessObject.addNewFeaturing(artist.getID(), alteredSong.getID(), connection);
+            for (Artist featuredArtist : alteredSong.getFeaturedArtists()) {
+                if (!artistDataAccessObject.checkIfArtistExists(featuredArtist, connection)) {
+                    artistDataAccessObject.addArtistToDatabase(featuredArtist, connection);
                 }
-            });
+
+                featuredArtist.setID(artistDataAccessObject.getArtistID(featuredArtist, connection));
+                featuringsDataAccessObject.addNewFeaturing(featuredArtist.getID(), alteredSong.getID(), connection);
+            }
 
             if (oldSong.hasFeaturedArtists()) {
-                oldSong.getFeaturedArtists().forEach(artist -> {
-                    if (!alteredSong.getFeaturedArtists().contains(artist)) {
-                        int featuringID = featuringsDataAccessObject.getFeaturingID(artist.getID(), oldSong.getID(), connection);
+                for (Artist featuredArtist : oldSong.getFeaturedArtists()) {
+                    if (!alteredSong.getFeaturedArtists().contains(featuredArtist)) {
+                        int featuringID = featuringsDataAccessObject.getFeaturingID(featuredArtist.getID(), oldSong.getID(), connection);
                         featuringsDataAccessObject.markFeatuirngAsDeleted(featuringID, connection);
                     }
-                });
+                }
             }
         } else if (oldSong.hasFeaturedArtists()) {
-            oldSong.getFeaturedArtists().forEach(artist -> {
-                int featuringID = featuringsDataAccessObject.getFeaturingID(artist.getID(), oldSong.getID(), connection);
+            for (Artist featuredArtist : oldSong.getFeaturedArtists()) {
+                int featuringID = featuringsDataAccessObject.getFeaturingID(featuredArtist.getID(), oldSong.getID(), connection);
                 featuringsDataAccessObject.markFeatuirngAsDeleted(featuringID, connection);
-            });
+            }
         }
     }
 
@@ -144,40 +144,47 @@ public class SongsManager {
      */
     private void alterGenresOfSong(Song alteredSong, Song oldSong, Connection connection) {
         GenresDataAccessObject genresDataAccessObject = new GenresDataAccessObject();
+        GenresOfSongsDataAccessObject genresOfSongsDataAccessObject = new GenresOfSongsDataAccessObject();
 
         if (!alteredSong.getGenres().isEmpty()) {
-            alteredSong.getGenres().forEach(genre ->{
+            for (String genre : alteredSong.getGenres()) {
                 if (!genresDataAccessObject.checkIfGenreExists(genre, connection)) {
                     genresDataAccessObject.addGenreToDatabase(genre, connection);
                 }
-            });
+            }
 
-            alteredSong.getGenres().forEach(genre -> {
+            for (String genre : oldSong.getGenres()) {
                 if (!oldSong.getGenres().contains(genre)) {
                     int genreID = genresDataAccessObject.getGenreID(genre, connection);
-                    genresDataAccessObject.addSongGenreMatch(alteredSong.getID(), genreID, connection);
+                    genresOfSongsDataAccessObject.addGenreOfSong(alteredSong.getID(), genreID, connection);
                 }
-            });
+            }
 
             if (!oldSong.getGenres().isEmpty()) {
-                oldSong.getGenres().forEach(genre -> {
+                for (String genre : oldSong.getGenres()) {
                     if (!alteredSong.getGenres().contains(genre)) {
                         int genreID = genresDataAccessObject.getGenreID(genre, connection);
-                        int matchID = genresDataAccessObject.getSongGenreMatchID(alteredSong.getID(), genreID, connection);
-                        genresDataAccessObject.markSongGenreMatchAsDeleted(matchID, connection);
+                        int matchID = genresOfSongsDataAccessObject.getSongGenreMatchID(alteredSong.getID(), genreID, connection);
+                        genresOfSongsDataAccessObject.markSongGenreMatchAsDeleted(matchID, connection);
                     }
-                });
+                }
             }
         } else if (!oldSong.getGenres().isEmpty()) {
-            oldSong.getGenres().forEach(genre -> {
+            for (String genre : oldSong.getGenres()) {
                 int genreID = genresDataAccessObject.getGenreID(genre, connection);
-                int matchID = genresDataAccessObject.getSongGenreMatchID(oldSong.getID(), genreID, connection);
-                genresDataAccessObject.markSongGenreMatchAsDeleted(matchID, connection);
-            });
+                int matchID = genresOfSongsDataAccessObject.getSongGenreMatchID(oldSong.getID(), genreID, connection);
+                genresOfSongsDataAccessObject.markSongGenreMatchAsDeleted(matchID, connection);
+            }
         }
     }
 
-    private void alterLyrics(Song alteredSong, Song oldSong, Connection connection) throws SongAlteringException {
+    /**
+     * Compares lyrics of song received from the user and song stored in database, and applies changes (if any).
+     * @param alteredSong Song received from user.
+     * @param oldSong Song stored in database.
+     * @param connection Connection to be used.
+     */
+    private void alterLyrics(Song alteredSong, Song oldSong, Connection connection)  {
         if (oldSong.getLyrics().equals(alteredSong.getLyrics())) { ;
             return;
         }
@@ -188,9 +195,10 @@ public class SongsManager {
     }
 
     /**
-     * Compares genres of song received from the user and song stored in database, and applies changes (if any).
+     * Compares lines of song received from the user and song stored in database, and applies changes (if any).
      * @param alteredSong Song received from user.
      * @param oldSong Song stored in database.
+     * @param connection Connection to be used.
      */
     private void alterLines(Song alteredSong, Song oldSong, Connection connection) {
         List<Line> alteredLines = SongHelper.getLines(alteredSong);
@@ -293,10 +301,10 @@ public class SongsManager {
      * @param connection Connection to be used.
      */
     private void alterYouTubeLink(int songID, String newYouTubeVideoID, String oldYouTubeVideoID, Connection connection) {
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         if (!newYouTubeVideoID.trim().equals(oldYouTubeVideoID)) {
-            songDataAccessObject.alterYouTubeLink(songID, newYouTubeVideoID, connection);
+            songsDataAccessObject.alterYouTubeLink(songID, newYouTubeVideoID, connection);
         }
     }
 
@@ -309,18 +317,21 @@ public class SongsManager {
     public Song getSongByID(int songID) throws NoSuchSongException {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
-        return getSongByID(songID, connection);
+        Song song = getSongByID(songID, connection);
+
+        ConnectionPool.getInstance().returnConnection(connection);
+
+        return song;
     }
 
     private Song getSongByID(int songID, Connection connection) throws NoSuchSongException {
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
-        if (songDataAccessObject.checkIfSongExists(songID, connection)) {
-            Song song = songDataAccessObject.getSongByID(songID, true, connection);
-            ConnectionPool.getInstance().returnConnection(connection);
+        if (songsDataAccessObject.checkIfSongExists(songID, connection)) {
+            boolean withLyrics = true;
+            Song song = songsDataAccessObject.getSongByID(songID, withLyrics, connection);
             return song;
         } else {
-            ConnectionPool.getInstance().returnConnection(connection);
             throw new NoSuchSongException();
         }
     }
@@ -328,85 +339,128 @@ public class SongsManager {
     public Map<Integer, String> getSongIDsWithTitles(boolean approved) {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
-        Map<Integer, String> songIDsWithTitles =  songDataAccessObject.getSongIDsWithTitles(approved, connection);
+        Map<Integer, String> songIDsWithTitles =  songsDataAccessObject.getSongIDsWithTitles(approved, connection);
 
         ConnectionPool.getInstance().returnConnection(connection);
 
         return songIDsWithTitles;
     }
 
+    /**
+     * Adds song to database.
+     * @param song Song to be added.
+     * @throws SongAddingException Thrown if there is an error occurred when attempted to insert data into database.
+     * @throws SuchSongAlreadyExistsException Thrown if such song already exists.
+     */
     public void addSongToDatabase(Song song) throws SongAddingException, SuchSongAlreadyExistsException {
        Connection connection = ConnectionPool.getInstance().getConnection();
 
-       SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
+        ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
+        FeaturingsDataAccessObject featuringsDataAccessObject = new FeaturingsDataAccessObject();
+        GenresDataAccessObject genresDataAccessObject = new GenresDataAccessObject();
+        GenresOfSongsDataAccessObject genresOfSongsDataAccessObject = new GenresOfSongsDataAccessObject();
+        LinesDataAccessObject linesDataAccessObject = new LinesDataAccessObject();
 
-       ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
+        if (songsDataAccessObject.checkIfSongExists(song, connection)) {
+            throw new SuchSongAlreadyExistsException();
+        }
 
         try {
             connection.setAutoCommit(false);
 
-            if (checkIfSongExists(song, connection)) {
-                throw new SuchSongAlreadyExistsException();
-            }
-
+            songsDataAccessObject.addDataToSongsTable(song, connection);
             artistDataAccessObject.addArtistToDatabase(song.getArtist(), connection);
-            int artistID = artistDataAccessObject.getArtistID(song.getArtist(), connection);
-
-            song.getArtist().setID(artistID);
 
             if (song.hasFeaturedArtists()) {
                 for (Artist featuredArtist : song.getFeaturedArtists()) {
-                    artistDataAccessObject.addArtistToDatabase(featuredArtist, connection);
+                    if (!artistDataAccessObject.checkIfArtistExists(featuredArtist, connection)) {
+                        artistDataAccessObject.addArtistToDatabase(featuredArtist, connection);
+                    }
+
                     featuredArtist.setID(artistDataAccessObject.getArtistID(featuredArtist, connection));
+                    featuringsDataAccessObject.addNewFeaturing(featuredArtist.getID(), song.getID(), connection);
                 }
             }
 
-            songDataAccessObject.addSongToDatabase(song, connection);
-            connection.commit();
+            if (!song.getGenres().isEmpty()) {
+                for (String genre : song.getGenres()) {
+                    if (genresDataAccessObject.checkIfGenreExists(genre, connection)) {
+                        genresDataAccessObject.addGenreToDatabase(genre, connection);
+                    }
+
+                    int genreID = genresDataAccessObject.getGenreID(genre, connection);
+                    genresOfSongsDataAccessObject.addGenreOfSong(song.getID(), genreID, connection);
+                }
+            }
+
+            linesDataAccessObject.addSongLyricsToDatabase(song, connection);
+
         } catch (SQLException e) {
             e.printStackTrace();
             try {
                 connection.rollback();
+                throw new SongAddingException();
             } catch (SQLException e1) {
-                e1.printStackTrace();
                 throw new SongAddingException();
             }
-
-            throw new SongAddingException();
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
-
     }
 
-    private boolean checkIfSongExists(Song song, Connection connection) {
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
-        return songDataAccessObject.checkIfSongExists(song, connection);
-    }
-
+    /**
+     * Returns list of songs performed by specific artist.
+     * @param artist Artist whose songs are to be retrieved.
+     * @return List of songs performed by specific artist.
+     */
     public List<Song> getSongsByArtist(Artist artist) {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
         artist.setID(artistDataAccessObject.getArtistID(artist, connection));
-        List<Song> songsByArtist =  songDataAccessObject.getSongsByArtist(artist, connection);
+        List<Song> songsByArtist =  songsDataAccessObject.getSongsByArtist(artist, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return songsByArtist;
     }
 
+    public List<Song> getRecentlyAddedSongs() {
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
+
+        List<Song> songs = new ArrayList<>();
+        int numberOfSongs = 10;
+        List<Integer> songsIDs = songsDataAccessObject.getIDsOfRecentlyAddedSongs(numberOfSongs, connection);
+
+        for (Integer songID : songsIDs) {
+            boolean withLyrics = false;
+            Song song = songsDataAccessObject.getSongByID(songID, withLyrics, connection);
+            songs.add(song);
+        }
+
+        ConnectionPool.getInstance().returnConnection(connection);
+
+        return songs;
+    }
+
+    /**
+     * Marks song with specific ID as approved.
+     * @param songID ID of song which is to be approved.
+     */
     public void approveSong(int songID) {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         try {
             connection.setAutoCommit(false);
-            songDataAccessObject.approveSong(songID, connection);
+            songsDataAccessObject.approveSong(songID, connection);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();

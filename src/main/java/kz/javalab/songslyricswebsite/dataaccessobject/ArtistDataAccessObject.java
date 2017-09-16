@@ -1,6 +1,6 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 
 
@@ -161,7 +161,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if such artist is in database, <Code>False</Code> if not.
      */
-    private boolean checkIfArtistExists(Artist artist, Connection connection) {
+    public boolean checkIfArtistExists(Artist artist, Connection connection) {
         boolean result = false;
 
         String checkArtistQuery = "SELECT artist_id FROM artists\n" +

@@ -1,5 +1,7 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
+import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -20,7 +20,7 @@ $(document).ready(function () {
         let content = $("#comment-content").val();
         commentValidator.validateComment(content);
 
-        if (!commentValidator.result !== CommentValidationResults.SUCCESS) {
+        if (commentValidator.result !== CommentValidationResults.SUCCESS) {
             commentValidatorView.displayValidationResult(commentValidator.result);
         } else {
             commentsManager.sendComment(content, songID);
@@ -29,6 +29,7 @@ $(document).ready(function () {
 });
 
 function CommentsManager() {
+
     this.sendComment = function (content, songID) {
         $.post(
             {

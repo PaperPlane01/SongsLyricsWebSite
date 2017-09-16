@@ -11,26 +11,79 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 02.08.2017.
+ * This class contains methods for validating, parsing and unparsing <Code>SongLyrics</Code> object.
+ * <Code>SongLyrics</Code> object can be represented as string. In string representation of <Code>SongLyrics</Code>
+ * object, each component (lyrics part) is located within opening and closing tags. The opening tag is different for
+ * each type of lyrics part, for instance, "[INTRO}" is for intro, "[CHORUS]" is for chorus, and so on. The closing tag "[/]"
+ * is the same for all types of lyrics part.
+ * Example of <Code>SongLyrics</Code> object converted to string:
+ * [VERSE]
+ * On my way to your house, sneakers in the snow
+ * I only wanna see her
+ * And my thoughts are so loud, 'cause I just wanna know
+ * Are you gonna keep her?
+ * [/]
+ * [BRIDGE]
+ * Only call you faded
+ * Sorry, I know you hate it
+ * Probably shouldn't say this
+ * But it hurts to bite my tongue
+ * [/]
  */
 public class LyricsParser {
 
+    /**
+     * Tag for intro.
+     */
     private final String INTRO = "[INTRO]";
+    /**
+     * Tag for verse.
+     */
     private final String VERSE = "[VERSE]";
+    /**
+     * Tag for chorus.
+     */
     private final String CHORUS = "[CHORUS]";
+    /**
+     * Tag for hook.
+     */
     private final String HOOK = "[HOOK]";
+    /**
+     * Tag for bridge.
+     */
     private final String BRIDGE = "[BRIDGE]";
+    /**
+     * Tag for outro.
+     */
     private final String OUTRO = "[OUTRO]";
+    /**
+     * Tag for other.
+     */
     private final String OTHER = "[OTHER]";
+    /**
+     * Empty line.
+     */
     private final String EMPTY_LINE = "";
+    /**
+     * Closing tag.
+     */
     private final String CLOSING_TAG = "[/]";
 
-    public SongLyricsComposite buildLyricsFromString(String lyricsAsText) throws LyricsParsingException {
+    public LyricsParser() {
+    }
+
+    /**
+     * Parses song lyrics from string.
+     * @param lyricsAsText String to be parsed.
+     * @return Parsed song lyrics.
+     * @throws LyricsParsingException Thrown if string is invalid.
+     */
+    public SongLyrics parseLyrics(String lyricsAsText) throws LyricsParsingException {
         if (!validateLyrics(lyricsAsText)) {
             throw new LyricsParsingException();
         }
 
-        SongLyricsComposite songLyrics = new SongLyricsComposite();
+        SongLyrics songLyrics = new SongLyricsComposite();
         List<String> lines = Arrays.asList(lyricsAsText.split("\n"));
 
         SongLyricsComposite lyricsPart = new SongLyricsComposite();
@@ -84,6 +137,11 @@ public class LyricsParser {
         return songLyrics;
     }
 
+    /**
+     * Converts <Code>SongLyrics</Code> object to string.
+     * @param songLyrics <Code>SongLyrics</Code> object which is to be converted to string..
+     * @return <Code>SongLyrics</Code> object converted to string.
+     */
     public String unparseLyrics(SongLyrics songLyrics) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -137,6 +195,11 @@ public class LyricsParser {
 
     }
 
+    /**
+     * Validates song lyrics represented as string.
+     * @param lyricsAsText Song lyrics to be validated.
+     * @return <Code>True</Code> if lyrics are valid, <Code>False</Code> if not.
+     */
     private boolean validateLyrics(String lyricsAsText) {
         int numberOfOpeningTags = 0;
         int numberOfClosingTags = 0;
@@ -233,6 +296,11 @@ public class LyricsParser {
         return true;
     }
 
+    /**
+     * Defines if string is opening tag.
+     * @param candidate String to be checked.
+     * @return <Code>True</Code> if string is opening tag, <Code>False</Code> if not.
+     */
     private boolean isOpeningTag(String candidate) {
         boolean result = false;
 
@@ -245,6 +313,11 @@ public class LyricsParser {
         return result;
     }
 
+    /**
+     * Defines if string is tag.
+     * @param candidate String to be checked.
+     * @return <Code>True</Code> if string is tag, <Code>False</Code> if not.
+     */
     private boolean isTag(String candidate) {
         if (INTRO.equals(candidate)) return true;
         if (VERSE.equals(candidate)) return true;

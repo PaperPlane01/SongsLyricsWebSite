@@ -30,7 +30,7 @@ public class EditSongCommand implements ActionCommand {
 
         String page = new String();
 
-        if (user == null ||user.getUserType() != UserType.MODERATOR) {
+        if (user == null || user.getUserType() != UserType.MODERATOR) {
             page = ConfigurationManager.getProperty("path.page.nopermission");
             request.getRequestDispatcher(page).forward(request, response);
             return;

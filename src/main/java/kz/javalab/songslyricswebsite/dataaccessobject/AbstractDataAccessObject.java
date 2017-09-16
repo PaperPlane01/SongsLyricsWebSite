@@ -37,7 +37,13 @@ public abstract class AbstractDataAccessObject {
         return result;
     }
 
-
+    /**
+     * Updates string value of entity by it's ID.
+     * @param preparedStatement Prepared statement to be executed.
+     * @param entityID ID of entity.
+     * @param newStringValue New string value.
+     * @throws SQLException Thrown if there is error occurred while attempting to execute query.
+     */
     protected void updateStringValueByEntityID(PreparedStatement preparedStatement, int entityID, String newStringValue) throws SQLException {
         int stringParameter = 1;
         int entityIDParameter = 2;
@@ -50,6 +56,12 @@ public abstract class AbstractDataAccessObject {
         preparedStatement.close();
     }
 
+    /**
+     * Executes query with multiple integer values as parameters.
+     * @param preparedStatement Prepared statement to be executed.
+     * @param values Integer parameters of query.
+     * @throws SQLException Thrown if there is error occurred while attempting to execute query.
+     */
     protected void executePreparedStatementWithMultipleIntegerValues(PreparedStatement preparedStatement, int... values) throws SQLException {
         for (int index = 0; index < values.length; index++) {
             preparedStatement.setInt(index + 1, values[index]);
@@ -59,6 +71,13 @@ public abstract class AbstractDataAccessObject {
         preparedStatement.close();
     }
 
+    /**
+     *
+     * @param preparedStatement
+     * @param value
+     * @return
+     * @throws SQLException
+     */
     protected boolean checkEntityExistenceByStringValue(PreparedStatement preparedStatement, String value) throws SQLException {
         int stringValueParameter = 1;
 

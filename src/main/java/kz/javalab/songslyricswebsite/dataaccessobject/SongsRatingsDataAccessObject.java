@@ -1,5 +1,7 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
+import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

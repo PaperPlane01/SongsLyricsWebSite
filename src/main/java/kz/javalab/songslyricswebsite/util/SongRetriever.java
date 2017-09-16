@@ -30,88 +30,83 @@ public class SongRetriever {
      * @throws InvalidFeaturedArtistNameException Thrown if one of featured artist's name is too long.
      * @throws LyricsParsingException Thrown if song lyrics are invalid.
      */
-    public Song retrieveSongFromRequest(HttpServletRequest request) throws InvalidArtistNameException, InvalidSongNameException, InvalidFeaturedArtistsException, InvalidSongGenresException, TooLongOrEmptyLyricsException, InvalidYouTubeVideoIDException, InvalidFeaturedArtistNameException, LyricsParsingException, NoSuchSongException {
+    public Song retrieveSongFromRequest(HttpServletRequest request) throws InvalidArtistNameException, InvalidSongNameException, InvalidFeaturedArtistsException, InvalidSongGenresException, TooLongOrEmptyLyricsException, InvalidYouTubeVideoIDException, InvalidFeaturedArtistNameException, LyricsParsingException {
 
         Song song = new Song();
 
-        try {
-            int songID = Integer.valueOf(request.getParameter("songID"));
-            String songName = request.getParameter("songName");
-            String artistName = request.getParameter("songArtist");
-            String songFeaturedArtists = request.getParameter("songFeaturedArtists");
-            String songGenres = request.getParameter("songGenres");
-            String songLyricsAsString = request.getParameter("songLyrics");
-            String youTubeLink = request.getParameter("youTubeLink");
+        String songName = request.getParameter("songName");
+        String artistName = request.getParameter("songArtist");
+        String songFeaturedArtists = request.getParameter("songFeaturedArtists");
+        String songGenres = request.getParameter("songGenres");
+        String songLyricsAsString = request.getParameter("songLyrics");
+        String youTubeLink = request.getParameter("youTubeLink");
 
-            if (!validateArtistName(artistName)) {
-                throw new InvalidArtistNameException();
-            }
-
-            if (!validateSongName(songName)) {
-                throw new InvalidSongNameException();
-            }
-
-            if (!validateFeaturedArtists(songFeaturedArtists)) {
-                throw new InvalidFeaturedArtistsException();
-            }
-
-            if (!validateSongGenres(songGenres)) {
-                throw new InvalidSongGenresException();
-            }
-
-            if (!validateLyrics(songLyricsAsString)) {
-                throw new TooLongOrEmptyLyricsException();
-            }
-
-            if (!validateYouTubeVideoID(youTubeLink)) {
-                throw new InvalidYouTubeVideoIDException();
-            }
-
-            song.setName(songName);
-            song.setID(songID);
-            song.setArtist(new Artist(artistName));
-            song.setYouTubeVideoID(youTubeLink);
-
-            if (!songFeaturedArtists.trim().isEmpty()) {
-                StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");
-
-                List<Artist> featuredArtists = new ArrayList<>();
-
-                while (stringTokenizer.hasMoreTokens()) {
-                    String featuredArtistName = stringTokenizer.nextToken().trim();
-
-                    if (!validateArtistName(featuredArtistName)) {
-                        throw new InvalidFeaturedArtistNameException();
-                    }
-
-                    featuredArtists.add(new Artist(featuredArtistName));
-                }
-
-                song.setFeaturedArtists(featuredArtists);
-            }
-
-            if (!songGenres.isEmpty()) {
-                List<String> songGenresList = new ArrayList<>();
-
-                StringTokenizer stringTokenizer = new StringTokenizer(songGenres, ";");
-
-                while (stringTokenizer.hasMoreTokens()) {
-                    songGenresList.add(stringTokenizer.nextToken().trim());
-                }
-
-                song.setGenres(songGenresList);
-            }
-
-            LyricsParser lyricsParser = new LyricsParser();
-
-            SongLyrics songLyrics = lyricsParser.buildLyricsFromString(songLyricsAsString);
-
-            song.setLyrics(songLyrics);
-
-            return song;
-        } catch (NumberFormatException ex) {
-            throw new NoSuchSongException();
+        if (!validateArtistName(artistName)) {
+            throw new InvalidArtistNameException();
         }
+
+        if (!validateSongName(songName)) {
+            throw new InvalidSongNameException();
+        }
+
+        if (!validateFeaturedArtists(songFeaturedArtists)) {
+            throw new InvalidFeaturedArtistsException();
+        }
+
+        if (!validateSongGenres(songGenres)) {
+            throw new InvalidSongGenresException();
+        }
+
+        if (!validateLyrics(songLyricsAsString)) {
+            throw new TooLongOrEmptyLyricsException();
+        }
+
+        if (!validateYouTubeVideoID(youTubeLink)) {
+            throw new InvalidYouTubeVideoIDException();
+        }
+
+        song.setName(songName);
+        song.setArtist(new Artist(artistName));
+        song.setYouTubeVideoID(youTubeLink);
+
+        if (!songFeaturedArtists.trim().isEmpty()) {
+            StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");
+
+            List<Artist> featuredArtists = new ArrayList<>();
+
+            while (stringTokenizer.hasMoreTokens()) {
+                String featuredArtistName = stringTokenizer.nextToken().trim();
+
+                if (!validateArtistName(featuredArtistName)) {
+                    throw new InvalidFeaturedArtistNameException();
+                }
+
+                featuredArtists.add(new Artist(featuredArtistName));
+            }
+
+            song.setFeaturedArtists(featuredArtists);
+        }
+
+        if (!songGenres.isEmpty()) {
+            List<String> songGenresList = new ArrayList<>();
+
+            StringTokenizer stringTokenizer = new StringTokenizer(songGenres, ";");
+
+            while (stringTokenizer.hasMoreTokens()) {
+                songGenresList.add(stringTokenizer.nextToken().trim());
+            }
+
+            song.setGenres(songGenresList);
+        }
+
+        LyricsParser lyricsParser = new LyricsParser();
+
+        SongLyrics songLyrics = lyricsParser.parseLyrics(songLyricsAsString);
+
+        song.setLyrics(songLyrics);
+
+        return song;
+
     }
 
     private boolean validateSongName(String songName) {

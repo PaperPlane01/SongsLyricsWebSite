@@ -1,9 +1,11 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
+import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;
+import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
-import kz.javalab.songslyricswebsite.exception.SongAlteringException;
+import kz.javalab.songslyricswebsite.exception.SongAddingException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,5 +124,39 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         }
 
         return lineID;
+    }
+
+    public void addSongLyricsToDatabase(Song song, Connection connection) {
+        String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
+                "VALUES (?, ?, ?, ?)";
+
+        int songIDParameter = 1;
+        int contentParameter = 2;
+        int songPartParameter = 3;
+        int linePositionParameter = 4;
+
+        int linePosition = 0;
+
+        for (SongLyrics songPart : song.getLyrics().getComponents()) {
+
+            for (SongLyrics line : songPart.getComponents()) {
+                linePosition++;
+                try {
+                    PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
+
+                    preparedStatement.setInt(songIDParameter, song.getID());
+                    preparedStatement.setString(contentParameter, line.toString());
+                    preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
+                    preparedStatement.setInt(linePositionParameter, linePosition);
+
+                    preparedStatement.execute();
+
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 }

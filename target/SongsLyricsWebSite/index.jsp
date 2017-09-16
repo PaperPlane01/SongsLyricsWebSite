@@ -7,16 +7,84 @@
   <head>
     <title>Song Lyrics Website</title>
     <jsp:include page="/WEB-INF/pages/css.jsp"/>
+    <link rel="stylesheet" href="/css/index.css">
   </head>
   <body>
   <jsp:include page="/WEB-INF/pages/menu.jsp"/>
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12">
-        <jsp:include page="/WEB-INF/pages/quick-acсess.jsp"/>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <jsp:include page="/WEB-INF/pages/quick-acсess.jsp"/>
+          </div>
       </div>
-    </div>
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div id="greetings-message">
+                  <div class="card card-body">
+                      <div class="card-header">
+                          <strong>
+                              <fmt:bundle basename="labels">
+                                  <fmt:message key="labels.mainpage.greetings"/>
+                              </fmt:bundle>
+                          </strong>
+                      </div>
+                      <div class="card-body">
+                          <p class="card-text">
+                              <fmt:bundle basename="labels">
+                                  <fmt:message key="labels.mainpage.decription"/> <a href="/controller?command=newsong"><fmt:message key="labels.mainpage.addsong"/></a><fmt:message key="labels.mainpage.dot"/>
+                              </fmt:bundle>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div id="top-ten-rated-songs">
+                  <div class="card card-body">
+                      <div class="card-header">
+                          <strong>
+                              <fmt:bundle basename="labels">
+                                  <fmt:message key="labels.mainpage.toptenratedsongs"/>
+                              </fmt:bundle>
+                          </strong>
+                      </div>
+                      <div class="card-body">
+                          <p class="card-text" id="list-of-top-rated-songs">
+                              <ul class="list-group" id="top-ten-rated-songs-list">
+
+                              </ul>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <div id="recently-added-songs">
+                  <div class="card card-body">
+                      <div class="card-header">
+                          <strong>
+                              <fmt:bundle basename="labels">
+                                  <fmt:message key="labels.mainpage.recenltyaddedsongs"/>
+                              </fmt:bundle>
+                          </strong>
+                      </div>
+                      <div class="card-body">
+                          <p class="card-text" id="list-of-recenlty-added-songs">
+                              <ul class="list-group" id="recently-added-songs-list">
+
+                              </ul>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
   <jsp:include page="/WEB-INF/pages/scripts.jsp"/>
+  <script src="/scripts/get-list-of-songs.js"></script>
   </body>
 </html>

@@ -9,12 +9,8 @@
     <link rel="stylesheet" href="/css/addsong.css">
 </head>
 <body>
+<jsp:include page="menu.jsp"/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <jsp:include page="menu.jsp"/>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="quick-acсess.jsp"/>

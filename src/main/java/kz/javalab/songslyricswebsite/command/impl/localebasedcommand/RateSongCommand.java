@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
+import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;

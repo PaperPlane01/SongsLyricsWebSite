@@ -17,6 +17,8 @@ public class Song {
     private List<String> genres = new ArrayList<>();
     private SongLyrics lyrics = new SongLyricsComposite();
     private boolean approved;
+    private String title;
+    private double averageRating;
     private String youTubeVideoID;
 
     public Song() {
@@ -110,7 +112,27 @@ public class Song {
         this.youTubeVideoID = youTubeVideoID;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
+
     public String getTitle() {
+        if (title == null || title.isEmpty()) {
+            initTitle();
+        }
+
+        return title;
+    }
+
+    public void initTitle() {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append(artist.getName());
@@ -128,7 +150,8 @@ public class Song {
 
         stringBuilder.append(" — ");
         stringBuilder.append(name);
-        return stringBuilder.toString();
+
+        title = stringBuilder.toString();
     }
 
     public boolean hasFeaturedArtists() {

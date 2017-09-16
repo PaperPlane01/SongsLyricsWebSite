@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.command;
 
-import kz.javalab.songslyricswebsite.command.*;
 import kz.javalab.songslyricswebsite.command.impl.*;
+import kz.javalab.songslyricswebsite.command.impl.jsoncommand.*;
 import kz.javalab.songslyricswebsite.command.impl.localebasedcommand.*;
 
 /**
@@ -113,6 +113,18 @@ public enum CommandEnum {
     ADDCOMMENT {
         {
             this.command = new AddCommentCommand();
+        }
+    },
+
+    TOPTENRATEDSONGS {
+        {
+            this.command = new TopTenRatedSongsCommand();
+        }
+    },
+
+    RECENLTYADDEDSONGS {
+        {
+            this.command = new RecentlyAddedSongsCommand();
         }
     };
 

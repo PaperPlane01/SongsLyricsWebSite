@@ -1,14 +1,16 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
-import kz.javalab.songslyricswebsite.dataaccessobject.SongDataAccessObject;
+import kz.javalab.songslyricswebsite.dataaccessobject.SongsDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,25 +98,30 @@ public class SongsRatingsManager {
         return averageRating;
     }
 
-    public Map<Song, Double> getTopTenRatedSongsWithRatings() {
+    public List<Song> getTopTenRatedSongs() {
         SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-        SongDataAccessObject songDataAccessObject = new SongDataAccessObject();
+        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         Connection connection = ConnectionPool.getInstance().getConnection();
 
-        Map<Song, Double> mapWithSongs = new LinkedHashMap<>();
-
+        List<Song> songs = new ArrayList<>();
         Map<Integer, Double> mapWithSongsIDs = songsRatingsDataAccessObject.getTopTenRatedSongsIDsAndRatings(connection);
 
         for (Map.Entry entry : mapWithSongsIDs.entrySet()) {
             Integer songID = (Integer) entry.getKey();
             Double songRating = (Double) entry.getValue();
 
-            Song song = songDataAccessObject.getSongByID(songID, false, connection);
+            System.out.println(songID + " " + songRating);
 
-            mapWithSongs.put(song, songRating);
+            boolean withLyrics = false;
+
+            Song song = songsDataAccessObject.getSongByID(songID, withLyrics, connection);
+
+            song.setAverageRating(songRating);
+
+            songs.add(song);
         }
 
-        return mapWithSongs;
+        return songs;
     }
 }

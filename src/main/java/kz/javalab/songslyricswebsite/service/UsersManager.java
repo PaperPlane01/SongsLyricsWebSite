@@ -2,7 +2,7 @@ package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
-import kz.javalab.songslyricswebsite.dataaccessobject.UserDataAccessObject;
+import kz.javalab.songslyricswebsite.dataaccessobject.UsersDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
@@ -25,7 +25,7 @@ public class UsersManager {
     public void registerNewUser(User user) throws SuchUserAlreadyExistsException, RegistrationFailedException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
 
         if (checkIfUserExists(user, CHECK_BY_USERNAME, connection)) {
             throw new SuchUserAlreadyExistsException();
@@ -33,7 +33,7 @@ public class UsersManager {
 
         try {
             connection.setAutoCommit(false);
-            userDataAccessObject.registerNewUser(user, connection);
+            usersDataAccessObject.registerNewUser(user, connection);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,36 +80,36 @@ public class UsersManager {
     }
 
     private boolean checkIfUserExists(User user, int parameterOfChecking, Connection connection) {
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
-        boolean userExists = userDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
+        boolean userExists = usersDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
         ConnectionPool.getInstance().returnConnection(connection);
         return userExists;
     }
 
     private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
-        boolean passwordValidates = userDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
+        boolean passwordValidates = usersDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return passwordValidates;
     }
 
     public int getUserIDByUserName(String userName) {
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
-        int userID =  userDataAccessObject.getUserIDByUserName(userName, connection);
+        int userID =  usersDataAccessObject.getUserIDByUserName(userName, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return userID;
     }
 
     public String getUserNameByUserID(int userID) throws InvalidUserIDException {
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         User user = new User();
         user.setID(userID);
 
         if (checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
-            String userName = userDataAccessObject.getUserNameByUserID(userID, connection);
+            String userName = usersDataAccessObject.getUserNameByUserID(userID, connection);
             ConnectionPool.getInstance().returnConnection(connection);
             return userName;
         } else {
@@ -120,9 +120,9 @@ public class UsersManager {
     }
 
     public UserType getUserTypeByUserID(int userID) {
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
-        UserType userType = userDataAccessObject.getUserTypeByUserID(userID, connection);
+        UserType userType = usersDataAccessObject.getUserTypeByUserID(userID, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return userType;
     }
