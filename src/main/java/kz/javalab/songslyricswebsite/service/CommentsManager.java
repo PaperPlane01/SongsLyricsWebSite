@@ -1,10 +1,15 @@
 package kz.javalab.songslyricswebsite.service;
 
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.CommentsDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
+import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.CommentAddingException;
 import kz.javalab.songslyricswebsite.exception.CommentAlteringException;
+import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
+import sun.misc.Request;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,7 +20,21 @@ import java.util.List;
  */
 public class CommentsManager {
 
+    private RequestWrapper requestWrapper;
+
     public CommentsManager() {
+    }
+
+    public CommentsManager(RequestWrapper requestWrapper) {
+        this.requestWrapper = requestWrapper;
+    }
+
+    public RequestWrapper getRequestWrapper() {
+        return requestWrapper;
+    }
+
+    public void setRequestWrapper(RequestWrapper requestWrapper) {
+        this.requestWrapper = requestWrapper;
     }
 
     public List<Comment> getCommentsOfSong(int songID) {
@@ -34,9 +53,22 @@ public class CommentsManager {
         return result;
     }
 
-    public void addCommentToDatabase(Comment comment) throws CommentAddingException {
+    public void addCommentToDatabase() throws CommentAddingException, InvalidCommentContentException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
+
+        User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+        int songID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.SONG_ID));
+        String content = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.CONTENT);
+
+        Comment comment = new Comment();
+        comment.setAuthor(currentUser);
+        comment.setSongID(songID);
+        comment.setContent(content);
+
+        if (!validateComment(comment)) {
+            throw new InvalidCommentContentException();
+        }
 
         try {
             connection.setAutoCommit(false);
@@ -54,6 +86,10 @@ public class CommentsManager {
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
+    }
+
+    private boolean validateComment(Comment comment) {
+        return comment.getContent().length() <= 1000 && comment.getContent().length() >= 1;
     }
 
     public void markCommentAsDeleted(int commentID) throws CommentAlteringException {

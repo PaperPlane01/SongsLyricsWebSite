@@ -1,6 +1,7 @@
 package kz.javalab.songslyricswebsite.command.impl;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
@@ -66,13 +67,13 @@ public class EditSongCommand implements ActionCommand {
 
                 String unparsedLyrics = lyricsParser.unparseLyrics(songLyrics);
 
-                request.setAttribute("songArtist", song.getArtist());
-                request.setAttribute("featuredArtists", featuredArtists);
-                request.setAttribute("songName", song.getName());
-                request.setAttribute("songGenres", songGenres);
-                request.setAttribute("unparsedLyrics", unparsedLyrics);
-                request.setAttribute("youTubeVideoID", youTubeLink);
-                request.setAttribute("songID", songID);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_ARTIST, song.getArtist());
+                request.setAttribute(RequestConstants.RequestAttributes.FEATURED_ARTISTS, featuredArtists);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_NAME, song.getName());
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_GENRES, songGenres);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_LYRICS, unparsedLyrics);
+                request.setAttribute(RequestConstants.RequestAttributes.YOUTUBE_VIDEO_ID, youTubeLink);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_ID, songID);
 
                 page = ConfigurationManager.getProperty("path.page.editsong");
                 request.getRequestDispatcher(page).forward(request, response);

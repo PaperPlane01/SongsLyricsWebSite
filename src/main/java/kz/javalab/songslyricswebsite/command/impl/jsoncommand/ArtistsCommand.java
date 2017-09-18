@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl.jsoncommand;
 import com.google.gson.Gson;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.command.JSONCommand;
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.service.ArtistsManager;
 
@@ -17,13 +18,16 @@ import java.util.List;
  */
 public class ArtistsCommand extends JSONCommand {
 
+    public ArtistsCommand() {
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Character letter = request.getParameter("letter").charAt(0);
+        RequestWrapper requestWrapper = new RequestWrapper(request);
 
-        ArtistsManager artistsManager = new ArtistsManager();
+        ArtistsManager artistsManager = new ArtistsManager(requestWrapper);
 
-        List<Artist> artists = artistsManager.getArtistsByLetter(letter);
+        List<Artist> artists = artistsManager.getArtistsByLetter();
 
         sendJsonResponse(artists, response);
     }

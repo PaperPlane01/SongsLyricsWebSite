@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.filter;
 
 
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -19,12 +21,12 @@ public class LanguageFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
-        String language = (String) httpServletRequest.getSession().getAttribute("language");
+        String language = (String) httpServletRequest.getSession().getAttribute(RequestConstants.RequestParameters.LANGUAGE);
 
         if (language == null) {
-            httpServletRequest.getSession().setAttribute("language", "en_US");
+            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, "en_US");
         } else if (language.isEmpty()) {
-            httpServletRequest.getSession().setAttribute("language", "en_US");
+            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, "en_US");
         }
 
         filterChain.doFilter(httpServletRequest, servletResponse);

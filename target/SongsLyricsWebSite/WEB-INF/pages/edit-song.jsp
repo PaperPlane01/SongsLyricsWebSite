@@ -148,7 +148,7 @@
                         </fmt:bundle>:
                     </label>
                     <span class="message" id="song-lyrics-message" style="display: none"></span>
-                    <textarea class="form-control" id="song-lyrics">${requestScope.unparsedLyrics}</textarea>
+                    <textarea class="form-control" id="song-lyrics">${requestScope.songLyrics}</textarea>
                 </div>
 
                 <div class="form-group">

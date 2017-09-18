@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.util;
 
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
@@ -34,12 +35,12 @@ public class SongRetriever {
 
         Song song = new Song();
 
-        String songName = request.getParameter("songName");
-        String artistName = request.getParameter("songArtist");
-        String songFeaturedArtists = request.getParameter("songFeaturedArtists");
-        String songGenres = request.getParameter("songGenres");
-        String songLyricsAsString = request.getParameter("songLyrics");
-        String youTubeLink = request.getParameter("youTubeLink");
+        String songName = request.getParameter(RequestConstants.RequestParameters.SONG_NAME);
+        String artistName = request.getParameter(RequestConstants.RequestParameters.SONG_ARTIST);
+        String songFeaturedArtists = request.getParameter(RequestConstants.RequestParameters.FEATURED_ARTISTS);
+        String songGenres = request.getParameter(RequestConstants.RequestParameters.SONG_GENRES);
+        String songLyricsAsString = request.getParameter(RequestConstants.RequestParameters.SONG_LYRICS);
+        String youTubeVideoID = request.getParameter(RequestConstants.RequestParameters.YOUTUBE_VIDEO_ID);
 
         if (!validateArtistName(artistName)) {
             throw new InvalidArtistNameException();
@@ -61,13 +62,13 @@ public class SongRetriever {
             throw new TooLongOrEmptyLyricsException();
         }
 
-        if (!validateYouTubeVideoID(youTubeLink)) {
+        if (!validateYouTubeVideoID(youTubeVideoID)) {
             throw new InvalidYouTubeVideoIDException();
         }
 
         song.setName(songName);
         song.setArtist(new Artist(artistName));
-        song.setYouTubeVideoID(youTubeLink);
+        song.setYouTubeVideoID(youTubeVideoID);
 
         if (!songFeaturedArtists.trim().isEmpty()) {
             StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");

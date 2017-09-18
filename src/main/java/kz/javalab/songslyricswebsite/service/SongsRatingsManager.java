@@ -1,10 +1,16 @@
 package kz.javalab.songslyricswebsite.service;
 
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
+import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
+import kz.javalab.songslyricswebsite.exception.SongRatingException;
+import kz.javalab.songslyricswebsite.exception.UserNotLoggedInException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,30 +24,69 @@ import java.util.Map;
  */
 public class SongsRatingsManager {
 
+    private RequestWrapper requestWrapper;
+
     public SongsRatingsManager() {
     }
 
-    public void rateSong(int userID, int songID, int rating) throws InvalidRatingValueException {
-        if (!validateRatingValue(rating)) {
-            throw new InvalidRatingValueException();
+    public SongsRatingsManager(RequestWrapper requestWrapper) {
+        this.requestWrapper = requestWrapper;
+    }
+
+    public RequestWrapper getRequestWrapper() {
+        return requestWrapper;
+    }
+
+    public void setRequestWrapper(RequestWrapper requestWrapper) {
+        this.requestWrapper = requestWrapper;
+    }
+
+    public void rateSong() throws InvalidRatingValueException, UserNotLoggedInException, NoSuchSongException, SongRatingException {
+        User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+
+        if (user == null) {
+            throw new UserNotLoggedInException();
         }
 
-        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-        Connection connection = ConnectionPool.getInstance().getConnection();
-
         try {
-            connection.setAutoCommit(false);
-            songsRatingsDataAccessObject.rateSong(userID, songID, rating, connection);
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+            int songID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.SONG_ID));
+
+            SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
+
+            Connection connection = ConnectionPool.getInstance().getConnection();
+
+            if (!songsDataAccessObject.checkIfSongExists(songID, connection)) {
+                throw new NoSuchSongException();
             }
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
+
+            try {
+                int rating = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.RATING));
+
+                if (!validateRatingValue(rating)) {
+                    throw new InvalidRatingValueException();
+                }
+
+                SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+
+                connection.setAutoCommit(false);
+
+                songsRatingsDataAccessObject.rateSong(user.getID(), songID, rating, connection);
+            } catch (NumberFormatException e) {
+                throw new InvalidRatingValueException();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                try {
+                    connection.rollback();
+                    throw new SongRatingException();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                    throw new SongRatingException();
+                }
+            } finally {
+                ConnectionPool.getInstance().returnConnection(connection);
+            }
+        } catch (NumberFormatException e) {
+            throw new NoSuchSongException();
         }
     }
 

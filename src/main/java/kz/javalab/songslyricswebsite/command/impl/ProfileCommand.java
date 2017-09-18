@@ -1,6 +1,7 @@
 package kz.javalab.songslyricswebsite.command.impl;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
@@ -22,12 +23,12 @@ public class ProfileCommand implements ActionCommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int userID = Integer.valueOf(request.getParameter("userID"));
+            int userID = Integer.valueOf(request.getParameter(RequestConstants.RequestParameters.USER_ID));
 
             User requestedUser = new User();
             requestedUser.setID(userID);
 
-            User sessionUser = (User) request.getSession().getAttribute("user");
+            User sessionUser = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);
 
             if (sessionUser != null) {
                 if (requestedUser.getID() == sessionUser.getID()) {

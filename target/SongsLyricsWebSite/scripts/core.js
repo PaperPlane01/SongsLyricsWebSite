@@ -384,7 +384,7 @@ function SignUpManager() {
                 url : 'controller',
                 data: {
                     command : 'register',
-                    userName : userName,
+                    username : userName,
                     password : password,
                     secondPassword : secondPassword
                 },

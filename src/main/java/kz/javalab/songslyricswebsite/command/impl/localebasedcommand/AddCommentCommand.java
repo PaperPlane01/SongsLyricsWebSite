@@ -1,9 +1,10 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
-import kz.javalab.songslyricswebsite.entity.comment.Comment;
-import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
+import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.exception.CommentAddingException;
+import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 
 import javax.servlet.ServletException;
@@ -25,43 +26,26 @@ public class AddCommentCommand extends LocaleBasedCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User currentUser = (User) request.getSession().getAttribute("user");
-
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(ResponseConstants.Messages.LABELS, getLocaleFromRequest(request));
         Map<String, String> responseMap = new LinkedHashMap<>();
+        RequestWrapper requestWrapper = new RequestWrapper(request);
 
-        CommentsManager commentsManager = new CommentsManager();
-
-        int songID = Integer.valueOf(request.getParameter("songID"));
-        String content = request.getParameter("content");
-
-        Comment comment = new Comment();
-
-        comment.setAuthor(currentUser);
-        comment.setSongID(songID);
-        comment.setContent(content);
-
-        if (!validateComment(comment)) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.invalidcommentcontent"));
-            sendJsonResponse(responseMap, response);
-            return;
-        }
+        CommentsManager commentsManager = new CommentsManager(requestWrapper);
 
         try {
-            commentsManager.addCommentToDatabase(comment);
-            responseMap.put("status", "SUCCESS");
+            commentsManager.addCommentToDatabase();
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
             sendJsonResponse(responseMap, response);
         } catch (CommentAddingException e) {
             e.printStackTrace();
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.errorwhileaddingcomment"));
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_ADDING_COMMENT));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidCommentContentException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_COMMENT_CONTENT));
             sendJsonResponse(responseMap, response);
         }
-    }
-
-    private boolean validateComment(Comment comment) {
-        return comment.getContent().length() <= 1000 && comment.getContent().length() >= 1;
     }
 
     @Override

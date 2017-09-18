@@ -25,7 +25,6 @@ public class TopTenRatedSongsCommand extends JSONCommand {
 
         for (Song song : songs) {
             song.initTitle();
-            System.out.println(song.getTitle());
         }
 
         sendJsonResponse(songs, response);

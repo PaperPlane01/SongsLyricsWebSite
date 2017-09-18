@@ -204,9 +204,9 @@ $(document).ready(function () {
                     command : "addsong",
                     songName : songName,
                     songArtist : artistName,
-                    songFeaturedArtists : featuredArtists,
+                    featuredArtists : featuredArtists,
                     songGenres : songGenres,
-                    youTubeLink : youTubeVideoID,
+                    youTubeVideoID : youTubeVideoID,
                     songLyrics : songLyrics
                 },
                 

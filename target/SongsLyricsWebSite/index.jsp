@@ -8,6 +8,7 @@
     <title>Song Lyrics Website</title>
     <jsp:include page="/WEB-INF/pages/css.jsp"/>
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/spinning-loader.css">
   </head>
   <body>
   <jsp:include page="/WEB-INF/pages/menu.jsp"/>
@@ -52,11 +53,10 @@
                           </strong>
                       </div>
                       <div class="card-body">
-                          <p class="card-text" id="list-of-top-rated-songs">
-                              <ul class="list-group" id="top-ten-rated-songs-list">
+                          <div class="loader" id="top-ten-rated-songs-loader"></div>
+                          <ul class="list-group" id="top-ten-rated-songs-list">
 
-                              </ul>
-                          </p>
+                          </ul>
                       </div>
                   </div>
               </div>
@@ -73,11 +73,10 @@
                           </strong>
                       </div>
                       <div class="card-body">
-                          <p class="card-text" id="list-of-recenlty-added-songs">
-                              <ul class="list-group" id="recently-added-songs-list">
+                          <div class="loader" id="recently-added-songs-loader"></div>
+                          <ul class="list-group" id="recently-added-songs-list">
 
-                              </ul>
-                          </p>
+                          </ul>
                       </div>
                   </div>
               </div>
@@ -85,6 +84,6 @@
       </div>
   </div>
   <jsp:include page="/WEB-INF/pages/scripts.jsp"/>
-  <script src="/scripts/get-list-of-songs.js"></script>
+  <script src="/scripts/songs-loader.js"></script>
   </body>
 </html>

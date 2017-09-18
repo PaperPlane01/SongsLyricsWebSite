@@ -1,6 +1,7 @@
 package kz.javalab.songslyricswebsite.command.impl.jsoncommand;
 
 import kz.javalab.songslyricswebsite.command.JSONCommand;
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.service.SongsManager;
@@ -16,15 +17,16 @@ import java.util.List;
  */
 public class ListOfSongsCommand extends JSONCommand {
 
+    public ListOfSongsCommand() {
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SongsManager songsManager = new SongsManager();
+        RequestWrapper requestWrapper = new RequestWrapper(request);
 
-        String artistName = request.getParameter("artistName");
+        SongsManager songsManager = new SongsManager(requestWrapper);
 
-        Artist artist = new Artist(artistName);
-
-        List<Song> songsPerformedByArtist = songsManager.getSongsByArtist(artist);
+        List<Song> songsPerformedByArtist = songsManager.getSongsByArtist();
 
         sendJsonResponse(songsPerformedByArtist, response);
     }

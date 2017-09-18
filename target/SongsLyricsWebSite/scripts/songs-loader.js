@@ -25,6 +25,7 @@ function SongsManager() {
     };
 
     this._displayTopTenRatedSongs = function (songs) {
+        $("#top-ten-rated-songs-loader").css('display', 'none');
         $.each(songs, function (index, song) {
             let displayedIndex = index + 1;
             $("#top-ten-rated-songs-list").append(
@@ -50,6 +51,7 @@ function SongsManager() {
     };
 
     this._displayRecentlyAddedSongs = function (songs) {
+        $("#recently-added-songs-loader").css('display', 'none');
         $.each(songs, function (index, song) {
             let displayedIndex = index + 1;
             $("#recently-added-songs-list").append(

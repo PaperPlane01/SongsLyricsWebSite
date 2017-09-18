@@ -2,6 +2,7 @@ package kz.javalab.songslyricswebsite.command.impl;
 
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
@@ -11,6 +12,7 @@ import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
+import sun.misc.Request;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +30,7 @@ public class SongCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            int songID = Integer.valueOf(request.getParameter("songID"));
+            int songID = Integer.valueOf(request.getParameter(RequestConstants.RequestParameters.SONG_ID));
 
             SongsManager songsManager = new SongsManager();
             CommentsManager commentsManager = new CommentsManager();
@@ -47,30 +49,29 @@ public class SongCommand implements ActionCommand {
                     lyricsPartsAsList.add(songPart);
                 }
 
-                request.setAttribute("songTitle", songTitle);
-                request.setAttribute("listOfLyricsParts", lyricsPartsAsList);
-                request.setAttribute("youTubeLink", youTubeLink);
-                request.setAttribute("isApproved", isApproved);
-                request.setAttribute("songID", songID);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_TITLE, songTitle);
+                request.setAttribute(RequestConstants.RequestAttributes.LIST_OF_LYRICS_PARTS, lyricsPartsAsList);
+                request.setAttribute(RequestConstants.RequestAttributes.YOUTUBE_VIDEO_ID, youTubeLink);
+                request.setAttribute(RequestConstants.RequestAttributes.IS_APPROVED, isApproved);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG_ID, songID);
 
                 if (commentsManager.checkIfSongHasComments(songID)) {
                     List<Comment> comments = commentsManager.getCommentsOfSong(songID);
-                    System.out.println("comments length: " + comments.size());
-                    request.setAttribute("comments", comments);
+                    request.setAttribute(RequestConstants.RequestAttributes.COMMENTS, comments);
                 }
 
-                if (request.getSession().getAttribute("user") != null) {
-                    User currentUser = (User) request.getSession().getAttribute("user");
+                if (request.getSession().getAttribute(RequestConstants.SessionAttributes.USER) != null) {
+                    User currentUser = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);
 
                     SongsRatingsManager songsRatingsManager = new SongsRatingsManager();
 
                     Boolean userHasRatedSong = songsRatingsManager.checkIfUserRatedSong(currentUser.getID(), song.getID());
 
-                    request.setAttribute("userHasRatedSong", userHasRatedSong);
+                    request.setAttribute(RequestConstants.RequestAttributes.USER_HAS_RATED_SONG, userHasRatedSong);
 
                     if (userHasRatedSong) {
                         int userRatingOfSong = songsRatingsManager.getUserRatingOfSong(currentUser.getID(), song.getID());
-                        request.setAttribute("userRating", userRatingOfSong);
+                        request.setAttribute(RequestConstants.RequestAttributes.USER_RATING, userRatingOfSong);
                     }
                 }
 

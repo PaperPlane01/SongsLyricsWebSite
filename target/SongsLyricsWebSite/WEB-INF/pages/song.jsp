@@ -45,7 +45,7 @@
                     </div>
                     <div class="song-video">
                         <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${requestScope.youTubeLink}"></iframe>
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/${requestScope.youTubeVideoID}"></iframe>
                         </div>
                     </div>
 

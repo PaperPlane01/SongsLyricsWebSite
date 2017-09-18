@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
+import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.WrongPasswordException;
@@ -26,34 +28,27 @@ public class LoginCommand extends LocaleBasedCommand {
         ResourceBundle labels = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
         Map<String, String> responseMap = new LinkedHashMap<>();
 
-        String userName = request.getParameter("username");
-        Password password = new Password();
-        password.encodePassword(request.getParameter("password"));
+        RequestWrapper requestWrapper = new RequestWrapper(request);
 
-        User user = new User(userName, password);
-
-        UsersManager usersManager = new UsersManager();
+        UsersManager usersManager = new UsersManager(requestWrapper);
 
         try {
-            usersManager.doLogin(user);
-            user.setID(usersManager.getUserIDByUserName(user.getUsername()));
-            user.setUserType(usersManager.getUserTypeByUserID(user.getID()));
-            request.getSession().setAttribute("user", user);
+            usersManager.doLogin();
 
-            responseMap.put("status", "SUCCESS");
-            responseMap.put("message", labels.getString("labels.loginsuccess"));
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_SUCCESS));
 
             sendJsonResponse(responseMap, response);
         } catch (WrongPasswordException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", labels.getString("labels.loginfailed"));
-            responseMap.put("reason", labels.getString("labels.wrongpassword"));
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_FAILED));
+            responseMap.put(ResponseConstants.Messages.REASON, labels.getString(ResponseConstants.Messages.WRONG_PASSWORD));
 
             sendJsonResponse(responseMap, response);
         } catch (WrongUsernameException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", labels.getString("labels.loginfailed"));
-            responseMap.put("reason", labels.getString("labels.wrongusername"));
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_FAILED));
+            responseMap.put(ResponseConstants.Messages.REASON, labels.getString(ResponseConstants.Messages.WRONG_USERNAME));
 
             sendJsonResponse(responseMap, response);
         }

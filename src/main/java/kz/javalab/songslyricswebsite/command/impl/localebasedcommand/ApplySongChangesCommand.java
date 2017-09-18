@@ -1,10 +1,10 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
-import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
+import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.service.SongsManager;
-import kz.javalab.songslyricswebsite.util.SongRetriever;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,59 +26,57 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SongRetriever songRetriever = new SongRetriever();
         Map<String, String> responseMap = new LinkedHashMap<>();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
 
+        RequestWrapper requestWrapper = new RequestWrapper(request);
+        SongsManager songsManager = new SongsManager(requestWrapper);
+
         try {
-            Song alteredSong = songRetriever.retrieveSongFromRequest(request);
-
-            SongsManager songsManager = new SongsManager();
-
-            songsManager.alterSong(alteredSong.getID(), alteredSong);
-
-            responseMap.put("status", "SUCCESS");
-            responseMap.put("message", "Everything is ok!");
-            sendJsonResponse(responseMap, response);
-
-        }  catch (InvalidArtistNameException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.artistname.invalid"));
-            sendJsonResponse(responseMap, response);
-        } catch (InvalidSongNameException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.songname.invalid"));
-            sendJsonResponse(responseMap, response);
-        } catch (InvalidFeaturedArtistsException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.featuredartists.invalid"));
-            sendJsonResponse(responseMap, response);
-        } catch (InvalidSongGenresException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.songgenres.invalid"));
-            sendJsonResponse(responseMap, response);
-        } catch (TooLongOrEmptyLyricsException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.songlyrics.toolong"));
-            sendJsonResponse(responseMap, response);
-        } catch (InvalidYouTubeVideoIDException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.youtubevideoid.invalid"));
-            sendJsonResponse(responseMap, response);
-        } catch (InvalidFeaturedArtistNameException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.featuredartists.artistnametoolong"));
+            songsManager.alterSong();
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, "Everything is ok!");
             sendJsonResponse(responseMap, response);
         } catch (LyricsParsingException e) {
             e.printStackTrace();
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", resourceBundle.getString("labels.errors.songlyrics.invalid"));
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_SONG_LYRICS));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidSongNameException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_SONG_NAME));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidFeaturedArtistsException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_FEATURED_ARTISTS));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidYouTubeVideoIDException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_YOUTUBE_VIDEO_ID));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidSongGenresException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_SONG_GENRES));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidArtistNameException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_ARTIST_NAME));
+            sendJsonResponse(responseMap, response);
+        } catch (TooLongOrEmptyLyricsException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.TOO_LONG_LYRICS));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidFeaturedArtistNameException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.FEATURED_ARTIST_NAME_IS_TOO_LONG));
             sendJsonResponse(responseMap, response);
         } catch (NoSuchSongException e) {
-            e.printStackTrace();
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_SUCH_SONG));
+            sendJsonResponse(responseMap, response);
         } catch (SongAlteringException e) {
-            responseMap.put("status", "FAILURE");
-            responseMap.put("message", "cant alter song");
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_ALTERING_SONG));
             sendJsonResponse(responseMap, response);
         }
     }

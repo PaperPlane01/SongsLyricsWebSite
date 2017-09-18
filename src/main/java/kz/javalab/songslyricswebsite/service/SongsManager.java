@@ -1,17 +1,17 @@
 package kz.javalab.songslyricswebsite.service;
 
+import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.*;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
-import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
-import kz.javalab.songslyricswebsite.exception.SongAddingException;
-import kz.javalab.songslyricswebsite.exception.SongAlteringException;
-import kz.javalab.songslyricswebsite.exception.SuchSongAlreadyExistsException;
+import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.util.SongHelper;
+import kz.javalab.songslyricswebsite.util.SongRetriever;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -24,7 +24,45 @@ import java.util.Map;
  */
 public class SongsManager {
 
+    private RequestWrapper requestWrapper;
+
     public SongsManager() {
+    }
+
+    public SongsManager(RequestWrapper requestWrapper) {
+        this.requestWrapper = requestWrapper;
+    }
+
+    public void alterSong() throws NoSuchSongException, LyricsParsingException, InvalidSongNameException, InvalidFeaturedArtistsException, InvalidYouTubeVideoIDException, InvalidSongGenresException, InvalidArtistNameException, TooLongOrEmptyLyricsException, InvalidFeaturedArtistNameException, SongAlteringException {
+       Connection connection = ConnectionPool.getInstance().getConnection();
+       int songID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.SONG_ID));
+
+       SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
+
+       if (!songsDataAccessObject.checkIfSongExists(songID, connection)) {
+           throw new NoSuchSongException();
+       }
+
+       SongRetriever songRetriever = new SongRetriever();
+
+       Song alteredSong = songRetriever.retrieveSongFromRequest(requestWrapper.getRequest());
+
+        try {
+            connection.setAutoCommit(false);
+            alterSong(songID, alteredSong, connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+                throw new SongAlteringException();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new SongAlteringException();
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
+
     }
 
     /**
@@ -34,39 +72,20 @@ public class SongsManager {
      * @throws NoSuchSongException Thrown if there is no song with this ID.
      * @throws SongAlteringException Thrown if some exception occurred when tried to alter song.
      */
-    public void alterSong(int songID, Song alteredSong) throws NoSuchSongException, SongAlteringException {
-        Connection connection = ConnectionPool.getInstance().getConnection();
+    private void alterSong(int songID, Song alteredSong, Connection connection) throws NoSuchSongException, SongAlteringException {
         Song oldSong = getSongByID(songID, connection);
 
-        try {
+        alterSongName(alteredSong, oldSong, connection);
 
-            connection.setAutoCommit(false);
+        alterArtistID(alteredSong, oldSong, connection);
 
-            alterSongName(alteredSong, oldSong, connection);
+        alterFeaturings(alteredSong, oldSong, connection);
 
-            alterArtistID(alteredSong, oldSong, connection);
+        alterGenresOfSong(alteredSong, oldSong, connection);
 
-            alterFeaturings(alteredSong, oldSong, connection);
+        alterLyrics(alteredSong, oldSong, connection);
 
-            alterGenresOfSong(alteredSong, oldSong, connection);
-
-            alterLyrics(alteredSong, oldSong, connection);
-
-            alterYouTubeLink(songID, alteredSong.getYouTubeVideoID(), oldSong.getYouTubeVideoID(), connection);
-
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-                throw  new SongAlteringException();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                throw new SongAlteringException();
-            }
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
-        }
+        alterYouTubeLink(songID, alteredSong.getYouTubeVideoID(), oldSong.getYouTubeVideoID(), connection);
     }
 
     /**
@@ -349,13 +368,25 @@ public class SongsManager {
     }
 
     /**
-     * Adds song to database.
-     * @param song Song to be added.
-     * @throws SongAddingException Thrown if there is an error occurred when attempted to insert data into database.
-     * @throws SuchSongAlreadyExistsException Thrown if such song already exists.
+     *
+     * @throws SongAddingException
+     * @throws SuchSongAlreadyExistsException
+     * @throws LyricsParsingException
+     * @throws InvalidSongNameException
+     * @throws InvalidFeaturedArtistsException
+     * @throws InvalidYouTubeVideoIDException
+     * @throws InvalidSongGenresException
+     * @throws InvalidArtistNameException
+     * @throws TooLongOrEmptyLyricsException
+     * @throws InvalidFeaturedArtistNameException
      */
-    public void addSongToDatabase(Song song) throws SongAddingException, SuchSongAlreadyExistsException {
+    public void addSongToDatabase() throws SongAddingException, SuchSongAlreadyExistsException, LyricsParsingException, InvalidSongNameException, InvalidFeaturedArtistsException, InvalidYouTubeVideoIDException, InvalidSongGenresException, InvalidArtistNameException, TooLongOrEmptyLyricsException, InvalidFeaturedArtistNameException {
        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        SongRetriever songRetriever = new SongRetriever();
+
+        Song song = songRetriever.retrieveSongFromRequest(requestWrapper.getRequest());
+        song.setApproved(false);
 
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
@@ -413,15 +444,18 @@ public class SongsManager {
 
     /**
      * Returns list of songs performed by specific artist.
-     * @param artist Artist whose songs are to be retrieved.
      * @return List of songs performed by specific artist.
      */
-    public List<Song> getSongsByArtist(Artist artist) {
+    public List<Song> getSongsByArtist() {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
+
+        String artistName = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.ARTIST_NAME);
+
+        Artist artist = new Artist(artistName);
 
         artist.setID(artistDataAccessObject.getArtistID(artist, connection));
         List<Song> songsByArtist =  songsDataAccessObject.getSongsByArtist(artist, connection);
