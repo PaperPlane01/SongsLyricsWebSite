@@ -34,7 +34,7 @@
                            </fmt:bundle>
                        </a>
                        <a class="dropdown-item delete-comment" href="#">
-                           <div class="comment-id" style="display: none">${id}</div>
+                           <div class="deleted-comment-id" style="display: none">${id}</div>
                            <fmt:bundle basename="labels">
                                <fmt:message key="labels.deletecomment"/>
                            </fmt:bundle>

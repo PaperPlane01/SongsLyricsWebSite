@@ -1,9 +1,15 @@
 $(document).ready(function () {
     let userBlockingManager = new UserBlockingManager();
+    let commentDeletingManager = new CommentDeletingManager();
 
     $(".block-user").on('click', function () {
         let userID = $(this).children(".comment-author-id").html();
         userBlockingManager.blockUser(userID);
+    });
+    
+    $(".delete-comment").on('click', function () {
+        let commentID = $(this).children(".deleted-comment-id").html();
+        commentDeletingManager.deleteComment(commentID);
     })
 });
 
@@ -64,16 +70,17 @@ function CommentDeletingManager() {
                 },
 
                 success : function (responseData) {
-
+                    self._handleCommentDeletingResults(responseData, commentID)
                 }
             }
         )
     };
 
-    this._handleCommentDeletingResults = function (responseData) {
+    this._handleCommentDeletingResults = function (responseData, commentID) {
         if (responseData.status === "SUCCESS") {
             let message = responseData.message;
             self._showSuccessMessage(message);
+            $("#comments").children("#" + commentID).css('display', 'none');
         }
 
         if (responseData.status === "FAILURE") {

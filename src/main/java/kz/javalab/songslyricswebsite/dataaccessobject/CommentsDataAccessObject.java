@@ -27,7 +27,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
         String getCommentsQuery = "SELECT comment_id, comments.user_id, comment_content, time, user_name, user_role\n" +
                 "FROM comments INNER JOIN users\n" +
                 "ON comments.user_id = users.user_id\n" +
-                "WHERE song_id = ?\n" +
+                "WHERE song_id = ? AND is_deleted = 0\n" +
                 "ORDER BY comment_id";
 
         int songIDParameter = 1;
@@ -111,7 +111,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
     /**
      * Adds comment to the database.
      * @param comment Comment to be added.
-     * @param connection Conection to be used.
+     * @param connection Connection to be used.
      */
     public void addCommentToDatabase(Comment comment, Connection connection) {
         String addCommentQuery = "INSERT INTO comments\n" +
