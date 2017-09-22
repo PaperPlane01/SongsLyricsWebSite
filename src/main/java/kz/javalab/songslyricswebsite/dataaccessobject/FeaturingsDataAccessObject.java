@@ -66,33 +66,27 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
         return  featuringID;
     }
 
-    public void addNewFeaturing(int artistID, int songID, Connection connection) {
+    public void addNewFeaturing(int artistID, int songID, Connection connection) throws SQLException {
         String addFeaturingQuery = "INSERT INTO featurings\n" +
                 "(artist_id, song_id)\n" +
                 "VALUES (?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, artistID, songID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, artistID, songID);
+
     }
 
-    public void markFeatuirngAsDeleted(int featuringID, Connection connection) {
+    public void markFeatuirngAsDeleted(int featuringID, Connection connection) throws SQLException {
         String markFeaturingAsDeletedQuery = "UPDATE featurings\n" +
                 "SET is_deleted = ?\n" +
                 "WHERE featuring_id = ?";
 
         int isDeletedValue = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(markFeaturingAsDeletedQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(markFeaturingAsDeletedQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, featuringID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, featuringID);
+
     }
 }

@@ -22,11 +22,12 @@ public class LanguageFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 
         String language = (String) httpServletRequest.getSession().getAttribute(RequestConstants.RequestParameters.LANGUAGE);
+        String english = "en_US";
 
         if (language == null) {
-            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, "en_US");
+            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, english);
         } else if (language.isEmpty()) {
-            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, "en_US");
+            httpServletRequest.getSession().setAttribute(RequestConstants.RequestParameters.LANGUAGE, english);
         }
 
         filterChain.doFilter(httpServletRequest, servletResponse);

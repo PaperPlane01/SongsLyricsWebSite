@@ -20,39 +20,33 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
     public LinesDataAccessObject() {
     }
 
-    public void alterLine(int lineID, Line newLine, Connection connection) {
+    public void alterLine(int lineID, Line newLine, Connection connection) throws SQLException {
         String alterLineQuery = "UPDATE websitedatabase.lines\n" +
                 "SET content = ?\n" +
                 "WHERE line_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterLineQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(alterLineQuery);
 
-            updateStringValueByEntityID(preparedStatement, lineID, newLine.toString());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        updateStringValueByEntityID(preparedStatement, lineID, newLine.toString());
+
     }
 
-    public void alterLyricsPart(int lineID, SongLyricsPartType songLyricsPartType, Connection connection) {
+    public void alterLyricsPart(int lineID, SongLyricsPartType songLyricsPartType, Connection connection) throws SQLException {
         String alterLyricsPartQuery = "UPDATE websitedatabase.lines\n" +
                 "SET song_part = ?\n" +
                 "WHERE line_id = ?";
         int songPartParameter = 1;
         int lineIDParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterLyricsPartQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(alterLyricsPartQuery);
 
-            preparedStatement.setString(songPartParameter, songLyricsPartType.toString().toLowerCase());
-            preparedStatement.setInt(lineIDParameter, lineID);
+        preparedStatement.setString(songPartParameter, songLyricsPartType.toString().toLowerCase());
+        preparedStatement.setInt(lineIDParameter, lineID);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        preparedStatement.close();
+
     }
 
     public void addLineToDatabase(int linePosition, int songID, Line line, SongLyricsPartType songLyricsPartType, Connection connection) {
@@ -80,20 +74,17 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         }
     }
 
-    public void markLineAsDeleted(int lineID, Connection connection) {
+    public void markLineAsDeleted(int lineID, Connection connection) throws SQLException {
         String markLineAsDeletedQuery = "UPDATE websitedatabase.lines\n" +
                 "SET is_deleted = ?\n" +
                 "WHERE line_id = ?";
 
         int isDeletedValue = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(markLineAsDeletedQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(markLineAsDeletedQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, lineID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, lineID);
+
     }
 
     public int getLineID(int linePosition, int songID, Connection connection) {

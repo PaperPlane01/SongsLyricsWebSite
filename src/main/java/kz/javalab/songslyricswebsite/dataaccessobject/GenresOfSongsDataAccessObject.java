@@ -18,19 +18,16 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
      * @param genreID ID of the genre.
      * @param connection Connection to be used.
      */
-    public void addGenreOfSong(int songID, int genreID, Connection connection) {
+    public void addGenreOfSong(int songID, int genreID, Connection connection) throws SQLException {
         String addSongGenreMatchQuery = "INSERT INTO genres_of_songs\n" +
                 "(song_id, genre_id)\n" +
                 "VALUES\n" +
                 "(?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatchQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatchQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, songID, genreID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, songID, genreID);
+
     }
 
     /**
@@ -38,20 +35,17 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
      * @param matchID ID of "song" - "genre" match.
      * @param connection Connection to be used.
      */
-    public void markSongGenreMatchAsDeleted(int matchID, Connection connection) {
+    public void markSongGenreMatchAsDeleted(int matchID, Connection connection) throws SQLException {
         String markAsDeletedQuery = "UPDATE genres_of_songs\n" +
                 "SET match_deleted = ?\n" +
                 "WHERE match_id = ?";
 
         int matchDeletedValue = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(markAsDeletedQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(markAsDeletedQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, matchDeletedValue, matchID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, matchDeletedValue, matchID);
+
     }
 
     /**

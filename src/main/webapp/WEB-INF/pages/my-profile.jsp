@@ -25,7 +25,10 @@
             <h3>${sessionScope.user.getUserType()}</h3>
         </div>
     </div>
-    <jsp:include page="scripts.jsp"/>
 </div>
+<div id="messages" style="display: none">
+    <jsp:include page="messages/login-and-sign-up-messages.jsp"/>
+</div>
+<jsp:include page="scripts.jsp"/>
 </body>
 </html>

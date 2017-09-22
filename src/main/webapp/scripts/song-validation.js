@@ -26,13 +26,13 @@ function ArtistNameValidatorView() {
 
         if (validationResult === ArtistNameValidationResults.EMPTY_NAME) {
             $("#artist-name-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.artistname.empty", PageGlobals.currentLocale);
+            let message = $("#empty-artist-name").html();
             this._showErrorMessage(message);
         }
 
         if (validationResult === ArtistNameValidationResults.TOO_LONG) {
             $("#artist-name-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.artistname.toolong", PageGlobals.currentLocale);
+            let message = $("#too-long-artist-name").html();
             this._showErrorMessage(message);
         }
     };
@@ -76,13 +76,13 @@ function SongNameValidatorView() {
         }
 
         if (validationResult === SongNameValidationResults.EMPTY_SONG_NAME) {
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.songname.empty", PageGlobals.currentLocale);
+            let message = $("#empty-song-name").html();
             this._showErrorMessage(message);
             return;
         }
 
         if (validationResult === SongNameValidationResults.TOO_LONG) {
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.songname.toolong", PageGlobals.currentLocale);
+            let message = $("#too-long-song-name").html();
             this._showErrorMessage(message);
             return;
         }
@@ -119,7 +119,7 @@ function FeaturedArtistsValidatorView() {
         }
 
         if (validationResult === FeaturedArtistsValidationResults.TOO_LONG) {
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.featuredartists.toolong");
+            let message = $("#too-long-featured-artists").html();
             this._showErrorMessage(message);
         }
     };
@@ -157,7 +157,7 @@ function SongGenresValidatorView() {
         }
 
         if (validationResult === SongGenresValidationResults.TOO_LONG) {
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.songgenres.toolong", PageGlobals.currentLocale);
+            let message = $("#too-long-song-genres").html();
             this._showErrorMessage(message);
         }
     };
@@ -193,13 +193,14 @@ function YouTubeVideoIDValidatorView() {
         }
 
         if (validationResult === YouTubeVideoIDValidationResults.TOO_LONG) {
-            $("#song-youtube-video-id-message").css('display', 'block');
-            $("#song-youtube-video-id-message").html("<span style = \"color:red\">" + message + "</span>");
+            let message = $("#too-long-youtube-video-id").html();
+            this._showErrorMessage(message);
         }
     };
 
     this._showErrorMessage = function (message) {
-
+        $("#song-youtube-video-id-message").css('display', 'block');
+        $("#song-youtube-video-id-message").html("<span style = \"color:red\">" + message + "</span>");
     }
 }
 
@@ -325,37 +326,36 @@ function LyricsValidatorView() {
 
         if (validationResult === LyricsValidationResults.SUCCESS) {
             $("#song-lyrics-message").css('display', 'none');
-            console.log("Now I'm supposed to hide lyrics validation message!");
             return;
         }
 
         if (validationResult === LyricsValidationResults.EMPTY) {
             console.log('empty');
-            message = PageGlobals.labelsManager.getLabelContent("labels.errors.songlyrics.empty", PageGlobals.currentLocale);
+            message = $("#empty-lyrics").html();
             this._showErrorMessage(message);
             return;
         }
 
         if (validationResult === LyricsValidationResults.TOO_LONG) {
-            message = PageGlobals.labelsManager.getLabelContent("labels.errors.songlyric.toolong", PageGlobals.currentLocale);
+            message = $("#too-long-lyrics").html();
             this._showErrorMessage(message);
             return;
         }
 
         if (validationResult === LyricsValidationResults.UNSUPPORTED_TAG) {
-            message = PageGlobals.labelsManager.getLabelContent("labels.errors.songlyrics.unsupportedtags", PageGlobals.currentLocale);
+            message = $("#unsupported-tags").html();
             this._showErrorMessage(message);
             return;
         }
 
         if (validationResult === LyricsValidationResults.UNCLOSED_TAGS) {
-            message = PageGlobals.labelsManager.getLabelContent("labels.errors.songlyrics.unclosedtags", PageGlobals.currentLocale);
+            message = $("#unclosed-tags").html();
             this._showErrorMessage(message);
             return;
         }
 
         if (validationResult === LyricsValidationResults.NESTED_TAGS) {
-            message = PageGlobals.labelsManager.getLabelContent("labels.errors.songlyrics.nestedtags", PageGlobals.currentLocale);
+            message = $("#nested-tags").html();
             this._showErrorMessage(message);
             return;
         }
@@ -402,7 +402,7 @@ let Tags = {
         let result = false;
 
         Object.keys(Tags).forEach(function (key) {
-            if (Tags[key] == value) {
+            if (Tags[key] === value) {
                 result = true;
             }
         });

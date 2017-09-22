@@ -98,8 +98,9 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
     /**
      * Inserts artist to the database.
      * @param artist Artist to be inserted.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
-    public void addArtistToDatabase(Artist artist, Connection connection) {
+    public void addArtistToDatabase(Artist artist, Connection connection) throws SQLException {
 
         if (!checkIfArtistExists(artist, connection)) {
             int lastID = getLastArtistID(connection);
@@ -111,16 +112,13 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             int artistNameParameter = 2;
             int artistLetterParameter = 3;
 
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);
-                preparedStatement.setInt(artistIDParameter,lastID + 1);
-                preparedStatement.setString(artistNameParameter, artist.getName());
-                preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
-                preparedStatement.execute();
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);
+            preparedStatement.setInt(artistIDParameter,lastID + 1);
+            preparedStatement.setString(artistNameParameter, artist.getName());
+            preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
+            preparedStatement.execute();
+            preparedStatement.close();
+
         }
     }
 

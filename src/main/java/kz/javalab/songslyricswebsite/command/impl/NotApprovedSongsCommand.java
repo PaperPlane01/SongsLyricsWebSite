@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public class NotApprovedSongsCommand implements ActionCommand {
 
+    public NotApprovedSongsCommand() {
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = new String();

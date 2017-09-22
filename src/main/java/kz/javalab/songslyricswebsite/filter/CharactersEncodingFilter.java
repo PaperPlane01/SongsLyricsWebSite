@@ -14,8 +14,9 @@ public class CharactersEncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletRequest.setCharacterEncoding("UTF-8");
-        servletResponse.setCharacterEncoding("UTF-8");
+        String characterEncoding = "UTF-8";
+        servletRequest.setCharacterEncoding(characterEncoding);
+        servletResponse.setCharacterEncoding(characterEncoding);
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

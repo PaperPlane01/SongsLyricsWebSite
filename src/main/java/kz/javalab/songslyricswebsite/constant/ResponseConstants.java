@@ -49,6 +49,11 @@ public class ResponseConstants {
         public static final String INVALID_USERNAME = "labels.errors.invalidusername.general";
         public static final String INVALID_PASSWORD = "labels.errors.invalidpassword.general";
         public static final String PASSWORDS_ARE_NOT_EQUAL = "labels.errors.passwordsarentequal";
+        public static final String NO_PERMISSION = "labels.errors.nopermission";
+        public static final String ERROR_WHILE_BLOCKING = "labels.errors.errorwhileblocking";
+        public static final String SUCCESSFUL_BLOCKING = "labels.successfullblocking";
+        public static final String ERROR_WHILE_DELETING_COMMENT = "labels.errors.errorwhiledeletingcomment";
+        public static final String SUCCESSFUL_COMMENT_DELETING = "labels.successfullcommentdeleting";
     }
 
 }

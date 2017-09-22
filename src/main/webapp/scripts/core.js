@@ -16,12 +16,14 @@ $(document).ready(function () {
         let username = $("#username").val();
         let password = $("#password").val();
 
-        if (username == "") {
-            alert("Username is required!");
+        if (username === "") {
+            let message = $("#empty-user-name").html();
+            $('#login-message').html("<span style = \"color:red\">" + message + "</span>")
             return;
         }
-        if (password == "") {
-            alert("Password is required!");
+        if (password === "") {
+            let message = $("#empty-password").html();
+            $('#login-message').html("<span style = \"color:red\">" + message + "</span>")
             return;
         }
 
@@ -272,28 +274,28 @@ function SignUpValidatorView() {
 
         if (result === SignUpValidationResults.EMPTY_USERNAME) {
             $("#username-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.emptyusername", PageGlobals.currentLocale);
+            let message = $("#empty-user-name").html();
             $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.TOO_SHORT_USERNAME) {
             $("#username-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.tooshortusername", PageGlobals.currentLocale);
+            let message = $("#too-short-user-name").html();
             $("username-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.TOO_LONG_USERNAME) {
             $("#username-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.toolongusername", PageGlobals.currentLocale);
+            let message = $("#too-long-username").html();
             $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.INVALID_USERNAME) {
             $("#username-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidusername", PageGlobals.currentLocale);
+            let message = $("#invalid-username").html();
             $("#username-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
@@ -307,28 +309,28 @@ function SignUpValidatorView() {
 
         if (result === SignUpValidationResults.EMPTY_PASSWORD) {
             $("#password-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.emptypassword", PageGlobals.currentLocale);
+            let message = $("#empty-password").html();
             $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.TOO_SHORT_PASSWORD) {
             $("#password-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.tooshortpassword", PageGlobals.currentLocale);
+            let message = $("#too-short-password").html();
             $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.TOO_LONG_PASSWORD) {
             $("#password-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.toolongpassword", PageGlobals.currentLocale);
+            let message = $("#too-long-password").html();
             $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
 
         if (result === SignUpValidationResults.INVALID_PASSWORD) {
             $("#password-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidpassword", PageGlobals.currentLocale);
+            let message = $("#invalid-password").html();
             $("#password-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
@@ -342,7 +344,7 @@ function SignUpValidatorView() {
 
         if (result === SignUpValidationResults.PASSWORDS_ARENT_EQUAL) {
             $("#second-password-message").css('display', 'block');
-            let message = PageGlobals.labelsManager.getLabelContent("labels.errors.passwordsarentequal", PageGlobals.currentLocale);
+            let message = $("#passwords-are-not-equal").html();
             $("#second-password-message").html("<span style = \"color:red\">" + message + "</span>");
             return;
         }
@@ -350,7 +352,7 @@ function SignUpValidatorView() {
 
     this.showErrorMessage = function () {
         $("#sign-up-message").css('display', 'block');
-        let message = PageGlobals.labelsManager.getLabelContent("labels.errors.invalidfields", PageGlobals.currentLocale);
+        let message = $("#invalid-fields").html();
         $("#sign-up-message").html("<span style = \"color:red\">" + message + "</span>");
     };
 

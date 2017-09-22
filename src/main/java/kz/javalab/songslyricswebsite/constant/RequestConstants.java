@@ -26,6 +26,8 @@ public class RequestConstants {
         public static final String RATING = "rating";
         public static final String LANGUAGE = "language";
         public static final String USER_ID = "userID";
+        public static final String COMMAND = "command";
+        public static final String COMMENT_ID = "commentID";
     }
 
     public class RequestAttributes {
@@ -47,5 +49,30 @@ public class RequestConstants {
     public class SessionAttributes {
         public static final String USER = "user";
         public static final String LANGUAGE = "language";
+    }
+
+    public class Commands {
+        public static final String ARTISTS = "artists";
+        public static final String ARTISTS_LETTERS = "artistsletters";
+        public static final String SONGS = "songs";
+        public static final String RECENTLY_ADDED_SONGS = "recentlyaddedsongs";
+        public static final String NOT_APPROVED_SONGS = "notapprovedsongs";
+        public static final String EDIT_SONG = "editsong";
+        public static final String TOP_TEN_RATED_SONGS = "toptenratedsongs";
+        public static final String ADD_COMMENT = "addcomment";
+        public static final String ADD_SONG = "addsong";
+        public static final String APPLY_SONG_CHANGES = "applysongchanges";
+        public static final String GET_LABEL = "getlabel";
+        public static final String LOGIN = "login";
+        public static final String RATE_SONG = "ratesong";
+        public static final String REGISTER = "register";
+        public static final String APPROVE_SONG = "approvesong";
+        public static final String CHANGE_LANGUAGE = "changelanguage";
+        public static final String LOG_OUT = "logout";
+        public static final String NEW_SONG = "newsong";
+        public static final String PROFILE = "profile";
+        public static final String SONG = "song";
+        public static final String BLOCK_USER = "blockuser";
+        public static final String DELETE_COMMENT = "deletecomment";
     }
 }

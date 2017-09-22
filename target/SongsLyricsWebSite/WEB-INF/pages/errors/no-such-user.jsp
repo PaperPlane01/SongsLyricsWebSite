@@ -32,6 +32,9 @@
         </div>
     </div>
 </div>
+<div id="messages" style="display: none">
+    <jsp:include page="../messages/song-validation-messages.jsp"/>
+</div>
 <jsp:include page="../scripts.jsp"/>
 </body>
 </html>

@@ -21,7 +21,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
      * @param genreName Name of the genre to be added.
      * @param connection Connection to be used.
      */
-    public void addGenreToDatabase(String genreName, Connection connection) {
+    public void addGenreToDatabase(String genreName, Connection connection) throws SQLException {
         String addGenreQuery = "INSERT INTO genres\n" +
                 "(genre_name)\n" +
                 "VALUES\n" +
@@ -29,17 +29,14 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
         int genreNameParameter = 1;
 
         if (!checkIfGenreExists(genreName, connection)) {
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
 
-                preparedStatement.setString(genreNameParameter, genreName);
+            preparedStatement.setString(genreNameParameter, genreName);
 
-                preparedStatement.execute();
+            preparedStatement.execute();
 
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            preparedStatement.close();
+
         }
 
     }

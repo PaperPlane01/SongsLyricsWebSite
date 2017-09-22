@@ -55,18 +55,15 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         }
     }
 
-    public void alterYouTubeLink(int songID, String newYouTubeLink, Connection connection) {
+    public void alterYouTubeLink(int songID, String newYouTubeLink, Connection connection) throws SQLException {
         String alterYouTubeLinkQuery = "UPDATE songs\n" +
                 "SET youtube_link = ?\n" +
                 "WHERE song_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterYouTubeLinkQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(alterYouTubeLinkQuery);
 
-            updateStringValueByEntityID(preparedStatement, songID, newYouTubeLink);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        updateStringValueByEntityID(preparedStatement, songID, newYouTubeLink);
+
     }
 
     public List<Integer> getIDsOfRecentlyAddedSongs(int numberOfSongs, Connection connection) {
@@ -90,6 +87,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 Integer songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
                 songIDs.add(songID);
             }
+
+            resultSet.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -646,69 +646,68 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * Adds data related to song into <Code>songs</Code> table.
      * @param song Song which data is to be added.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
-    public void addDataToSongsTable(Song song, Connection connection) {
+    public void addDataToSongsTable(Song song, Connection connection) throws SQLException {
         int lastID = getLastSongID(connection);
         song.setID(lastID + 1);
 
-        try {
-            String addSongQuery = "INSERT INTO songs (song_id, artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
+        String addSongQuery = "INSERT INTO songs (song_id, artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
                     "VALUES (?, ?, ?, ?, ?, ?)";
+        int songIDParameter = 1;
+        int artistIDParameter = 2;
+        int songNameParameter = 3;
+        int isApprovedParameter = 4;
+        int youTubeLinkParameter = 5;
+        int hasFeaturingParameter = 6;
 
-            int songIDParameter = 1;
-            int artistIDParameter = 2;
-            int songNameParameter = 3;
-            int isApprovedParameter = 4;
-            int youTubeLinkParameter = 5;
-            int hasFeaturingParameter = 6;
+        int isApprovedValue = 0;
 
-            int isApprovedValue = 0;
-            int hasFeaturingValue = 1;
-            int doesntHaveFeaturingValue = 0;
-
-            PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
-            preparedStatement.setInt(songIDParameter, song.getID());
-            preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
-            preparedStatement.setString(songNameParameter, song.getName());
-            preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
-            preparedStatement.setInt(isApprovedParameter, isApprovedValue);
-
-            if (song.hasFeaturedArtists()) {
-                preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
-            } else {
-                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
-            }
-
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (song.isApproved()) {
+            isApprovedValue = 1;
         }
+
+        int hasFeaturingValue = 1;
+        int doesntHaveFeaturingValue = 0;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
+        preparedStatement.setInt(songIDParameter, song.getID());
+        preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
+        preparedStatement.setString(songNameParameter, song.getName());
+        preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
+        preparedStatement.setInt(isApprovedParameter, isApprovedValue);
+
+        if (song.hasFeaturedArtists()) {
+            preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
+        } else {
+            preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
+        }
+
+        preparedStatement.execute();
+        preparedStatement.close();
+
     }
 
     /**
      * Approves song by its ID.
      * @param songID ID of the song which is to be approved.
      */
-    public void approveSong(int songID, Connection connection) {
+    public void approveSong(int songID, Connection connection) throws SQLException {
 
         String approveSongQuery = "UPDATE songs\n" +
                 "SET is_approved = 1\n" +
                 "WHERE song_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery);
 
-            int songIDParameter = 1;
+        PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery);
 
-            preparedStatement.setInt(songIDParameter, songID);
+        int songIDParameter = 1;
 
-            preparedStatement.execute();
+        preparedStatement.setInt(songIDParameter, songID);
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        preparedStatement.execute();
+
+        preparedStatement.close();
 
     }
 

@@ -83,6 +83,9 @@
           </div>
       </div>
   </div>
+  <div id="messages" style="display: none">
+      <jsp:include page="/WEB-INF/pages/messages/login-and-sign-up-messages.jsp"/>
+  </div>
   <jsp:include page="/WEB-INF/pages/scripts.jsp"/>
   <script src="/scripts/songs-loader.js"></script>
   </body>

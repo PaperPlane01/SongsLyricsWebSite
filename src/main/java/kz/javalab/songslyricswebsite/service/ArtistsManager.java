@@ -14,7 +14,6 @@ import java.util.List;
  * Created by PaperPlane on 23.08.2017.
  */
 public class ArtistsManager {
-    private ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
     private RequestWrapper requestWrapper = new RequestWrapper();
 
     public ArtistsManager() {
@@ -35,6 +34,7 @@ public class ArtistsManager {
     public List<Artist> getArtistsByLetter() {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
+        ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
         int index = 0;
         Character letter = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.LETTER).charAt(index);
@@ -47,6 +47,8 @@ public class ArtistsManager {
 
     public List<Character> getArtistsLetters() {
         Connection connection = ConnectionPool.getInstance().getConnection();
+        ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
+
         List<Character> artistsLetters =  artistDataAccessObject.getArtistLetters(connection);
 
         ConnectionPool.getInstance().returnConnection(connection);

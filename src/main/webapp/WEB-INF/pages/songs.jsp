@@ -4,28 +4,26 @@
 <html>
 <head>
     <title>List of songs</title>
-    <script src="/scripts/jquery-3.2.1.js"></script>
     <jsp:include page="css.jsp"/>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12">
-            <jsp:include page="menu.jsp"/>
-        </div>
-    </div>
+<jsp:include page="menu.jsp"/>
+<div class="container">
     <div class="row">
         <div class="col-xs-12">
             <div class="list-of-songs">
                 <ul>
                     <c:forEach items="${requestScope.songsIDsAndTitles}" var="entry">
-                        <li><a href="/controller?command=song&songID=${entry.key}"}><c:out value="${entry.value}"></c:out></a> </li>
+                        <li><a href="/controller?command=song&songID=${entry.key}"}><c:out value="${entry.value}"/></a> </li>
                     </c:forEach>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+<div id="messages" style="display: none">
+    <jsp:include page="messages/sign-up-validation-messages.jsp"/>
 </div>
+<jsp:include page="scripts.jsp"/>
 </body>
 </html>

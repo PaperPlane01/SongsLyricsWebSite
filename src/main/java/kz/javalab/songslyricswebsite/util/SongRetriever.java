@@ -70,35 +70,41 @@ public class SongRetriever {
         song.setArtist(new Artist(artistName));
         song.setYouTubeVideoID(youTubeVideoID);
 
-        if (!songFeaturedArtists.trim().isEmpty()) {
-            StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");
+        if (songFeaturedArtists != null) {
+            if (!songFeaturedArtists.trim().isEmpty()) {
+                StringTokenizer stringTokenizer = new StringTokenizer(songFeaturedArtists, ";");
 
-            List<Artist> featuredArtists = new ArrayList<>();
+                List<Artist> featuredArtists = new ArrayList<>();
 
-            while (stringTokenizer.hasMoreTokens()) {
-                String featuredArtistName = stringTokenizer.nextToken().trim();
+                while (stringTokenizer.hasMoreTokens()) {
+                    String featuredArtistName = stringTokenizer.nextToken().trim();
 
-                if (!validateArtistName(featuredArtistName)) {
-                    throw new InvalidFeaturedArtistNameException();
+                    if (!validateArtistName(featuredArtistName)) {
+                        throw new InvalidFeaturedArtistNameException();
+                    }
+
+                    featuredArtists.add(new Artist(featuredArtistName));
                 }
 
-                featuredArtists.add(new Artist(featuredArtistName));
+                song.setFeaturedArtists(featuredArtists);
             }
-
-            song.setFeaturedArtists(featuredArtists);
         }
 
-        if (!songGenres.isEmpty()) {
-            List<String> songGenresList = new ArrayList<>();
 
-            StringTokenizer stringTokenizer = new StringTokenizer(songGenres, ";");
+        if (songGenres != null) {
+            if (!songGenres.isEmpty()) {
+                List<String> songGenresList = new ArrayList<>();
 
-            while (stringTokenizer.hasMoreTokens()) {
-                songGenresList.add(stringTokenizer.nextToken().trim());
+                StringTokenizer stringTokenizer = new StringTokenizer(songGenres, ";");
+
+                while (stringTokenizer.hasMoreTokens()) {
+                    songGenresList.add(stringTokenizer.nextToken().trim());
+                }
+
+                song.setGenres(songGenresList);
             }
-
-            song.setGenres(songGenresList);
         }
+
 
         LyricsParser lyricsParser = new LyricsParser();
 
@@ -147,10 +153,13 @@ public class SongRetriever {
         int maxSize = 250;
         boolean result = true;
 
+        if (featuredArtists == null) {
+            return true;
+        }
+
         if (featuredArtists.length() > maxSize) {
             result = false;
         }
-
 
         return result;
     }
@@ -158,6 +167,10 @@ public class SongRetriever {
     private boolean validateSongGenres(String songGenres) {
         int maxSize = 130;
         boolean result = false;
+
+        if (songGenres == null) {
+            return true;
+        }
 
         if (songGenres.length() < maxSize) {
             result = true;
@@ -169,6 +182,10 @@ public class SongRetriever {
     private boolean validateLyrics(String lyrics) {
         int minSize = 0;
         int maxSize = 5000;
+
+        if (lyrics == null) {
+            return false;
+        }
 
         if (lyrics.length() == minSize) {
             return false;
@@ -187,14 +204,13 @@ public class SongRetriever {
 
         if (youTubeVideoID == null) {
             //YouTube link is not necessary.
-            result = true;
-            return result;
+            return true;
         }
 
-        if (youTubeVideoID.length() < maxSize) {
-            result = true;
+        if (youTubeVideoID.length() > maxSize) {
+            return false;
         }
 
-        return  result;
+        return true;
     }
 }

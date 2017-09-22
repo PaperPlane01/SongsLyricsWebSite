@@ -1,9 +1,10 @@
 package kz.javalab.songslyricswebsite.command.factory;
 
-import com.sun.deploy.net.HttpRequest;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
-import kz.javalab.songslyricswebsite.command.CommandEnum;
-import kz.javalab.songslyricswebsite.command.impl.EmptyCommand;
+import kz.javalab.songslyricswebsite.command.impl.*;
+import kz.javalab.songslyricswebsite.command.impl.jsoncommand.*;
+import kz.javalab.songslyricswebsite.command.impl.localebasedcommand.*;
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,22 +17,87 @@ public class ActionFactory {
     }
 
     public ActionCommand defineCommand(HttpServletRequest request) {
-        ActionCommand current = new EmptyCommand();
-        String action = request.getParameter("command");
+        ActionCommand command = new EmptyCommand();
+        String action = request.getParameter(RequestConstants.RequestParameters.COMMAND);
 
         System.out.println(action);
 
         if (action == null || action.isEmpty()) {
-            return current;
+            return command;
         }
 
-        try {
-            CommandEnum commandEnum = CommandEnum.valueOf(action.toUpperCase());
-            current = commandEnum.getCurrentCommand();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
+        switch (action) {
+            case RequestConstants.Commands.ADD_COMMENT:
+                command = new AddCommentCommand();
+                break;
+            case RequestConstants.Commands.ADD_SONG:
+                command = new AddSongCommand();
+                break;
+            case RequestConstants.Commands.APPLY_SONG_CHANGES:
+                command = new ApplySongChangesCommand();
+                break;
+            case RequestConstants.Commands.APPROVE_SONG:
+                command = new ApproveSongCommand();
+                break;
+            case RequestConstants.Commands.ARTISTS:
+                command = new ArtistsCommand();
+                break;
+            case RequestConstants.Commands.ARTISTS_LETTERS:
+                command = new ArtistsLettersCommand();
+                break;
+            case RequestConstants.Commands.BLOCK_USER:
+                command = new BlockUserCommand();
+                break;
+            case RequestConstants.Commands.CHANGE_LANGUAGE:
+                command = new ChangeLanguageCommand();
+                break;
+            case RequestConstants.Commands.DELETE_COMMENT:
+                command = new DeleteCommentCommand();
+                break;
+            case RequestConstants.Commands.EDIT_SONG:
+                command = new EditSongCommand();
+                break;
+            case RequestConstants.Commands.GET_LABEL:
+                command = new GetLabelCommand();
+                break;
+            case RequestConstants.Commands.LOG_OUT:
+                command = new LogOutCommand();
+                break;
+            case RequestConstants.Commands.LOGIN:
+                command = new LoginCommand();
+                break;
+            case RequestConstants.Commands.NEW_SONG:
+                command = new NewSongCommand();
+                break;
+            case RequestConstants.Commands.NOT_APPROVED_SONGS:
+                command = new NotApprovedSongsCommand();
+                break;
+            case RequestConstants.Commands.PROFILE:
+                command = new ProfileCommand();
+                break;
+            case RequestConstants.Commands.RATE_SONG:
+                command = new RateSongCommand();
+                break;
+            case RequestConstants.Commands.RECENTLY_ADDED_SONGS:
+                command = new RecentlyAddedSongsCommand();
+                break;
+            case RequestConstants.Commands.REGISTER:
+                command = new RegisterCommand();
+                break;
+            case RequestConstants.Commands.SONG:
+                command = new SongCommand();
+                break;
+            case RequestConstants.Commands.SONGS:
+                command = new ListOfSongsCommand();
+                break;
+            case RequestConstants.Commands.TOP_TEN_RATED_SONGS:
+                command = new TopTenRatedSongsCommand();
+                break;
+            default:
+                command = new EmptyCommand();
+                break;
         }
 
-        return current;
+        return command;
     }
 }

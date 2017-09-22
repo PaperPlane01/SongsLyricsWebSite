@@ -6,10 +6,11 @@ import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.CommentsDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.exception.CommentAddingException;
 import kz.javalab.songslyricswebsite.exception.CommentAlteringException;
 import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
-import sun.misc.Request;
+import kz.javalab.songslyricswebsite.exception.NoPermissionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -92,9 +93,20 @@ public class CommentsManager {
         return comment.getContent().length() <= 1000 && comment.getContent().length() >= 1;
     }
 
-    public void markCommentAsDeleted(int commentID) throws CommentAlteringException {
+    public void deleteComment() throws CommentAlteringException, NoPermissionException {
+        User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+
+        if (user == null) {
+            throw new NoPermissionException();
+        }
+
+        if (user.getUserType() != UserType.MODERATOR) {
+            throw new NoPermissionException();
+        }
+
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
+        int commentID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.COMMENT_ID));
 
         try {
             connection.setAutoCommit(false);

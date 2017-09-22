@@ -253,6 +253,18 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return UserType.valueOf(result);
     }
 
+    public void blockUser(int userID, Connection connection) throws SQLException {
+        String blockUserQuery = "UPDATE users\n" +
+                "SET is_blocked = ?\n" +
+                "WHERE user_id = ?";
+
+        int isBlockedValue = 1;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(blockUserQuery);
+
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
+    }
+
     /**
      * Retrieves last user ID from the database.
      * @param connection Connection to be used.

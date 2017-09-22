@@ -39,6 +39,14 @@ public class UsersManager {
         this.requestWrapper = requestWrapper;
     }
 
+    /**
+     * Registers new user.
+     * @throws SuchUserAlreadyExistsException Thrown if user with specified username already exists.
+     * @throws RegistrationFailedException Thrown if some error occurred when attempted to insert data into database.
+     * @throws InvalidUserNameException Thrown if username if invalid.
+     * @throws InvalidPasswordException Thrown if password is invalid.
+     * @throws PasswordsAreNotEqualException Thrown if first password and second password sent by user are not equal.
+     */
     public void registerNewUser() throws SuchUserAlreadyExistsException, RegistrationFailedException, InvalidUserNameException, InvalidPasswordException, PasswordsAreNotEqualException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
@@ -92,6 +100,11 @@ public class UsersManager {
         }
     }
 
+    /**
+     * Validates username.
+     * @param userName Username to be validated.
+     * @return <Code>True</Code> if username is valid, <Code>False</Code> if not.
+     */
     private boolean validateUserName(String userName) {
         int minSize = 3;
         int maxSize = 20;
@@ -122,6 +135,11 @@ public class UsersManager {
         return true;
     }
 
+    /**
+     * Validates password.
+     * @param unEncodedPassword Password to be validated.
+     * @return <Code>True</Code> if password is valid, <Code>False</Code> if not.
+     */
     private boolean validatePassword(String unEncodedPassword) {
         int minSize = 5;
         int maxSize = 25;
@@ -152,6 +170,11 @@ public class UsersManager {
         return true;
     }
 
+    /**
+     * Does login.
+     * @throws WrongPasswordException Thrown if password is wrong.
+     * @throws WrongUsernameException Thrown if username is wrong.
+     */
     public void doLogin() throws WrongPasswordException, WrongUsernameException { ;
         Connection connection = ConnectionPool.getInstance().getConnection();
 
@@ -179,6 +202,15 @@ public class UsersManager {
         ConnectionPool.getInstance().returnConnection(connection);
     }
 
+    /**
+     * Checks if such user exists.
+     * @param user User to be checked.
+     * @param parameterOfChecking Specifies the parameter of checking.
+     *                            1 - checks user's existence by username.
+     *                            2 - checks user's existence by user ID.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if such user exists, <Code>False</Code> if not.
+     */
     private boolean checkIfUserExists(User user, int parameterOfChecking, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         boolean userExists = usersDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
@@ -186,6 +218,13 @@ public class UsersManager {
         return userExists;
     }
 
+    /**
+     * Checks if password is correct.
+     * @param userName Name of the user.
+     * @param password Password which has been sent by user.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if password is correct, <Code>False</Code> if not.
+     */
     private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         boolean passwordValidates = usersDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
@@ -193,11 +232,23 @@ public class UsersManager {
         return passwordValidates;
     }
 
+    /**
+     * Retrieves user ID by username.
+     * @param userName Username.
+     * @param connection Connection to be used.
+     * @return User ID.
+     */
     private int getUserIDByUserName(String userName, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.getUserIDByUserName(userName, connection);
     }
 
+    /**
+     * Retrieves username by user ID.
+     * @param userID User ID.
+     * @return Username.
+     * @throws InvalidUserIDException Thrown if there is no user with such ID.
+     */
     public String getUserNameByUserID(int userID) throws InvalidUserIDException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -216,6 +267,11 @@ public class UsersManager {
 
     }
 
+    /**
+     * Retrieves user type by user ID.
+     * @param userID User ID.
+     * @return User type of the user with specific ID.
+     */
     public UserType getUserTypeByUserID(int userID) {
         Connection connection = ConnectionPool.getInstance().getConnection();
         UserType userType = getUserTypeByUserID(userID, connection);
@@ -223,9 +279,47 @@ public class UsersManager {
         return userType;
     }
 
+    /**
+     * Retrieves user type by user ID.
+     * @param userID User ID.
+     * @param connection Connection to be used.
+     * @return User type of the user with specific ID.
+     */
     private UserType getUserTypeByUserID(int userID, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.getUserTypeByUserID(userID, connection);
+    }
+
+    public void blockUser() throws NoPermissionException, UserBlockingException {
+        User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+
+        if (user == null) {
+            throw new NoPermissionException();
+        }
+
+        if (user.getUserType() != UserType.MODERATOR) {
+            throw new NoPermissionException();
+        }
+
+        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
+
+        try {
+            connection.setAutoCommit(false);
+            usersDataAccessObject.blockUser(userID, connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+                throw new UserBlockingException();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new UserBlockingException();
+            }
+        }
+
     }
 
     public void changePassword(int userID, String oldHashedPassword, String newHashedPassword) {

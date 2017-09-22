@@ -13,6 +13,8 @@ import java.io.IOException;
  */
 public class EmptyCommand implements ActionCommand {
 
+    public EmptyCommand() {
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

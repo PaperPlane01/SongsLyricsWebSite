@@ -205,6 +205,14 @@ public class LyricsParser {
         int numberOfClosingTags = 0;
         int numberOfNestedTags = 0;
 
+        if (lyricsAsText == null) {
+            return false;
+        }
+
+        if (lyricsAsText.isEmpty()) {
+            return false;
+        }
+
         List<String> lines = Arrays.asList(lyricsAsText.split("\n"));
 
         for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {

@@ -21,6 +21,9 @@
         </div>
     </div>
 </div>
+<div id="messages" style="display: none">
+    <jsp:include page="messages/login-and-sign-up-messages.jsp"/>
+</div>
 <jsp:include page="scripts.jsp"/>
 </body>
 </html>

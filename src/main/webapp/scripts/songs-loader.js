@@ -40,7 +40,7 @@ function SongsManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'recenltyaddedsongs'
+                    command : 'recentlyaddedsongs'
                 },
 
                 success : function (responseData) {

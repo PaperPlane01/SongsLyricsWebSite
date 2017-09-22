@@ -62,7 +62,11 @@
 
                         <c:otherwise>
                             <div class="song-not-approved">
-                                <b></b>
+                                <b>
+                                    <fmt:bundle basename="labels">
+                                        <fmt:message key="labels.songisnotapproved"/>
+                                    </fmt:bundle>
+                                </b>
                                 <c:if test="${not empty sessionScope.user}">
                                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
                                         <form method="post" action="/controller">
@@ -134,21 +138,34 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <c:choose>
                 <c:when test="${not empty requestScope.comments}">
+                    <c:set var="currentUserRole" scope="page" value="none"/>
 
+                    <c:if test="${not empty sessionScope.user}">
+                        <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+                            <c:set var="currentUserRole" value="moderator"/>
+                        </c:if>
+                    </c:if>
+
+                    <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+                        <div id="admin-messages" style="display: none"></div>
+                    </c:if>
                     <div id="comments">
                         <c:forEach var="comment" items="${requestScope.comments}">
                             <tagFiles:comment id="${comment.getID()}"
                                               authorID="${comment.getAuthor().getID()}"
                                               authorName="${comment.getAuthor().getUsername()}"
                                               content="${comment.getContent()}"
-                                              date="${comment.getTime()}"/>
+                                              date="${comment.getTime()}"
+                                              currentUserRole="${currentUserRole}" />
                         </c:forEach>
                     </div>
 
                 </c:when>
 
                 <c:otherwise>
-                    No comments for this song.
+                    <fmt:bundle basename="labels">
+                        <fmt:message key="labels.nocomments"/>
+                    </fmt:bundle>
                 </c:otherwise>
             </c:choose>
 
@@ -158,7 +175,14 @@
 <c:if test="${not empty sessionScope.user}">
     <div id="user-id" style="display: none">${sessionScope.user.getID()}</div>
     <div id="song-id" style="display: none;">${requestScope.songID}</div>
+
+    <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+        <
+    </c:if>
 </c:if>
+<div id="messages" style="display: none">
+    <jsp:include page="messages/login-and-sign-up-messages.jsp"/>
+</div>
 <jsp:include page="scripts.jsp"/>
 <c:if test="${not empty sessionScope.user}">
     <script src="/scripts/song-rating.js"></script>
@@ -178,5 +202,14 @@
         </fmt:bundle>
     </div>
 </div>
+
+<c:if test="${not empty sessionScope.user}">
+    <div id="user-id" style="display: none">${sessionScope.user.getID()}</div>
+    <div id="song-id" style="display: none;">${requestScope.songID}</div>
+
+    <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
+        <script src="/scripts/admin.js"></script>
+    </c:if>
+</c:if>
 </body>
 </html>
