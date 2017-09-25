@@ -129,6 +129,7 @@
                             <textarea class="form-control" id="comment-content"></textarea>
                             <a class="btn btn-default" id="add-comment-button">Comment</a>
                             <span id="comment-validation-message" style="display: none"></span>
+                            <div id="user-messages" style="display: none"></div>
                         </div>
                     </form>
                 </div>
@@ -151,12 +152,25 @@
                     </c:if>
                     <div id="comments">
                         <c:forEach var="comment" items="${requestScope.comments}">
+                            <c:choose>
+                                <c:when test="${comment.getAuthor().isBlocked() == true}">
+                                    <c:set var="isAuthorBlocked" value="true"/>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <c:set var="isAuthorBlocked" value="false"/>
+                                </c:otherwise>
+                            </c:choose>
+
                             <tagFiles:comment id="${comment.getID()}"
                                               authorID="${comment.getAuthor().getID()}"
                                               authorName="${comment.getAuthor().getUsername()}"
                                               content="${comment.getContent()}"
                                               date="${comment.getTime()}"
-                                              currentUserRole="${currentUserRole}" />
+                                              currentUserRole="${currentUserRole}"
+                                              isAuthorBlocked="${isAuthorBlocked}"
+                            />
+
                         </c:forEach>
                     </div>
 
@@ -175,10 +189,6 @@
 <c:if test="${not empty sessionScope.user}">
     <div id="user-id" style="display: none">${sessionScope.user.getID()}</div>
     <div id="song-id" style="display: none;">${requestScope.songID}</div>
-
-    <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-        <
-    </c:if>
 </c:if>
 <div id="messages" style="display: none">
     <jsp:include page="messages/login-and-sign-up-messages.jsp"/>

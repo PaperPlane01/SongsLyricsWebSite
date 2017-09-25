@@ -1,7 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.jsoncommand;
 
-import com.google.gson.Gson;
-import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.command.JSONCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;

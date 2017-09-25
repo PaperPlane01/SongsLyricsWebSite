@@ -1,7 +1,5 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
-
-
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;
@@ -25,36 +23,49 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
     public SongsDataAccessObject() {
     }
 
-    public void alterSongName(int songID, String newSongName, Connection connection) {
+    /**
+     * Modifies name of the specific song.
+     * @param songID ID of the song which is to be modified.
+     * @param newSongName New song name.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to modify data.
+     */
+    public void alterSongName(int songID, String newSongName, Connection connection) throws SQLException {
         String alterSongNameQuery = "UPDATE songs\n" +
                 "SET song_name = ?\n" +
                 "WHERE song_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterSongNameQuery);
 
-            updateStringValueByEntityID(preparedStatement, songID, newSongName);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        PreparedStatement preparedStatement = connection.prepareStatement(alterSongNameQuery);
+
+        updateStringValueByEntityID(preparedStatement, songID, newSongName);
+
     }
 
-    public void alterArtistID(int songID, int newArtistID, Connection connection) {
+    /**
+     * Modifies artist ID of the specific song.
+     * @param songID ID of the song which is to be modified.
+     * @param newArtistID New artist ID value.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to modify data.
+     */
+    public void alterArtistID(int songID, int newArtistID, Connection connection) throws SQLException {
         String alterArtistIDQuery = "UPDATE songs\n" +
                 "SET artist_id = ?\n" +
                 "WHERE song_id = ?";
 
-        int artistIDParameter = 1;
-        int songIDParameter = 2;
+        PreparedStatement preparedStatement = connection.prepareStatement(alterArtistIDQuery);
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, newArtistID, songID);
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterArtistIDQuery);
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, newArtistID, songID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
+    /**
+     * Modifies YouTube Video ID of the specific song.
+     * @param songID ID of the song which is to be modified.
+     * @param newYouTubeLink New YouTube video ID value.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to modify data.
+     */
     public void alterYouTubeLink(int songID, String newYouTubeLink, Connection connection) throws SQLException {
         String alterYouTubeLinkQuery = "UPDATE songs\n" +
                 "SET youtube_link = ?\n" +
@@ -66,6 +77,12 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
     }
 
+    /**
+     * Retrieves list of IDs of recently added songs.
+     * @param numberOfSongs Number of recently added songs to be retrieved.
+     * @param connection Connection to be used.
+     * @return List of IDs of recently added songs.
+     */
     public List<Integer> getIDsOfRecentlyAddedSongs(int numberOfSongs, Connection connection) {
         List<Integer> songIDs = new ArrayList<>();
 
@@ -142,6 +159,11 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         return song;
     }
 
+    /**
+     * Retrieves data from "Songs" table and sets it to <Code>Song</Code> object.
+     * @param song <Code>Song</Code> object to be modified.
+     * @param connection Connection to be used.
+     */
     private void setDataFromSongsTable(Song song, Connection connection) {
         String query = "SELECT * FROM songs\n" +
                 "WHERE song_id = ?";
@@ -223,6 +245,12 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         return hasFeaturedArtists;
     }
 
+    /**
+     * Checks if song exists by song name and artist name.
+     * @param song Song to be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if such song exists, <Code>False</Code> if not.
+     */
     public boolean checkIfSongExists(Song song, Connection connection) {
         String songName = song.getName();
         String artistName = song.getArtist().getName();
@@ -257,6 +285,12 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         return result;
     }
 
+    /**
+     * Checks if song exists by song ID.
+     * @param songID Song ID to be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if song with such ID exists, <Code>False</Code> if not.
+     */
     public boolean checkIfSongExists(int songID, Connection connection) {
         boolean result = false;
 
@@ -274,6 +308,12 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         return result;
     }
 
+    /**
+     * Retrieves list of genres of the song with specific ID.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return List of genres of the song with specific ID.
+     */
     private List<String> getGenresOfSongBySongID(int songID, Connection connection) {
         List<String> genres = new ArrayList<>();
 
@@ -307,6 +347,12 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         return genres;
     }
 
+    /**
+     * Retrieves list of songs performed by specific artist.
+     * @param artist Artist of the songs.
+     * @param connection Connection to be used.
+     * @return List of songs performed by specific artist.
+     */
     public List<Song> getSongsByArtist(Artist artist, Connection connection) {
 
         List<Song> songs = new ArrayList<>();
@@ -340,7 +386,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         List<Song> featuredSongs = getSongsFeaturedByArtist(artist, connection);
 
         if (!featuredSongs.isEmpty()) {
-            featuredSongs.forEach(song -> songs.add(song));
+            for (Song song : featuredSongs) {
+                songs.add(song);
+            }
         }
 
         return songs;
@@ -649,17 +697,14 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
     public void addDataToSongsTable(Song song, Connection connection) throws SQLException {
-        int lastID = getLastSongID(connection);
-        song.setID(lastID + 1);
-
-        String addSongQuery = "INSERT INTO songs (song_id, artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
+        String addSongQuery = "INSERT INTO songs (artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
                     "VALUES (?, ?, ?, ?, ?, ?)";
-        int songIDParameter = 1;
-        int artistIDParameter = 2;
-        int songNameParameter = 3;
-        int isApprovedParameter = 4;
-        int youTubeLinkParameter = 5;
-        int hasFeaturingParameter = 6;
+
+        int artistIDParameter = 1;
+        int songNameParameter = 2;
+        int isApprovedParameter = 3;
+        int youTubeLinkParameter = 4;
+        int hasFeaturingParameter = 5;
 
         int isApprovedValue = 0;
 
@@ -670,8 +715,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         int hasFeaturingValue = 1;
         int doesntHaveFeaturingValue = 0;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);
-        preparedStatement.setInt(songIDParameter, song.getID());
+        PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);;
         preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
         preparedStatement.setString(songNameParameter, song.getName());
         preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
@@ -711,30 +755,4 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
     }
 
-    /**
-     * Retrieves the ID of the last song from the databsae.
-     * @param connection Connection to be used.
-     * @return ID of the last song.
-     */
-    private int getLastSongID(Connection connection) {
-        int lastID = 0;
-
-        try {
-            String getLastSongIDQuery = "SELECT max(song_id) FROM songs";
-            PreparedStatement preparedStatement = connection.prepareStatement(getLastSongIDQuery);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                lastID = resultSet.getInt("max(song_id)");
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lastID;
-    }
 }

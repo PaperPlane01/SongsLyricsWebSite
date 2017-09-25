@@ -8,15 +8,17 @@ public class User {
     private String username;
     private UserType userType;
     private Password password;
+    private boolean blocked;
 
     public User() {
     }
 
-    public User(int ID, String username, UserType userType, Password password) {
+    public User(int ID, String username, UserType userType, Password password, boolean blocked) {
         this.ID = ID;
         this.username = username;
         this.userType = userType;
         this.password = password;
+        this.blocked = blocked;
     }
 
     public User(String username, Password password) {
@@ -54,5 +56,13 @@ public class User {
 
     public void setPassword(Password password) {
         this.password = password;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 }

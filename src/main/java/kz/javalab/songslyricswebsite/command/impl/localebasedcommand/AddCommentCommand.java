@@ -5,6 +5,8 @@ import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.exception.CommentAddingException;
 import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
+import kz.javalab.songslyricswebsite.exception.UserIsBlockedException;
+import kz.javalab.songslyricswebsite.exception.UserNotLoggedInException;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 
 import javax.servlet.ServletException;
@@ -44,6 +46,14 @@ public class AddCommentCommand extends LocaleBasedCommand {
         } catch (InvalidCommentContentException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_COMMENT_CONTENT));
+            sendJsonResponse(responseMap, response);
+        } catch (UserNotLoggedInException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.COMMENT_RECEIVED_FROM_NOT_LOGGED_IN_USER));
+            sendJsonResponse(responseMap, response);
+        } catch (UserIsBlockedException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.USER_IS_BLOCKED));
             sendJsonResponse(responseMap, response);
         }
     }

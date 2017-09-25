@@ -37,6 +37,7 @@ public class ResponseConstants {
         public static final String SUCH_SONG_ALREADY_EXISTS = "labels.errors.suchsongalreadyexists";
         public static final String ERROR_WHILE_ADDING_SONG = "labels.errors.errorwhileadding";
         public static final String NO_SUCH_SONG = "labels.errors.nosuchsong.explained";
+        public static final String NO_SUCH_USER = "labels.errors.nosuchuser.explained";
         public static final String ERROR_WHILE_ALTERING_SONG = "labels.errors.errorwhilealtering";
         public static final String LOGIN_SUCCESS = "labels.loginsuccess";
         public static final String LOGIN_FAILED = "labels.loginfailed";
@@ -51,9 +52,13 @@ public class ResponseConstants {
         public static final String PASSWORDS_ARE_NOT_EQUAL = "labels.errors.passwordsarentequal";
         public static final String NO_PERMISSION = "labels.errors.nopermission";
         public static final String ERROR_WHILE_BLOCKING = "labels.errors.errorwhileblocking";
-        public static final String SUCCESSFUL_BLOCKING = "labels.successfullblocking";
+        public static final String SUCCESSFUL_BLOCKING = "labels.successfulblocking";
         public static final String ERROR_WHILE_DELETING_COMMENT = "labels.errors.errorwhiledeletingcomment";
-        public static final String SUCCESSFUL_COMMENT_DELETING = "labels.successfullcommentdeleting";
+        public static final String SUCCESSFUL_COMMENT_DELETING = "labels.successfulcommentdeleting";
+        public static final String COMMENT_RECEIVED_FROM_NOT_LOGGED_IN_USER = "labels.errors.commentreceivedfromnonloggedinuser";
+        public static final String USER_IS_BLOCKED = "labels.errors.userisblocked";
+        public static final String SUCCESSFUL_UNBLOCKING = "labels.successfuluserunblocking";
+        public static final String ERROR_WHILE_UNBLOCKING = "labels.errors.errorwhileunblockinguser";
     }
 
 }

@@ -59,6 +59,10 @@
     float: right;
 }
 
+.comment-content {
+    font-size: 20px !important;
+}
+
 #add-comment-label {
     margin-top: 10px;
 }

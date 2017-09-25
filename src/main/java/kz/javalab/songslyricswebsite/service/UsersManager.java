@@ -60,18 +60,22 @@ public class UsersManager {
         user.setUsername(userName);
 
         if (checkIfUserExists(user, CHECK_BY_USERNAME, connection)) {
+            ConnectionPool.getInstance().returnConnection(connection);
             throw new SuchUserAlreadyExistsException();
         }
 
         if (!validateUserName(userName)) {
+            ConnectionPool.getInstance().returnConnection(connection);
             throw new InvalidUserNameException();
         }
 
         if (!validatePassword(passwordAsString)) {
+            ConnectionPool.getInstance().returnConnection(connection);
             throw new InvalidPasswordException();
         }
 
         if (!passwordAsString.equals(secondPasswordAsString)) {
+            ConnectionPool.getInstance().returnConnection(connection);
             throw new PasswordsAreNotEqualException();
         }
 
@@ -89,12 +93,12 @@ public class UsersManager {
 
             try {
                 connection.rollback();
+                throw new RegistrationFailedException();
             } catch (SQLException e1) {
                 e1.printStackTrace();
                 throw new RegistrationFailedException();
             }
 
-            throw new RegistrationFailedException();
         } finally {
             connectionPool.returnConnection(connection);
         }
@@ -213,9 +217,7 @@ public class UsersManager {
      */
     private boolean checkIfUserExists(User user, int parameterOfChecking, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
-        boolean userExists = usersDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
-        ConnectionPool.getInstance().returnConnection(connection);
-        return userExists;
+        return usersDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
     }
 
     /**
@@ -227,9 +229,7 @@ public class UsersManager {
      */
     private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
-        boolean passwordValidates = usersDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
-        ConnectionPool.getInstance().returnConnection(connection);
-        return passwordValidates;
+        return usersDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
     }
 
     /**
@@ -290,25 +290,43 @@ public class UsersManager {
         return usersDataAccessObject.getUserTypeByUserID(userID, connection);
     }
 
-    public void blockUser() throws NoPermissionException, UserBlockingException {
-        User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
-
-        if (user == null) {
-            throw new NoPermissionException();
-        }
-
-        if (user.getUserType() != UserType.MODERATOR) {
-            throw new NoPermissionException();
-        }
-
-        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
-
+    public void blockUser() throws NoPermissionException, UserBlockingException, InvalidUserIDException {
+        User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
         Connection connection = ConnectionPool.getInstance().getConnection();
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
 
+        if (currentUser == null) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new NoPermissionException();
+        }
+
+        if (currentUser.getUserType() != UserType.MODERATOR) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new NoPermissionException();
+        }
+
+        String regex = "[0-9]+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+
+        if (!matcher.matches()) {
+            throw new InvalidUserIDException();
+        }
+
+        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+        User user = new User();
+        user.setID(userID);
+
         try {
             connection.setAutoCommit(false);
+
+            if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
+                ConnectionPool.getInstance().returnConnection(connection);
+                throw new InvalidUserIDException();
+            }
+
             usersDataAccessObject.blockUser(userID, connection);
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -318,8 +336,66 @@ public class UsersManager {
                 e1.printStackTrace();
                 throw new UserBlockingException();
             }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
         }
 
+    }
+
+    public void unblockUser() throws InvalidUserIDException, UserUnblockingException, NoPermissionException {
+        User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+        User user = new User();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
+
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        if (currentUser == null) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new NoPermissionException();
+        }
+
+        if (currentUser.getUserType() != UserType.MODERATOR) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new NoPermissionException();
+        }
+
+        String regex = "[0-9]+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+
+        if (!matcher.matches()) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new InvalidUserIDException();
+        }
+
+        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+        user.setID(userID);
+
+        try {
+            connection.setAutoCommit(false);
+
+            if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
+                ConnectionPool.getInstance().returnConnection(connection);
+                throw new InvalidUserIDException();
+            }
+
+            usersDataAccessObject.unblockUser(user.getID(), connection);
+
+            System.out.println(connection.getAutoCommit());
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                e.printStackTrace();
+                connection.rollback();
+                throw new UserUnblockingException();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new UserUnblockingException();
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
     }
 
     public void changePassword(int userID, String oldHashedPassword, String newHashedPassword) {

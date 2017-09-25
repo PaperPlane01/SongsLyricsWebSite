@@ -4,21 +4,17 @@ import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.CommentsDataAccessObject;
+import kz.javalab.songslyricswebsite.dataaccessobject.UsersDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
-import kz.javalab.songslyricswebsite.exception.CommentAddingException;
-import kz.javalab.songslyricswebsite.exception.CommentAlteringException;
-import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
-import kz.javalab.songslyricswebsite.exception.NoPermissionException;
+import kz.javalab.songslyricswebsite.exception.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- * Created by PaperPlane on 08.09.2017.
- */
+
 public class CommentsManager {
 
     private RequestWrapper requestWrapper;
@@ -54,11 +50,21 @@ public class CommentsManager {
         return result;
     }
 
-    public void addCommentToDatabase() throws CommentAddingException, InvalidCommentContentException {
+    public void addCommentToDatabase() throws CommentAddingException, InvalidCommentContentException, UserNotLoggedInException, UserIsBlockedException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
+
+        if (currentUser == null) {
+            throw new UserNotLoggedInException();
+        }
+
+        if (usersDataAccessObject.checkIfUserIsBlocked(currentUser.getID(), connection)) {
+            throw new UserIsBlockedException();
+        }
+
         int songID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.SONG_ID));
         String content = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.CONTENT);
 

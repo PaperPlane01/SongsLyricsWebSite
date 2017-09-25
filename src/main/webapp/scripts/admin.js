@@ -6,6 +6,11 @@ $(document).ready(function () {
         let userID = $(this).children(".comment-author-id").html();
         userBlockingManager.blockUser(userID);
     });
+
+    $(".unblock-user").on('click', function () {
+        let userID = $(this).children(".comment-author-id").html();
+        userBlockingManager.unblockUser(userID);
+    });
     
     $(".delete-comment").on('click', function () {
         let commentID = $(this).children(".deleted-comment-id").html();
@@ -27,13 +32,30 @@ function UserBlockingManager() {
                 },
 
                 success : function (responseData) {
-                    self._handleBlockingResults(responseData)
+                    self._handleResponse(responseData)
                 }
             }
         )
     };
 
-    this._handleBlockingResults = function (responseData) {
+    this.unblockUser = function (userID) {
+        $.post(
+            {
+                url : 'controller',
+
+                data : {
+                    command : 'unblockuser',
+                    userID : userID
+                },
+
+                success : function (responseData) {
+                    self._handleResponse(responseData);
+                }
+            }
+        )
+    };
+
+    this._handleResponse = function (responseData) {
         if (responseData.status === "SUCCESS") {
             let message = responseData.message;
             self._showSuccessMessage(message);

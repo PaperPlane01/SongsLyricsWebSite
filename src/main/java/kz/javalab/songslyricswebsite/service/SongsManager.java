@@ -64,6 +64,7 @@ public class SongsManager {
         try {
             connection.setAutoCommit(false);
             alterSong(songID, alteredSong, connection);
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             try {
@@ -109,7 +110,7 @@ public class SongsManager {
      * @param oldSong Song stored in database.
      * @param connection Connection to be used.
      */
-    private void alterSongName(Song alteredSong, Song oldSong, Connection connection) {
+    private void alterSongName(Song alteredSong, Song oldSong, Connection connection) throws SQLException {
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
 
         if (!alteredSong.getName().equals(oldSong.getName())) { ;
@@ -459,6 +460,7 @@ public class SongsManager {
            }
 
            linesDataAccessObject.addSongLyricsToDatabase(song, connection);
+           connection.commit();
 
        } catch (SQLException e) {
            e.printStackTrace();

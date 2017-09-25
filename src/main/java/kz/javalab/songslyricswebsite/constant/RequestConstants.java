@@ -74,5 +74,6 @@ public class RequestConstants {
         public static final String SONG = "song";
         public static final String BLOCK_USER = "blockuser";
         public static final String DELETE_COMMENT = "deletecomment";
+        public static final String UNBLOCK_USER = "unblockuser";
     }
 }

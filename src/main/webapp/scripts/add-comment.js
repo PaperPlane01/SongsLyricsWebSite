@@ -30,6 +30,8 @@ $(document).ready(function () {
 
 function CommentsManager() {
 
+    let self = this;
+
     this.sendComment = function (content, songID) {
         $.post(
             {
@@ -41,16 +43,26 @@ function CommentsManager() {
                 },
 
                 success : function (response) {
-                    if (response.status === "SUCCESS") {
-                        location.reload();
-                    }
-
-                    if (response.status === "FAILURE") {
-                        alert(response.message);
-                    }
+                    self._handleResponse(response)
                 }
             }
         )
+    };
+
+    this._handleResponse = function (responseData) {
+       if (responseData.status === "SUCCESS") {
+           location.reload();
+       }
+
+       if (responseData.status === "FAILURE") {
+           let message = responseData.message;
+           self._showErrorMessage(message);
+       }
+    };
+
+    this._showErrorMessage = function (message) {
+        $("#user-messages").css('display', 'block');
+        $("#user-messages").html("<span style = \"color:red\">" + message + "</span>")
     }
 }
 

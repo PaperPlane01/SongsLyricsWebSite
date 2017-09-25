@@ -24,7 +24,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @return List of comments of the specific song.
      */
     public List<Comment> getCommentsOfSong(int songID, Connection connection) {
-        String getCommentsQuery = "SELECT comment_id, comments.user_id, comment_content, time, user_name, user_role\n" +
+        String getCommentsQuery = "SELECT comment_id, comments.user_id, comment_content, time, user_name, user_role, is_blocked\n" +
                 "FROM comments INNER JOIN users\n" +
                 "ON comments.user_id = users.user_id\n" +
                 "WHERE song_id = ? AND is_deleted = 0\n" +
@@ -51,6 +51,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
                 int userID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.USER_ID);
                 String userName = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_NAME);
                 String userRole = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_ROLE);
+                int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
 
                 commentAuthor.setID(userID);
                 commentAuthor.setUsername(userName);
@@ -64,6 +65,17 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
                         break;
                     default:
                         break;
+                }
+
+                switch (isBlockedValue) {
+                    case 0:
+                        commentAuthor.setBlocked(false);
+                        break;
+                    case 1:
+                        commentAuthor.setBlocked(true);
+                        break;
+                    default:
+                        commentAuthor.setBlocked(false);
                 }
 
                 comment.setAuthor(commentAuthor);

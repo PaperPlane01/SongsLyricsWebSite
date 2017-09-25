@@ -66,6 +66,7 @@ public class DatabaseConstants {
             public static final String USER_NAME = "user_name";
             public static final String HASHED_PASSWORD = "hashed_password";
             public static final String USER_ROLE = "user_role";
+            public static final String IS_BLOCKED = "is_blocked";
         }
     }
 }

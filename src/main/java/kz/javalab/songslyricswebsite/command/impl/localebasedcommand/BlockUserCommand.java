@@ -4,6 +4,7 @@ import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
+import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
 import kz.javalab.songslyricswebsite.exception.NoPermissionException;
 import kz.javalab.songslyricswebsite.exception.UserBlockingException;
 import kz.javalab.songslyricswebsite.service.UsersManager;
@@ -42,6 +43,10 @@ public class BlockUserCommand extends LocaleBasedCommand {
             e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_BLOCKING));
+            sendJsonResponse(responseMap, response);
+        } catch (InvalidUserIDException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_SUCH_USER));
             sendJsonResponse(responseMap, response);
         }
     }

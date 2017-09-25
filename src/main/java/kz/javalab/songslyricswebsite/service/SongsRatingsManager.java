@@ -70,6 +70,8 @@ public class SongsRatingsManager {
                 connection.setAutoCommit(false);
 
                 songsRatingsDataAccessObject.rateSong(user.getID(), songID, rating, connection);
+
+                connection.commit();
             } catch (NumberFormatException e) {
                 throw new InvalidRatingValueException();
             } catch (SQLException e) {

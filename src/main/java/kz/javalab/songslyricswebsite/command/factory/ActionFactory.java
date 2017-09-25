@@ -93,6 +93,9 @@ public class ActionFactory {
             case RequestConstants.Commands.TOP_TEN_RATED_SONGS:
                 command = new TopTenRatedSongsCommand();
                 break;
+            case RequestConstants.Commands.UNBLOCK_USER:
+                command = new UnblockUserCommand();
+                break;
             default:
                 command = new EmptyCommand();
                 break;

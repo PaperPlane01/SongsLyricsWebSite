@@ -24,24 +24,20 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param user User to be added.
      */
     public void registerNewUser(User user, Connection connection) {
-        int lastID = getLastUserID(connection);
 
-        String registerNewUserQuery = "INSERT INTO `websitedatabase`.`users`\n" +
-                "(`user_id`,\n" +
-                "`user_name`,\n" +
-                "`hashed_password`,\n" +
-                "`user_role`)\n" +
-                "VALUES\n" +
-                "(?,\n" +
-                "?,\n" +
-                "?,\n" +
-                "?);";
+        String registerNewUserQuery = "INSERT INTO users\n" +
+                "(user_name, hashed_password, user_role)\n" +
+                "VALUES (?, ?, ?)";
+
+        int userNameParameter = 1;
+        int hashedPasswordParameter = 2;
+        int userRoleParameter = 3;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(registerNewUserQuery);
-            preparedStatement.setInt(1, lastID + 1);
-            preparedStatement.setString(2, user.getUsername());
-            preparedStatement.setString(3, user.getPassword().getHashedPassword());
-            preparedStatement.setString(4, "COMMON");
+            preparedStatement.setString(userNameParameter, user.getUsername());
+            preparedStatement.setString(hashedPasswordParameter, user.getPassword().getHashedPassword());
+            preparedStatement.setString(userRoleParameter, "COMMON");
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException e) {
@@ -67,6 +63,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return result;
     }
 
+    /**
+     * Checks if user with specified username exists.
+     * @param username Username be be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if user with such username exists, <Code>False</Code> if not.
+     */
     private boolean checkIfUserExistsByUserName(String username, Connection connection) {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_name = BINARY ?";
@@ -83,6 +85,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return result;
     }
 
+    /**
+     * Checks if user with specified ID exists.
+     * @param userID User ID to be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if user with such ID exists, <Code>False</Code> if not.
+     */
     private boolean checkIfUserExistsByUserID(int userID, Connection connection) {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_id = ?";
@@ -103,7 +111,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * Checks if password is correct.
      * @param userName Username of user to be checked.
      * @param password Password to be checked.
-     * @return
+     * @return <Code>True</Code> if password is correct, <Code>False</Code> if not.
      */
     public boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
         boolean result = false;
@@ -165,6 +173,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return userID;
     }
 
+    /**
+     * Returns username by user ID.
+     * @param userID User ID.
+     * @param connection Connection to be used.
+     * @return Username of the user with specified ID.
+     */
     public String getUserNameByUserID(int userID, Connection connection) {
         String userName = new String();
 
@@ -253,6 +267,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return UserType.valueOf(result);
     }
 
+    /**
+     * Marks user as blocked.
+     * @param userID ID of the user which is to be blocked.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to update data.
+     */
     public void blockUser(int userID, Connection connection) throws SQLException {
         String blockUserQuery = "UPDATE users\n" +
                 "SET is_blocked = ?\n" +
@@ -265,29 +285,61 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
     }
 
+    public void unblockUser(int userID, Connection connection) throws SQLException {
+        String unblockUserQuery = "UPDATE users\n" +
+                "SET is_blocked = ?\n" +
+                "WHERE user_id = ?";
+
+        int isBlockedValue = 0;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(unblockUserQuery);
+
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
+    }
+
     /**
-     * Retrieves last user ID from the database.
+     * Checks if user with specified ID is blocked.
+     * @param userID ID of the user to be checked.
      * @param connection Connection to be used.
-     * @return Last user ID from the database.
+     * @return <Code>True</Code> if user with such ID is blocked, <Code>False</Code> if not.
      */
-    private int getLastUserID(Connection connection) {
-        int maxUserID = 0;
-        String getLastUserIDQuery = "SELECT max(user_id) AS biggest_id FROM users";
+    public boolean checkIfUserIsBlocked(int userID, Connection connection) {
+        boolean isBlocked = false;
+
+        String checkIfUserIsBlockedQuery = "SELECT is_blocked\n" +
+                "FROM users\n" +
+                "WHERE user_id = ?";
+
+        int userIDParameter = 1;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getLastUserIDQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserIsBlockedQuery);
+            preparedStatement.setInt(userIDParameter, userID);
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                maxUserID = resultSet.getInt("biggest_id");
+                int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
+
+                switch (isBlockedValue) {
+                    case 0:
+                        isBlocked = false;
+                        break;
+                    case 1:
+                        isBlocked = true;
+                        break;
+                    default:
+                        isBlocked = false;
+                        break;
+                }
             }
 
             resultSet.close();
             preparedStatement.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-        return maxUserID;
+        return isBlocked;
     }
 }
