@@ -59,6 +59,22 @@ public class ResponseConstants {
         public static final String USER_IS_BLOCKED = "labels.errors.userisblocked";
         public static final String SUCCESSFUL_UNBLOCKING = "labels.successfuluserunblocking";
         public static final String ERROR_WHILE_UNBLOCKING = "labels.errors.errorwhileunblockinguser";
+        public static final String USER_NOT_LOGGED_IN = "labels.errors.usernologgedin";
+        public static final String SUCCESSFUL_PASSWORD_CHANGING = "labels.successfulpasswordchanging";
+        public static final String ERROR_WHILE_CHANGING_PASSWORD = "labels.errors.errorwhilechangingpassword";
+    }
+
+    public class Pages {
+        public static final String NO_PERMISSION_PAGE = "path.page.nopermission";
+        public static final String INDEX_PAGE = "path.page.index";
+        public static final String EDIT_SONG_PAGE = "path.page.editsong";
+        public static final String NO_SUCH_SONG_PAGE = "path.page.nosuchsong";
+        public static final String NEW_SONG_PAGE = "path.page.newsong";
+        public static final String NOT_APPROVED_SONGS_PAGE = "path.page.songs";
+        public static final String MY_PROFILE_PAGE = "path.page.myprofile";
+        public static final String PROFILE_PAGE = "path.page.profile";
+        public static final String NO_SUCH_USER_PAGE = "path.page.nosuchuser";
+        public static final String SONG_PAGE = "path.page.song";
     }
 
 }

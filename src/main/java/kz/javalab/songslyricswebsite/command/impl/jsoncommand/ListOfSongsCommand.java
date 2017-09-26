@@ -13,13 +13,20 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 07.08.2017.
+ * This class is responsible for sending list of songs performed by the specific artist to the user.
  */
 public class ListOfSongsCommand extends JSONCommand {
 
     public ListOfSongsCommand() {
     }
 
+    /**
+     * Sends list of songs performed by the specific artist to the user.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestWrapper requestWrapper = new RequestWrapper(request);

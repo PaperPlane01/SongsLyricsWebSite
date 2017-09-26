@@ -128,7 +128,7 @@
                             <label for="comment-content" id="add-comment-label">Add commentary:</label>
                             <textarea class="form-control" id="comment-content"></textarea>
                             <a class="btn btn-default" id="add-comment-button">Comment</a>
-                            <span id="comment-validation-message" style="display: none"></span>
+                            <div id="comment-validation-message" style="display: none"></div>
                             <div id="user-messages" style="display: none"></div>
                         </div>
                     </form>

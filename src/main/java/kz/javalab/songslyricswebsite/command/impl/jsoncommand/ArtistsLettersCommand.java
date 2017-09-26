@@ -10,13 +10,20 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 23.08.2017.
+ * This class is responsible for sending artists letters to the user.
  */
 public class ArtistsLettersCommand extends JSONCommand {
 
     public ArtistsLettersCommand() {
     }
 
+    /**
+     * Sends artists letters to the user.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArtistsManager artistsManager = new ArtistsManager();

@@ -21,13 +21,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by PaperPlane on 07.09.2017.
+ * This class is responsible for rating the song.
  */
 public class RateSongCommand extends LocaleBasedCommand {
 
     public RateSongCommand() {
     }
 
+    /**
+     * Rates the specified song and informs the user whether attempt of rating the song has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));

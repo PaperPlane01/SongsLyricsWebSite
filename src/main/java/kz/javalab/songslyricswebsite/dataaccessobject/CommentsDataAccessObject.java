@@ -125,7 +125,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @param comment Comment to be added.
      * @param connection Connection to be used.
      */
-    public void addCommentToDatabase(Comment comment, Connection connection) {
+    public void addCommentToDatabase(Comment comment, Connection connection) throws SQLException {
         String addCommentQuery = "INSERT INTO comments\n" +
                 "(song_id, user_id, comment_content)\n" +
                 "VALUES" +
@@ -135,19 +135,17 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
         int userIDParameter = 2;
         int contentParameter = 3;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addCommentQuery);
 
-            preparedStatement.setInt(songIDParameter, comment.getSongID());
-            preparedStatement.setInt(userIDParameter, comment.getAuthor().getID());
-            preparedStatement.setString(contentParameter, comment.getContent());
+        PreparedStatement preparedStatement = connection.prepareStatement(addCommentQuery);
 
-            preparedStatement.execute();
+        preparedStatement.setInt(songIDParameter, comment.getSongID());
+        preparedStatement.setInt(userIDParameter, comment.getAuthor().getID());
+        preparedStatement.setString(contentParameter, comment.getContent());
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        preparedStatement.execute();
+
+        preparedStatement.close();
+
     }
 
     /**
@@ -155,20 +153,17 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @param commentID ID of the comment which is to be marked as deleted.
      * @param connection Connection to be used.
      */
-    public void markCommentAsDeleted(int commentID, Connection connection) {
+    public void markCommentAsDeleted(int commentID, Connection connection) throws SQLException {
         String markCommentAsDeletedQuery = "UPDATE comments\n" +
                 "SET is_deleted = ?\n" +
                 "WHERE comment_id = ?";
 
         int isDeletedValue = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(markCommentAsDeletedQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(markCommentAsDeletedQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, commentID);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, commentID);
+
     }
 
     @Override

@@ -20,13 +20,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by PaperPlane on 12.08.2017.
+ * This class is responsible for registering a new user.
  */
 public class RegisterCommand extends LocaleBasedCommand {
 
     public RegisterCommand() {
     }
 
+    /**
+     * Registers a new user and informs the user whether attempt of registering has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

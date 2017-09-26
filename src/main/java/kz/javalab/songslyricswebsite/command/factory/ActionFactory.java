@@ -9,13 +9,20 @@ import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by PaperPlane on 07.08.2017.
+ * <Code>ActionFactory</Code> class is responsible for defining next action to be performed.
+ * The next action depends on "command" attribute of request.
  */
 public class ActionFactory {
 
     public ActionFactory() {
     }
 
+    /**
+     * Defines next action to be performed.
+     * The next action depends on "command" attribute of request.
+     * @param request Request to be handled.
+     * @return Appropriate <Code>ActionCommand</Code> instance, which is based on "command" attribute of request.
+     */
     public ActionCommand defineCommand(HttpServletRequest request) {
         ActionCommand command = new EmptyCommand();
         String action = request.getParameter(RequestConstants.RequestParameters.COMMAND);
@@ -50,6 +57,9 @@ public class ActionFactory {
                 break;
             case RequestConstants.Commands.CHANGE_LANGUAGE:
                 command = new ChangeLanguageCommand();
+                break;
+            case RequestConstants.Commands.CHANGE_PASSWORD:
+                command = new ChangePasswordCommand();
                 break;
             case RequestConstants.Commands.DELETE_COMMENT:
                 command = new DeleteCommentCommand();

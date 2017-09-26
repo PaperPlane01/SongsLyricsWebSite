@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by PaperPlane on 30.08.2017.
+ * This class is responsible for modifying existing song.
  */
 public class ApplySongChangesCommand extends LocaleBasedCommand {
 
@@ -24,6 +24,13 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
 
     }
 
+    /**
+     * Modifies existing song and informs the user whether attempt of modifying existing song has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, String> responseMap = new LinkedHashMap<>();

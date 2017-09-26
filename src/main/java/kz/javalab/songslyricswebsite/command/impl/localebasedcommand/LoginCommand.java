@@ -16,13 +16,20 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by PaperPlane on 08.08.2017.
+ * This class is responsible for login.
  */
 public class LoginCommand extends LocaleBasedCommand {
 
     public LoginCommand() {
     }
 
+    /**
+     * Does login and inform the user whether attempt of login has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResourceBundle labels = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));

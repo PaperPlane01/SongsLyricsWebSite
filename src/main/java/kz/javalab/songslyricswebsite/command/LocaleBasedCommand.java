@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.command;
 
 
+import kz.javalab.songslyricswebsite.constant.RequestConstants;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,7 +10,7 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Created by PaperPlane on 27.08.2017.
+ * Classes extending <Code>LocaleBasedCommand</Code> are responsible for sending responses in JSON format in language chosen by user.
  */
 public abstract class LocaleBasedCommand extends JSONCommand {
 
@@ -18,18 +20,13 @@ public abstract class LocaleBasedCommand extends JSONCommand {
     @Override
     public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
+    /**
+     * Retrieves locale from request.
+     * @param request Request to be handled.
+     * @return <Code>Locale</Code> object retrieved from request.
+     */
     protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        String languageAttribute = (String) request.getSession().getAttribute("language");
-
-        String[] languageAndCountry = languageAttribute.split("_");
-
-        int languageIndex = 0;
-        int countryIndex = 1;
-
-        String language = languageAndCountry[languageIndex];
-        String country = languageAndCountry[countryIndex];
-
-        return new Locale(language, country);
+        return (Locale) request.getSession().getAttribute(RequestConstants.SessionAttributes.LANGUAGE);
     }
 
     @Override

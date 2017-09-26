@@ -18,13 +18,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by PaperPlane on 24.09.2017.
+ * This class is responsible for unblocking the user by the moderator.
  */
 public class UnblockUserCommand extends LocaleBasedCommand {
 
     public UnblockUserCommand() {
     }
 
+    /**
+     * Unblocks the specified user and informs the moderator whether attempt of unblocking has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestWrapper requestWrapper = new RequestWrapper(request);

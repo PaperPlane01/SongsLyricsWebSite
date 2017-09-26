@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class CommentsManager {
 
     private RequestWrapper requestWrapper;
@@ -99,7 +98,7 @@ public class CommentsManager {
         return comment.getContent().length() <= 1000 && comment.getContent().length() >= 1;
     }
 
-    public void deleteComment() throws CommentAlteringException, NoPermissionException {
+    public void deleteComment() throws CommentDeletingException, NoPermissionException {
         User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
 
         if (user == null) {
@@ -122,10 +121,10 @@ public class CommentsManager {
             e.printStackTrace();
             try {
                 connection.rollback();
-                throw new CommentAlteringException();
+                throw new CommentDeletingException();
             } catch (SQLException e1) {
                 e1.printStackTrace();
-                throw new CommentAlteringException();
+                throw new CommentDeletingException();
             }
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);

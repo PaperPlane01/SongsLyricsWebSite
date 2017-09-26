@@ -3,7 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
-import kz.javalab.songslyricswebsite.exception.CommentAlteringException;
+import kz.javalab.songslyricswebsite.exception.CommentDeletingException;
 import kz.javalab.songslyricswebsite.exception.NoPermissionException;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 
@@ -17,10 +17,20 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * Created by PaperPlane on 22.09.2017.
+ * This class is responsible for deleting comment.
  */
 public class DeleteCommentCommand extends LocaleBasedCommand {
 
+    public DeleteCommentCommand() {
+    }
+
+    /**
+     * Deletes the specified comment and informs the moderator whether attempt of deleting the comment has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestWrapper requestWrapper = new RequestWrapper(request);
@@ -33,13 +43,12 @@ public class DeleteCommentCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCCESSFUL_COMMENT_DELETING));
             sendJsonResponse(responseMap, response);
-        } catch (CommentAlteringException e) {
+        } catch (CommentDeletingException e) {
             e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_DELETING_COMMENT));
             sendJsonResponse(responseMap, response);
         } catch (NoPermissionException e) {
-            e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_PERMISSION));
             sendJsonResponse(responseMap, response);

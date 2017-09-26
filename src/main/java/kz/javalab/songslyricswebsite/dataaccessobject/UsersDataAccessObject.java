@@ -210,9 +210,9 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
     /**
      * Retrieves hashed password of the specific user from the database.
      * @param userID ID of the user.
-     * @return Hashed password of the specific user
+     * @return Password of the specific user
      */
-    public String getHashedPasswordByUserID(int userID, Connection connection) {
+    public Password getPasswordByUserID(int userID, Connection connection) {
         String hashedPassword = new String();
 
         String getHashedPasswordQuery = "SELECT hashed_password FROM users\n" +
@@ -234,7 +234,10 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             e.printStackTrace();
         }
 
-        return hashedPassword;
+        Password password = new Password();
+        password.setHashedPassword(hashedPassword);
+
+        return password;
     }
 
     /**
@@ -341,5 +344,23 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         }
 
         return isBlocked;
+    }
+
+    public void changePassword(int userID, Password newPassword, Connection connection) throws SQLException {
+        String changePasswordQuery = "UPDATE users\n" +
+                "SET hashed_password = ?\n" +
+                "WHERE user_id = ?";
+
+        int hashedPasswordParameter = 1;
+        int userIDParameter = 2;
+
+        PreparedStatement preparedStatement = connection.prepareStatement(changePasswordQuery);
+
+        preparedStatement.setString(hashedPasswordParameter, newPassword.getHashedPassword());
+        preparedStatement.setInt(userIDParameter, userID);
+
+        preparedStatement.execute();
+
+        preparedStatement.close();
     }
 }

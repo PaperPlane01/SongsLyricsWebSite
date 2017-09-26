@@ -15,16 +15,23 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by PaperPlane on 19.08.2017.
+ * This class is responsible for adding new song.
  */
 public class AddSongCommand extends LocaleBasedCommand {
 
     public AddSongCommand() {
     }
 
+    /**
+     * Adds new song and informs the user whether attempt of adding new song has been successful.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(ResponseConstants.Messages.LABELS, getLocaleFromRequest(request));
         RequestWrapper requestWrapper = new RequestWrapper(request);
         SongsManager songsManager = new SongsManager(requestWrapper);
 

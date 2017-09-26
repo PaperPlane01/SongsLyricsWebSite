@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
+import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
@@ -22,10 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 07.08.2017.
+ * This class is responsible for sending the user to the page with the specific song.
  */
 public class SongCommand implements ActionCommand {
 
+    public SongCommand() {
+    }
+
+    /**
+     * Sends the user to the page of the song with the specific ID, or to the error page.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -75,15 +86,15 @@ public class SongCommand implements ActionCommand {
                     }
                 }
 
-                String page = ConfigurationManager.getProperty("path.page.song");
+                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
-                String page = ConfigurationManager.getProperty("path.page.nosuchsong");
+                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NEW_SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 
         } catch (NumberFormatException ex) {
-            String page = ConfigurationManager.getProperty("path.page.nosuchsong");
+            String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

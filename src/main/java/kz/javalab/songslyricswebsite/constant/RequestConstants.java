@@ -28,6 +28,9 @@ public class RequestConstants {
         public static final String USER_ID = "userID";
         public static final String COMMAND = "command";
         public static final String COMMENT_ID = "commentID";
+        public static final String CURRENT_PASSWORD = "currentPassword";
+        public static final String NEW_PASSWORD = "newPassword";
+        public static final String DUPLICATED_NEW_PASSWORD = "duplicatedNewPassword";
     }
 
     public class RequestAttributes {
@@ -44,6 +47,7 @@ public class RequestConstants {
         public static final String FEATURED_ARTISTS = "featuredArtists";
         public static final String SONG_GENRES = "songGenres";
         public static final String SONG_LYRICS = "songLyrics";
+        public static final String PROFILE_OWNER = "profileOwner";
     }
 
     public class SessionAttributes {
@@ -75,5 +79,6 @@ public class RequestConstants {
         public static final String BLOCK_USER = "blockuser";
         public static final String DELETE_COMMENT = "deletecomment";
         public static final String UNBLOCK_USER = "unblockuser";
+        public static final String CHANGE_PASSWORD = "changepassword";
     }
 }

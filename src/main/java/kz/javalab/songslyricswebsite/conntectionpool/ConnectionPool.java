@@ -3,11 +3,11 @@ package kz.javalab.songslyricswebsite.conntectionpool;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 /**
- * Created by PaperPlane on 26.07.2017.
+ * This class is responsible for storing <Code>Connection</Code> objects.
  */
 public class ConnectionPool {
 
@@ -22,7 +22,7 @@ public class ConnectionPool {
     /**
      * Connections stored.
      */
-    private ConcurrentLinkedQueue<Connection> connections = new ConcurrentLinkedQueue<>();
+    private BlockingQueue<Connection> connections;
     /**
      * URL of the database.
      */
@@ -68,7 +68,7 @@ public class ConnectionPool {
     }
 
     /**
-     * Creates initialized <code>ConnectionPool</code>.
+     * Creates initialized <code>ConnectionPool</code> instance.
      */
     private ConnectionPool() {
         this.databaseURL = "jdbc:mysql://localhost:3306/websitedatabase";
@@ -76,6 +76,7 @@ public class ConnectionPool {
         this.userName = "root";
         this.password = "admin";
         this.driverName = "com.mysql.jdbc.Driver";
+        this.connections = new ArrayBlockingQueue<>(maxSize);
 
         while (!isConnectionPoolFull()) {
             connections.add(createNewConnection());
@@ -108,30 +109,22 @@ public class ConnectionPool {
         }
         catch(SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
 
         return connection;
     }
 
     /**
-     * Allows to retrieve connection from connection pool.
+     * Retrieves connection from connection pool.
      * @return Connection from connection pool.
      */
     public Connection getConnection() {
-
-        Connection connection = null;
-
-        if (connections.size() > 0) {
-            connection = connections.poll();
-        }
-
-        return connection;
+        return connections.poll();
     }
 
 
     /**
-     * Allows to put connection back into connection pool.
+     * Puts connection back into connection pool.
      * @param connection Connection to be returned.
      */
     public void returnConnection(Connection connection) {
@@ -141,6 +134,7 @@ public class ConnectionPool {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         connections.add(connection);
     }
 

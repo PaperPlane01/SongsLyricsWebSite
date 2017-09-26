@@ -11,10 +11,20 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 16.09.2017.
+ * This class is responsible for sending the list of 10 songs with the highest ratings to the user.
  */
 public class TopTenRatedSongsCommand extends JSONCommand {
 
+    public TopTenRatedSongsCommand() {
+    }
+
+    /**
+     * Sends the list of 10 songs with highest ratings to the user.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SongsRatingsManager songsRatingsManager = new SongsRatingsManager();

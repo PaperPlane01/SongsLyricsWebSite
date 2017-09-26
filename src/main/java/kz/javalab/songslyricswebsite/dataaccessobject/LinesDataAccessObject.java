@@ -49,7 +49,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
     }
 
-    public void addLineToDatabase(int linePosition, int songID, Line line, SongLyricsPartType songLyricsPartType, Connection connection) {
+    public void addLineToDatabase(int linePosition, int songID, Line line, SongLyricsPartType songLyricsPartType, Connection connection) throws SQLException {
         String addLineQuery = "INSERT INTO websitedatabase.lines\n" +
                 "(content, song_id, song_part, line_position)\n" +
                 "VALUES (?, ?, ?, ?)";
@@ -58,20 +58,17 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         int songPartParameter = 3;
         int linePositionParameter = 4;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
-            preparedStatement.setString(lineContentParameter, line.toString());
-            preparedStatement.setInt(songIDParameter, songID);
-            preparedStatement.setString(songPartParameter, songLyricsPartType.toString());
-            preparedStatement.setInt(linePositionParameter, linePosition);
+        preparedStatement.setString(lineContentParameter, line.toString());
+        preparedStatement.setInt(songIDParameter, songID);
+        preparedStatement.setString(songPartParameter, songLyricsPartType.toString());
+        preparedStatement.setInt(linePositionParameter, linePosition);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        preparedStatement.close();
+
     }
 
     public void markLineAsDeleted(int lineID, Connection connection) throws SQLException {
@@ -117,7 +114,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         return lineID;
     }
 
-    public void addSongLyricsToDatabase(Song song, Connection connection) {
+    public void addSongLyricsToDatabase(Song song, Connection connection) throws SQLException {
         String addLineQuery = "INSERT INTO websitedatabase.lines (song_id, content, song_part, line_position)\n" +
                 "VALUES (?, ?, ?, ?)";
 
@@ -132,20 +129,17 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
             for (SongLyrics line : songPart.getComponents()) {
                 linePosition++;
-                try {
-                    PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
-                    preparedStatement.setInt(songIDParameter, song.getID());
-                    preparedStatement.setString(contentParameter, line.toString());
-                    preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
-                    preparedStatement.setInt(linePositionParameter, linePosition);
+                PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
-                    preparedStatement.execute();
+                preparedStatement.setInt(songIDParameter, song.getID());
+                preparedStatement.setString(contentParameter, line.toString());
+                preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
+                preparedStatement.setInt(linePositionParameter, linePosition);
 
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                preparedStatement.execute();
+
+                preparedStatement.close();
             }
         }
 

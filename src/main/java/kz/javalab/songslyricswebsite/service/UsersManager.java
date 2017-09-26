@@ -398,8 +398,60 @@ public class UsersManager {
         }
     }
 
-    public void changePassword(int userID, String oldHashedPassword, String newHashedPassword) {
+    public void changePassword() throws UserNotLoggedInException, WrongPasswordException, InvalidPasswordException, PasswordsAreNotEqualException, PasswordChangingException {
+        User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
 
+        if (currentUser == null) {
+            throw new UserNotLoggedInException();
+        }
+
+        Connection connection = ConnectionPool.getInstance().getConnection();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
+
+        String passwordReceivedFromUser = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.CURRENT_PASSWORD);
+
+        Password currentPassword = usersDataAccessObject.getPasswordByUserID(currentUser.getID(), connection);
+
+        if (!currentPassword.matches(passwordReceivedFromUser)) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new WrongPasswordException();
+        }
+
+        String newPasswordAsString = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.NEW_PASSWORD);
+
+        if (!validatePassword(newPasswordAsString)) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new InvalidPasswordException();
+        }
+
+        String duplicatedNewPasswordAsString = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.DUPLICATED_NEW_PASSWORD);
+
+        if (!newPasswordAsString.equals(duplicatedNewPasswordAsString)) {
+            ConnectionPool.getInstance().returnConnection(connection);
+            throw new PasswordsAreNotEqualException();
+        }
+
+        try {
+            connection.setAutoCommit(false);
+
+            Password newPassword = new Password();
+            newPassword.encodePassword(newPasswordAsString);
+
+            usersDataAccessObject.changePassword(currentUser.getID(), newPassword, connection);
+
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+                throw new PasswordChangingException();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                throw new PasswordChangingException();
+            }
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
     }
 
     public void changeUserType(int userID, UserType newUserType) {
