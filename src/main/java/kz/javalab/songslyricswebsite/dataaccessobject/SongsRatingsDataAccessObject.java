@@ -10,27 +10,42 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by PaperPlane on 05.09.2017.
+ * This class contains methods for receiving, inserting and updating data of "songs_ratings" table.
  */
 public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs <Code>SongsRatingsDataAccessObject</Code> instance.
+     */
     public SongsRatingsDataAccessObject() {
+        super();
     }
 
-    public void rateSong(int userID, int songID, int rating, Connection connection) {
+    /**
+     * Inserts rating value of the specific song sent by the specific user.
+     * @param userID ID of user who rated the song.
+     * @param songID ID of the song which has been rated.
+     * @param rating Value of the rating.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
+     */
+    public void rateSong(int userID, int songID, int rating, Connection connection) throws SQLException {
         String rateSongQuery = "INSERT INTO songs_ratings\n" +
                 "(user_id, song_id, rating)\n" +
                 "VALUES (?, ?, ?)";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(rateSongQuery);
+         PreparedStatement preparedStatement = connection.prepareStatement(rateSongQuery);
 
-            executePreparedStatementWithMultipleIntegerValues(preparedStatement, userID, songID, rating);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+         executePreparedStatementWithMultipleIntegerValues(preparedStatement, userID, songID, rating);
     }
 
+    /**
+     * Checks if the specific user has rated the specific song.
+     * @param userID ID of the user.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if user has rated this song, <Code>False</Code> if not.
+     */
     public boolean checkIfUserRatedSong (int userID, int songID, Connection connection) {
         boolean result = false;
 
@@ -48,6 +63,13 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         return  result;
     }
 
+    /**
+     * Retrieves value of rating
+     * @param userID
+     * @param songID
+     * @param connection
+     * @return
+     */
     public int getUserRatingOfSong(int userID, int songID, Connection connection) {
         String userRatingOfSongQuery = "SELECT rating FROM songs_ratings\n" +
                 "WHERE user_id = ? AND song_id = ?";
@@ -78,7 +100,15 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         return rating;
     }
 
-    public void alterSongRating(int userID, int songID, int newRating, Connection connection) {
+    /**
+     * Modifies rating of the song.
+     * @param userID ID of the user who rated the song.
+     * @param songID ID of the song which has been rated.
+     * @param newRating New value of rating.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to modify data.
+     */
+    public void alterSongRating(int userID, int songID, int newRating, Connection connection) throws SQLException {
         String alterSongRatingQuery = "UPDATE songs_ratings\n" +
                 "SET rating = ?\n" +
                 "WHERE vote_id = ?";
@@ -86,27 +116,29 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         int ratingParameter = 1;
         int voteIDParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(alterSongRatingQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(alterSongRatingQuery);
 
-            int voteID = getVoteID(userID, songID, connection);
+        int voteID = getVoteID(userID, songID, connection);
 
-            preparedStatement.setInt(ratingParameter, newRating);
-            preparedStatement.setInt(voteIDParameter, voteID);
+        preparedStatement.setInt(ratingParameter, newRating);
+        preparedStatement.setInt(voteIDParameter, voteID);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
 
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        preparedStatement.close();
     }
 
+    /**
+     * Retrieves average rating of the specified song.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return Average rating of the specified song.
+     */
     public double getAverageRatingOfSong(int songID, Connection connection) {
         double averageRating = 0;
 
-        String getAverageRatingQuery = "SELECT avg(song_rating)\n" +
-                "FROM songs_rating\n" +
+        String getAverageRatingQuery = "SELECT avg(rating)\n" +
+                "FROM songs_ratings\n" +
                 "WHERE song_id = ?";
 
         int songIDParameter = 1;
@@ -131,6 +163,11 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         return averageRating;
     }
 
+    /**
+     * Returns a map with IDs and average ratings of top ten rated songs.
+     * @param connection Connection to be used.
+     * @return Map with IDs and average ratings of top ten rated songs.
+     */
     public Map<Integer, Double> getTopTenRatedSongsIDsAndRatings(Connection connection) {
         Map<Integer, Double> map = new LinkedHashMap<>();
 
@@ -161,6 +198,13 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         return map;
     }
 
+    /**
+     *
+     * @param userID
+     * @param songID
+     * @param connection
+     * @return
+     */
     private int getVoteID(int userID, int songID, Connection connection) {
         int voteID = 0;
 

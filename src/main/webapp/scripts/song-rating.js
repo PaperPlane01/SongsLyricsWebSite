@@ -14,7 +14,7 @@ function SongRatingManager() {
             {
                 url : 'controller',
                 data : {
-                    command : 'ratesong',
+                    command : 'rate_song',
                     songID : songID,
                     rating : rating
                 },

@@ -14,7 +14,7 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=newsong">
+                <a class="nav-link" href="/controller?command=new_song">
                     <fmt:bundle basename="labels">
                         <fmt:message key="labels.addsong"/>
                     </fmt:bundle>
@@ -33,7 +33,7 @@
 
                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
                         <li class="nav-item">
-                            <a class="nav-link" href="/controller?command=notapprovedsongs">
+                            <a class="nav-link" href="/controller?command=not_approved_songs">
                                 <fmt:bundle basename="labels">
                                     <fmt:message key="labels.songstoapprove"/>
                                 </fmt:bundle>

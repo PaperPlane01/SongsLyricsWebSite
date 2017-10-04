@@ -40,7 +40,7 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
         SongsManager songsManager = new SongsManager(requestWrapper);
 
         try {
-            songsManager.alterSong();
+            songsManager.updateSong();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
             responseMap.put(ResponseConstants.Messages.MESSAGE, "Everything is ok!");
             sendJsonResponse(responseMap, response);

@@ -5,9 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by PaperPlane on 08.09.2017.
+ * This class contains methods for operating SQL statements common for several data access objects.
  */
 public abstract class AbstractDataAccessObject {
+
+    public AbstractDataAccessObject() {
+    }
 
     /**
      * Checks if there is a record in table with specific parameters.
@@ -28,8 +31,6 @@ public abstract class AbstractDataAccessObject {
         if (resultSet.next()) {
             result = true;
         }
-
-        System.out.println("Result " + result);
 
         resultSet.close();
         preparedStatement.close();
@@ -72,11 +73,11 @@ public abstract class AbstractDataAccessObject {
     }
 
     /**
-     *
-     * @param preparedStatement
-     * @param value
-     * @return
-     * @throws SQLException
+     * Checks entity existence by string value.
+     * @param preparedStatement Prepared statement to be executed.
+     * @param value String value which is to be used to check entity's existence.
+     * @return <Code>True</Code> if entity exists, <Code>False</Code> if not.
+     * @throws SQLException Thrown if there is error occurred while attempting to execute query.
      */
     protected boolean checkEntityExistenceByStringValue(PreparedStatement preparedStatement, String value) throws SQLException {
         int stringValueParameter = 1;

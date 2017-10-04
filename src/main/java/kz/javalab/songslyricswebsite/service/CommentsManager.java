@@ -130,4 +130,15 @@ public class CommentsManager {
             ConnectionPool.getInstance().returnConnection(connection);
         }
     }
+
+    public int getNumberOfCommentsOfUser(int userID) {
+        CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
+        Connection connection = ConnectionPool.getInstance().getConnection();
+
+        int numberOfComments = commentsDataAccessObject.getNumberOfCommentsOfUser(userID, connection);
+
+        ConnectionPool.getInstance().returnConnection(connection);
+
+        return numberOfComments;
+    }
 }

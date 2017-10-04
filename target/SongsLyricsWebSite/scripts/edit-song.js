@@ -202,7 +202,7 @@ $(document).ready(function () {
             {
                 url : "controller",
                 data : {
-                    command : "applysongchanges",
+                    command : "apply_song_changes",
                     songID : songID,
                     songName : songName,
                     songArtist : artistName,

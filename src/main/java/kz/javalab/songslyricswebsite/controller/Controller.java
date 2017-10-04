@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 /**
- * Created by PaperPlane on 15.07.2017.
+ * This class is responsible for handling user's requests.
  */
 public class Controller extends HttpServlet {
 

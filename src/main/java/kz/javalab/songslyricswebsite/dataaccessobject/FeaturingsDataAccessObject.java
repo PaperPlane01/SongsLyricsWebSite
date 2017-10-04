@@ -6,34 +6,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by PaperPlane on 30.08.2017.
+ * This class contains methods for receiving, inserting and updating data of "Featurings" table.
  */
 public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs <Code>FeaturingsDataAccessObject</Code> instance.
+     */
     public FeaturingsDataAccessObject() {
+        super();
     }
 
-    public boolean checkIfFeaturingExists(int artistID, int songID, Connection connection) {
-        boolean result = false;
-
-        String checkFeaturingQuery = "SELECT featuring_id\n" +
-                "FROM featurings\n" +
-                "WHERE artist_id = ?\n" +
-                "AND song_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkFeaturingQuery);
-
-            result = checkEntityExistence(preparedStatement, artistID, songID);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
+    /**
+     * Retrieves ID of featuring with specified parameters.
+     * @param artistID ID of featured artist.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return ID of featuring with specified parameters.
+     */
     public int getFeaturingID(int artistID, int songID, Connection connection) {
         String checkFeaturingQuery = "SELECT featuring_id\n" +
                 "FROM featurings\n" +
@@ -66,6 +60,13 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
         return  featuringID;
     }
 
+    /**
+     * Adds featuring to database.
+     * @param artistID ID of the featured artist.
+     * @param songID ID of the song featured by artist.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
+     */
     public void addNewFeaturing(int artistID, int songID, Connection connection) throws SQLException {
         String addFeaturingQuery = "INSERT INTO featurings\n" +
                 "(artist_id, song_id)\n" +
@@ -77,6 +78,12 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
     }
 
+    /**
+     * Marks the specified featuring as deleted.
+     * @param featuringID ID of the featuring which is to be marked as deleted.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to update data.
+     */
     public void markFeatuirngAsDeleted(int featuringID, Connection connection) throws SQLException {
         String markFeaturingAsDeletedQuery = "UPDATE featurings\n" +
                 "SET is_deleted = ?\n" +
@@ -88,5 +95,32 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, featuringID);
 
+    }
+
+    public List<Integer> getIDsOfFeaturedArtists(int songID, Connection connection) {
+        List<Integer> featuredArtistsIDs = new ArrayList<>();
+
+        String listOfIDsQuery = "SELECT artist_id FROM featurings\n" +
+                "WHERE song_id = ?";
+        int songIDParameter = 1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(listOfIDsQuery);
+
+            preparedStatement.setInt(songIDParameter, songID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                featuredArtistsIDs.add(resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.ARTIST_ID));
+            }
+
+            preparedStatement.close();
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return featuredArtistsIDs;
     }
 }

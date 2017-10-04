@@ -213,7 +213,7 @@ function SignUpValidator() {
 
     };
 
-    this.validatePassword = function (password,) {
+    this.validatePassword = function (password) {
         if (password.length === 0) {
             this.passwordValidationResult = SignUpValidationResults.EMPTY_PASSWORD;
             return;
@@ -422,7 +422,7 @@ function QuickSongAccessManager  () {
             {
                 url : 'controller',
                 data : {
-                    command : 'artistsletters'
+                    command : 'artists_letters'
                 },
 
                 success : function (artistsLetters) {
@@ -547,7 +547,7 @@ function LanguageManager () {
             {
                 url : 'controller',
                 data : {
-                    command : "changelanguage",
+                    command : "change_language",
                     language : locale
                 },
 
@@ -603,7 +603,7 @@ function LabelsManager() {
                 url : 'controller',
                 async : false,
                 data : {
-                    command : 'getlabel',
+                    command : 'get_label',
                     labelKey : key,
                     locale : locale
                 },

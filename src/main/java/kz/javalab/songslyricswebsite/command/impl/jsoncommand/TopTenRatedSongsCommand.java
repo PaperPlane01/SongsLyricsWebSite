@@ -2,6 +2,7 @@ package kz.javalab.songslyricswebsite.command.impl.jsoncommand;
 
 import kz.javalab.songslyricswebsite.command.JSONCommand;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
 
 import javax.servlet.ServletException;
@@ -27,9 +28,9 @@ public class TopTenRatedSongsCommand extends JSONCommand {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SongsRatingsManager songsRatingsManager = new SongsRatingsManager();
+        SongsManager songsManager = new SongsManager();
 
-        List<Song> songs = songsRatingsManager.getTopTenRatedSongs();
+        List<Song> songs = songsManager.getTopTenRatedSongs();
 
         for (Song song : songs) {
             song.initTitle();

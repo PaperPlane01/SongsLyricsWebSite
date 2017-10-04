@@ -12,11 +12,9 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Created by PaperPlane on 30.08.2017.
+ * This class is responsible for retrieving <Code>Song</Code> object from <Code>HttpServletRequest</Code> and validation of received data.
  */
 public class SongRetriever {
-
-    private String youTubeLink = new String();
 
     /**
      * Retrieves <Code>Song</Code> object from <Code>HttpServletRequest</Code>

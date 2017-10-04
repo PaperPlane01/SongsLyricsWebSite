@@ -19,27 +19,52 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by PaperPlane on 07.09.2017.
+ * This class is responsible for managing ratings of songs.
  */
 public class SongsRatingsManager {
 
+    /**
+     * <Code>RequestWrapper</Code> which contains data sent by user.
+     */
     private RequestWrapper requestWrapper;
 
+    /**
+     * Constructs <Code>SongsRatingsManager</Code> instance.
+     */
     public SongsRatingsManager() {
     }
 
+    /**
+     * Constructs <Code>SongsRatingsManager</Code> instance with pre-defined requestWrapper.
+     * @param requestWrapper <Code>RequestWrapper</Code> instance.
+     */
     public SongsRatingsManager(RequestWrapper requestWrapper) {
         this.requestWrapper = requestWrapper;
     }
 
+    /**
+     * Returns requestWrapper.
+     * @return requestWrapper.
+     */
     public RequestWrapper getRequestWrapper() {
         return requestWrapper;
     }
 
+    /**
+     * Sets new requestWrapper.
+     * @param requestWrapper New <Code>RequestWrapper</Code> instance which is to be set.
+     */
     public void setRequestWrapper(RequestWrapper requestWrapper) {
         this.requestWrapper = requestWrapper;
     }
 
+    /**
+     * Inserts new rating of song.
+     * @throws InvalidRatingValueException Thrown if value of the rating is invalid.
+     * @throws UserNotLoggedInException Thrown if rating value received from not logged in user.
+     * @throws NoSuchSongException Thrown if there is no song with received ID.
+     * @throws SongRatingException Thrown if some error occurred when attempted to insert data.
+     */
     public void rateSong() throws InvalidRatingValueException, UserNotLoggedInException, NoSuchSongException, SongRatingException {
         User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
 
@@ -91,10 +116,21 @@ public class SongsRatingsManager {
         }
     }
 
+    /**
+     * Validates rating value.
+     * @param rating Rating value to be validated.
+     * @return <Code>True</Code> if rating value is valid, <Code>False</Code> if not.
+     */
     private boolean validateRatingValue(int rating) {
         return rating <= 5 && rating >= 1;
     }
 
+    /**
+     * Returns user's rating of the song.
+     * @param userID ID of the song.
+     * @param songID ID of the user.
+     * @return User's rating of the song.
+     */
     public int getUserRatingOfSong(int userID, int songID) {
         SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -103,6 +139,12 @@ public class SongsRatingsManager {
         return userRatingOfSong;
     }
 
+    /**
+     * Checks if user rated the song.
+     * @param userID ID of the user.
+     * @param songID ID of the song.
+     * @return <Code>True</Code> if user has rated the song, <Code>False</Code> if not.
+     */
     public boolean checkIfUserRatedSong(int userID, int songID) {
         SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -111,7 +153,7 @@ public class SongsRatingsManager {
         return result;
     }
 
-    public void alterSongRating(int userID, int songID, int newRating) throws InvalidRatingValueException {
+    public void updateSongRating(int userID, int songID, int newRating) throws InvalidRatingValueException {
         if (!validateRatingValue(newRating)) {
             throw new InvalidRatingValueException();
         }
@@ -133,42 +175,5 @@ public class SongsRatingsManager {
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
-    }
-
-    public double getAverageRatingOfSong(int songID) {
-        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-        Connection connection = ConnectionPool.getInstance().getConnection();
-
-        double averageRating = songsRatingsDataAccessObject.getAverageRatingOfSong(songID, connection);
-
-        ConnectionPool.getInstance().returnConnection(connection);
-        return averageRating;
-    }
-
-    public List<Song> getTopTenRatedSongs() {
-        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
-
-        Connection connection = ConnectionPool.getInstance().getConnection();
-
-        List<Song> songs = new ArrayList<>();
-        Map<Integer, Double> mapWithSongsIDs = songsRatingsDataAccessObject.getTopTenRatedSongsIDsAndRatings(connection);
-
-        for (Map.Entry entry : mapWithSongsIDs.entrySet()) {
-            Integer songID = (Integer) entry.getKey();
-            Double songRating = (Double) entry.getValue();
-
-            System.out.println(songID + " " + songRating);
-
-            boolean withLyrics = false;
-
-            Song song = songsDataAccessObject.getSongByID(songID, withLyrics, connection);
-
-            song.setAverageRating(songRating);
-
-            songs.add(song);
-        }
-
-        return songs;
     }
 }

@@ -11,26 +11,49 @@ import java.sql.Connection;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 23.08.2017.
+ * This class is responsible for managing artists.
  */
 public class ArtistsManager {
-    private RequestWrapper requestWrapper = new RequestWrapper();
 
+    /**
+     * <Code>RequestWrapper</Code> which contains data sent by user.
+     */
+    private RequestWrapper requestWrapper;
+
+    /**
+     * Constructs <Code>ArtistsManager</Code> instance.
+     */
     public ArtistsManager() {
     }
 
+    /**
+     * Constructs <Code>ArtistsManager</Code> instance with pre-defined requestWrapper.
+     * @param requestWrapper <Code>RequestWrapper</Code> instance.
+     */
     public ArtistsManager(RequestWrapper requestWrapper) {
         this.requestWrapper = requestWrapper;
     }
 
+    /**
+     * Returns requestWrapper.
+     * @return requestWrapper.
+     */
     public RequestWrapper getRequestWrapper() {
         return requestWrapper;
     }
 
+    /**
+     * Sets new requestWrapper.
+     * @param requestWrapper New <Code>RequestWrapper</Code> instance which is to be set.
+     */
     public void setRequestWrapper(RequestWrapper requestWrapper) {
         this.requestWrapper = requestWrapper;
     }
 
+    /**
+     * Returns list of artists whose names begin with specified letter.
+     * @return List of artists whose names begin with specified letter.
+     */
     public List<Artist> getArtistsByLetter() {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
@@ -45,6 +68,10 @@ public class ArtistsManager {
         return artists;
     }
 
+    /**
+     * Returns list of beginning letters of names of artists.
+     * @return List of beginning letters of names of artists.
+     */
     public List<Character> getArtistsLetters() {
         Connection connection = ConnectionPool.getInstance().getConnection();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();

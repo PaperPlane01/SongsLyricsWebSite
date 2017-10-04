@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <Code>ActionFactory</Code> class is responsible for defining next action to be performed.
- * The next action depends on "command" attribute of request.
+ * The next action depends on "command" attribute of HTTP request.
  */
 public class ActionFactory {
 
@@ -21,7 +21,7 @@ public class ActionFactory {
      * Defines next action to be performed.
      * The next action depends on "command" attribute of request.
      * @param request Request to be handled.
-     * @return Appropriate <Code>ActionCommand</Code> instance, which is based on "command" attribute of request.
+     * @return Appropriate <Code>ActionCommand</Code> instance, which is based on "command" attribute of  HTTP request.
      */
     public ActionCommand defineCommand(HttpServletRequest request) {
         ActionCommand command = new EmptyCommand();

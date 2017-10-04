@@ -70,7 +70,7 @@ public class ResponseConstants {
         public static final String EDIT_SONG_PAGE = "path.page.editsong";
         public static final String NO_SUCH_SONG_PAGE = "path.page.nosuchsong";
         public static final String NEW_SONG_PAGE = "path.page.newsong";
-        public static final String NOT_APPROVED_SONGS_PAGE = "path.page.songs";
+        public static final String NOT_APPROVED_SONGS_PAGE = "path.page.notapprovedsongs";
         public static final String MY_PROFILE_PAGE = "path.page.myprofile";
         public static final String PROFILE_PAGE = "path.page.profile";
         public static final String NO_SUCH_USER_PAGE = "path.page.nosuchuser";

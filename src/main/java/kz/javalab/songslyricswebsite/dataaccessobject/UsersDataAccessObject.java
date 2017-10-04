@@ -16,7 +16,11 @@ import java.sql.SQLException;
  */
 public class UsersDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs new <Code>UsersDataAccessObject</Code> instance.
+     */
     public UsersDataAccessObject() {
+        super();
     }
 
     /**
@@ -154,9 +158,11 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         String getUserIDQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_name = ?";
 
+        int userNameParameter = 1;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getUserIDQuery);
-            preparedStatement.setString(1, userName);
+            preparedStatement.setString(userNameParameter, userName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -346,6 +352,13 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         return isBlocked;
     }
 
+    /**
+     * Changes password of the specified user.
+     * @param userID ID of the user.
+     * @param newPassword New password.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occured when attempted to modify data.
+     */
     public void changePassword(int userID, Password newPassword, Connection connection) throws SQLException {
         String changePasswordQuery = "UPDATE users\n" +
                 "SET hashed_password = ?\n" +

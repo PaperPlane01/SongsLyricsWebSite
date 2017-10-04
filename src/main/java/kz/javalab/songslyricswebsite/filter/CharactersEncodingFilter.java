@@ -4,9 +4,11 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
- * Created by PaperPlane on 24.08.2017.
+ * This filter is responsible for setting "UTF-8" character encoding to all incoming requests
+ * and outcoming responses.
  */
 public class CharactersEncodingFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

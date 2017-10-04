@@ -14,7 +14,7 @@ function SongsManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'toptenratedsongs'
+                    command : 'top_ten_rated_songs'
                 },
 
                 success : function (responseData) {
@@ -40,7 +40,7 @@ function SongsManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'recentlyaddedsongs'
+                    command : 'recently_added_songs'
                 },
 
                 success : function (responseData) {

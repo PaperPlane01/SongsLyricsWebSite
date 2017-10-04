@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.filter;
 
-
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 
 import javax.servlet.*;
@@ -9,7 +8,8 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Created by PaperPlane on 24.08.2017.
+ * This filter is responsible for setting english language to display the content
+ * if no language has been chosen yet.
  */
 public class LanguageFilter implements Filter {
 

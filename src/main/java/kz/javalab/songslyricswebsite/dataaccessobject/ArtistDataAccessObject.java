@@ -12,16 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 17.08.2017.
+ * This class contains methods for receiving, inserting and updating data of "Artists" table.
  */
 public class ArtistDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs <Code>ArtistDataAccessObject</Code> instance.
+     */
     public ArtistDataAccessObject() {
+        super();
     }
 
     /**
      * Retrieves artists whose names are beginning with a specific letter.
      * @param letter First letter of the artists.
+     * @param connection Connection to be used.
      * @return List of Artists whose names are beginning with a specific letter.
      */
     public List<Artist> getArtistsByLetter(char letter, Connection connection) {
@@ -63,6 +68,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
 
     /**
      * Retrieves all starting letters of the artists from the database.
+     * @param connection Connection to be used.
      * @return List of all starting letters of the artists.
      */
     public List<Character> getArtistLetters(Connection connection) {
@@ -98,6 +104,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
     /**
      * Inserts artist to the database.
      * @param artist Artist to be inserted.
+     * @param connection Connection to be used.
      * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
     public void addArtistToDatabase(Artist artist, Connection connection) throws SQLException {
@@ -125,6 +132,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
     /**
      * Retrieves ID of the specific artist from the database.
      * @param artist Artist whose ID is to be retrieved.
+     * @param connection Connection to be used.
      * @return ID of the specific artist
      */
     public int getArtistID(Artist artist, Connection connection) {
@@ -151,6 +159,35 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         }
 
         return id;
+    }
+
+    public Artist getArtistByID(int artistID, Connection connection) {
+        Artist artist = new Artist();
+        artist.setID(artistID);
+
+        String getArtistByIDQuery = "SELECT artist_name FROM artists\n" +
+                "WHERE artist_id = ?";
+        int artistIDParameter = 1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(getArtistByIDQuery);
+
+            preparedStatement.setInt(artistIDParameter, artistID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                String artistName = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_NAME);
+                artist.setName(artistName);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return artist;
     }
 
     /**

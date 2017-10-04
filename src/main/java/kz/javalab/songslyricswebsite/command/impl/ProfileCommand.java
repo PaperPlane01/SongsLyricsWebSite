@@ -3,15 +3,19 @@ package kz.javalab.songslyricswebsite.command.impl;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
+import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
 import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.service.CommentsManager;
+import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.UsersManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * This class is responsible to send the user to profile or personal page.
@@ -70,17 +74,43 @@ public class ProfileCommand implements ActionCommand {
      * @throws IOException Thrown if some error occurred when attempted to send response.
      */
     private void sendToMyProfilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);
+        SongsManager songsManager = new SongsManager();
+        CommentsManager commentsManager = new CommentsManager();
+
+        List<Song> songsContributedByUser = songsManager.getSongsContributedByUser(user.getID());
+        int numberOfComments = commentsManager.getNumberOfCommentsOfUser(user.getID());
+
+        request.setAttribute(RequestConstants.RequestAttributes.CONTRIBUTED_SONGS, songsContributedByUser);
+        request.setAttribute(RequestConstants.RequestAttributes.NUMBER_OF_COMMENTS, numberOfComments);
+
         String page = ConfigurationManager.getProperty(ResponseConstants.Pages.MY_PROFILE_PAGE);
         request.getRequestDispatcher(page).forward(request, response);
     }
 
+    /**
+     * Sends user to profile page of the specified user.
+     * @param request Request to be handled.
+     * @param response Response to be sent.
+     * @param user Profile owner.
+     * @throws ServletException Thrown if there is a server problem.
+     * @throws IOException Thrown if some error occurred when attempted to send response.
+     * @throws InvalidUserIDException Thrown if user ID is invalid.
+     */
     private void sendToProfilePage(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, InvalidUserIDException {
         String page = new String();
         UsersManager usersManager = new UsersManager();
+        SongsManager songsManager = new SongsManager();
+        CommentsManager commentsManager = new CommentsManager();
 
         user.setUsername(usersManager.getUserNameByUserID(user.getID()));
         user.setUserType(usersManager.getUserTypeByUserID(user.getID()));
+        List<Song> songsContributedByUser = songsManager.getSongsContributedByUser(user.getID());
+        int numberOfComments = commentsManager.getNumberOfCommentsOfUser(user.getID());
+
         request.setAttribute(RequestConstants.RequestAttributes.PROFILE_OWNER, user);
+        request.setAttribute(RequestConstants.RequestAttributes.CONTRIBUTED_SONGS, songsContributedByUser);
+        request.setAttribute(RequestConstants.RequestAttributes.NUMBER_OF_COMMENTS, numberOfComments);
 
         page = ConfigurationManager.getProperty(ResponseConstants.Pages.PROFILE_PAGE);
         request.getRequestDispatcher(page).forward(request, response);

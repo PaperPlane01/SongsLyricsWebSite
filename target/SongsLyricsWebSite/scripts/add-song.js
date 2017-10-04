@@ -201,7 +201,7 @@ $(document).ready(function () {
             {
                 url : "controller",
                 data : {
-                    command : "addsong",
+                    command : "add_song",
                     songName : songName,
                     songArtist : artistName,
                     featuredArtists : featuredArtists,

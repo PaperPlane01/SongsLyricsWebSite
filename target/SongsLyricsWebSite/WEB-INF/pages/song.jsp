@@ -23,8 +23,10 @@
                 <div class="song">
                     <c:if test="${not empty sessionScope.user}">
                         <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-                            <a class="btn btn-default" href="/controller?command=editsong&songID=${requestScope.songID}">
-                                Edit song
+                            <a class="btn btn-default" href="/controller?command=edit_song&songID=${requestScope.songID}">
+                                <fmt:bundle basename="labels">
+                                    <fmt:message key="labels.editsong"/>
+                                </fmt:bundle>
                             </a>
                         </c:if>
                     </c:if>
@@ -34,7 +36,7 @@
                     <div class="song-lyrics">
                         <c:forEach items="${requestScope.listOfLyricsParts}" var="lyricsPart">
                             <div class="song-part">
-                                <c:out value="${lyricsPart.getType().toString(sessionScope.language)}"/>
+                                <c:out value="${lyricsPart.getType().toLocalizedString(sessionScope.language)}"/>
                                 <c:forEach items="${lyricsPart.getComponents()}" var="line">
                                     <div class="line">
                                         <c:out value="${line.toString()}"/>
@@ -70,7 +72,7 @@
                                 <c:if test="${not empty sessionScope.user}">
                                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
                                         <form method="post" action="/controller">
-                                            <input type="hidden" name="command" value="approvesong"/>
+                                            <input type="hidden" name="command" value="approve_song"/>
                                             <input type="hidden" name="songID" value="${requestScope.songID}"/>
                                             <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
                                         </form>

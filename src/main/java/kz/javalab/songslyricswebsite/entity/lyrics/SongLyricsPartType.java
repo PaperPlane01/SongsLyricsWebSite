@@ -4,8 +4,10 @@ package kz.javalab.songslyricswebsite.entity.lyrics;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * This Enum includes types of lyrics parts and methods for converting them to string.
+ */
 public enum SongLyricsPartType {
-    WHOLE_SONG,
     VERSE,
     CHORUS,
     BRIDGE,
@@ -15,53 +17,45 @@ public enum SongLyricsPartType {
     OTHER,
     LINE;
 
-    public String toString() {
-        return toString("en_US");
-    }
+    /**
+     * Converts lyrics part type to localized string.
+     * @param locale Required locale.
+     * @return Localized string value of lyrics part type.
+     */
+    public String toLocalizedString(Locale locale) {
+        String result = new String();
+        String bundle = "labels";
 
-    public String toString(String locale) {
-        String result = "";
+        String bridgeKey = "labels.songparts.bridge";
+        String chorusKey = "labels.songparts.chorus";
+        String hookKey = "labels.songparts.hook";
+        String introKey = "labels.songparts.intro";
+        String outroKey = "labels.songparts.outro";
+        String verseKey = "labels.songparts.verse";
 
-        String[] languageAndCountry = locale.split("_");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle(bundle, locale);
 
-        int languageIndex = 0;
-        int countryIndex = 1;
-
-        String language = languageAndCountry[languageIndex];
-        String country = languageAndCountry[countryIndex];
-
-        Locale currentLocale = new Locale(language, country);
-
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", currentLocale);
-
-        if (this.equals(VERSE)) {
-            String key = "labels.songparts.verse";
-            result = resourceBundle.getString(key);
-        }
-
-        if (this.equals(CHORUS)) {
-            String key = "labels.songparts.chorus";
-            result = resourceBundle.getString(key);
-        }
-
-        if (this.equals(BRIDGE)) {
-            String key = "labels.songparts.bridge";
-            result = resourceBundle.getString(key);
-        }
-
-        if (this.equals(HOOK)) {
-            String key = "labels.songparts.hook";
-            result = resourceBundle.getString(key);
-        }
-
-        if (this.equals(INTRO)) {
-            String key = "labels.songparts.intro";
-            result = resourceBundle.getString(key);
-        }
-
-        if (this.equals(OUTRO)) {
-            String key = "labels.songparts.outro";
-            result = resourceBundle.getString(key);
+        switch (this) {
+            case BRIDGE:
+                result = resourceBundle.getString(bridgeKey);
+                break;
+            case CHORUS:
+                result = resourceBundle.getString(chorusKey);
+                break;
+            case HOOK:
+                result = resourceBundle.getString(hookKey);
+                break;
+            case INTRO:
+                result = resourceBundle.getString(introKey);
+                break;
+            case OUTRO:
+                result = resourceBundle.getString(outroKey);
+                break;
+            case VERSE:
+                result = resourceBundle.getString(verseKey);
+                break;
+            default:
+                break;
         }
 
         return result;

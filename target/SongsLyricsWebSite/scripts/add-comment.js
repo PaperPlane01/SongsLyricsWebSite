@@ -37,7 +37,7 @@ function CommentsManager() {
             {
                 url : 'controller',
                 data : {
-                    command : 'addcomment',
+                    command : 'add_comment',
                     songID : songID,
                     content : content
                 },

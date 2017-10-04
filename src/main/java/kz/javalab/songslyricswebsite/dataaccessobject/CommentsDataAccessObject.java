@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by PaperPlane on 08.09.2017.
+ * This class contains methods for receiving, inserting and updating data of "Comments" table.
  */
 public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs <Code>CommentsDataAccessObject</Code> instance.
+     */
     public CommentsDataAccessObject() {
+        super();
     }
 
     /**
@@ -124,6 +128,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * Adds comment to the database.
      * @param comment Comment to be added.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
     public void addCommentToDatabase(Comment comment, Connection connection) throws SQLException {
         String addCommentQuery = "INSERT INTO comments\n" +
@@ -152,6 +157,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * Marks specific comment as deleted.
      * @param commentID ID of the comment which is to be marked as deleted.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to update data.
      */
     public void markCommentAsDeleted(int commentID, Connection connection) throws SQLException {
         String markCommentAsDeletedQuery = "UPDATE comments\n" +
@@ -164,6 +170,38 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, commentID);
 
+    }
+
+    /**
+     * Returns number of comments written by the specified user.
+     * @param userID ID of the user.
+     * @param connection Connection to be used.
+     * @return Number of comments written by the specified user.
+     */
+    public int getNumberOfCommentsOfUser(int userID, Connection connection) {
+        String numberOfCommentsQuery = "SELECT comment_id FROM comments\n" +
+                "WHERE user_id = ?";
+        int userIDParameter = 1;
+        int numberOfComments = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(numberOfCommentsQuery);
+
+            preparedStatement.setInt(userIDParameter, userID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                numberOfComments++;
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return numberOfComments;
     }
 
     @Override

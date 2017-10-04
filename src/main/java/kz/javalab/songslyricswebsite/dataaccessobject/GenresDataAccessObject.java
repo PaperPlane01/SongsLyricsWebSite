@@ -9,17 +9,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Created by PaperPlane on 30.08.2017.
+ * This class contains methods for receiving, inserting and updating data of "Genres" table.
  */
 public class GenresDataAccessObject extends AbstractDataAccessObject {
 
+    /**
+     * Constructs <Code>GenresDataAccessObject</Code> instance.
+     */
     public GenresDataAccessObject() {
+        super();
     }
 
     /**
      * Adds genre to database.
      * @param genreName Name of the genre to be added.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
     public void addGenreToDatabase(String genreName, Connection connection) throws SQLException {
         String addGenreQuery = "INSERT INTO genres\n" +

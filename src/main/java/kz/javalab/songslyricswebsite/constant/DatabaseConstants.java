@@ -1,8 +1,7 @@
 package kz.javalab.songslyricswebsite.constant;
 
-
 /**
- * Created by PaperPlane on 18.08.2017.
+ * This class contains constants related to database.
  */
 public class DatabaseConstants {
 

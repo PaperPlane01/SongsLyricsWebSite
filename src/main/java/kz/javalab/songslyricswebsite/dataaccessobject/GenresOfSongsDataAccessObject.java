@@ -6,17 +6,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by PaperPlane on 16.09.2017.
+ * This class contains methods for receiving, inserting and updating data of "Genres_of_songs" table.
  */
 public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
+
+    /**
+     * Constructs <Code>GenresOfSongsDataAccessObject</Code> instance.
+     */
+    public GenresOfSongsDataAccessObject() {
+        super();
+    }
 
     /**
      * Adds "song" - "genre" match to the database.
      * @param songID ID of the song.
      * @param genreID ID of the genre.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to insert data into the database.
      */
     public void addGenreOfSong(int songID, int genreID, Connection connection) throws SQLException {
         String addSongGenreMatchQuery = "INSERT INTO genres_of_songs\n" +
@@ -34,6 +44,7 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
      * Marks "song" - "genre" match as deleted.
      * @param matchID ID of "song" - "genre" match.
      * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to update data.
      */
     public void markSongGenreMatchAsDeleted(int matchID, Connection connection) throws SQLException {
         String markAsDeletedQuery = "UPDATE genres_of_songs\n" +
@@ -85,27 +96,42 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
     }
 
     /**
-     * Checks if there is a "song" - "genre" match with specific genre ID and song ID.
-     * @param genreID ID of the genre.
+     * Retrieves list of genres of the song with specific ID.
      * @param songID ID of the song.
      * @param connection Connection to be used.
-     * @return <Code>True</Code> if such "song" - "genre" match exists, <Code>False</Code> if not.
+     * @return List of genres of the song with specific ID.
      */
-    public boolean checkIfSongGenreMatchExists(int genreID, int songID, Connection connection) {
-        boolean result = false;
+    public List<String> getGenresOfSongBySongID(int songID, Connection connection) {
+        List<String> genres = new ArrayList<>();
 
-        String checkSongGenreMatchQuery = "SELECT match_id FROM genres_of_songs\n" +
-                "WHERE song_id = ? and genre_id = ?";
+        String getGenresOfSongQuery = "SELECT genre_name FROM\n" +
+                "(SELECT genre_name, song_id FROM genres_of_songs INNER JOIN genres\n" +
+                "ON genres_of_songs.genre_id = genres.genre_id)\n" +
+                "AS intermediate_table\n" +
+                "INNER JOIN songs\n" +
+                "ON intermediate_table.song_id = songs.song_id\n" +
+                "WHERE songs.song_id = ?";
+        int songIDParameter = 1;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkSongGenreMatchQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(getGenresOfSongQuery);
 
-            result = checkEntityExistence(preparedStatement, songID, genreID);
+            preparedStatement.setInt(songIDParameter, songID);
 
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String genre = resultSet.getString(DatabaseConstants.ColumnLabels.GenresTable.GENRE_NAME);
+                genres.add(genre);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return result;
+        return genres;
     }
+
 }

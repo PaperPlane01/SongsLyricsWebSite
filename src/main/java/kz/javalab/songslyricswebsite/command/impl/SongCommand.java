@@ -46,9 +46,9 @@ public class SongCommand implements ActionCommand {
             SongsManager songsManager = new SongsManager();
             CommentsManager commentsManager = new CommentsManager();
 
-            Song song = null;
+
             try {
-                song = songsManager.getSongByID(songID);
+                Song song = songsManager.getSongByID(songID);
                 SongLyrics songLyrics = song.getLyrics();
                 String songTitle = song.getTitle();
                 String youTubeLink = song.getYouTubeVideoID();
@@ -89,7 +89,7 @@ public class SongCommand implements ActionCommand {
                 String page = ConfigurationManager.getProperty(ResponseConstants.Pages.SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
-                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NEW_SONG_PAGE);
+                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 

@@ -27,7 +27,7 @@ function UserBlockingManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'blockuser',
+                    command : 'block_user',
                     userID : userID
                 },
 
@@ -44,7 +44,7 @@ function UserBlockingManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'unblockuser',
+                    command : 'unblock_user',
                     userID : userID
                 },
 
@@ -87,7 +87,7 @@ function CommentDeletingManager() {
                 url : 'controller',
 
                 data : {
-                    command : 'deletecomment',
+                    command : 'delete_comment',
                     commentID : commentID
                 },
 
