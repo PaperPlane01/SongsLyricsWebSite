@@ -8,6 +8,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48f9b468-bc73-4c89-833e-0c4d18ebd106" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/LoggingConstants.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/resource/Config.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/LoggingConstants.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/resource/Config.class" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApproveSongCommand.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LoggingConstants.java" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/exception/SongApprovingException.java" />
@@ -245,8 +249,8 @@
       <file leaf-file-name="EditSongCommand.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-340">
-              <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+            <state relative-caret-position="255">
+              <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1122,12 +1126,12 @@
       <workItem from="1507310965068" duration="2597000" />
       <workItem from="1507369915471" duration="6339000" />
       <workItem from="1507404217085" duration="4362000" />
-      <workItem from="1507461868161" duration="535000" />
+      <workItem from="1507461868161" duration="627000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="819807000" />
+    <option name="totallyTimeSpent" value="819899000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1645,8 +1649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-340">
-          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        <state relative-caret-position="255">
+          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
           <folding />
         </state>
       </provider>
