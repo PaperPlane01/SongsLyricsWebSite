@@ -1,7 +1,9 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import org.apache.log4j.Logger;
 
 
 import java.sql.Connection;
@@ -15,6 +17,8 @@ import java.util.List;
  * This class contains methods for receiving, inserting and updating data of "Artists" table.
  */
 public class ArtistDataAccessObject extends AbstractDataAccessObject {
+
+    private static Logger logger = Logger.getLogger(AbstractDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>ArtistDataAccessObject</Code> instance.
@@ -60,7 +64,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_BY_LETTER, e);
         }
 
         return artists;
@@ -95,7 +99,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_LETTERS, e);
         }
 
         return artistLetters;
@@ -154,7 +158,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
                 resultSet.close();
                 preparedStatement.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_ID, e);
             }
         }
 
@@ -184,7 +188,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_BY_ID, e);
         }
 
         return artist;
@@ -206,7 +210,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             PreparedStatement preparedStatement = connection.prepareStatement(checkArtistQuery);
             result = checkEntityExistenceByStringValue(preparedStatement, artist.getName());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_ARTIST_EXISTENCE, e);
         }
 
         return result;

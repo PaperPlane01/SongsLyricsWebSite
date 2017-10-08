@@ -51,6 +51,7 @@ public class DatabaseConstants {
             public static final String IS_APPROVED = "is_approved";
             public static final String HAS_FEATURING = "has_featuring";
             public static final String YOUTUBE_LINK = "youtube_link";
+            public static final String CONTRIBUTED_USER_ID = "contributed_user_id";
         }
 
         public class SongsRatingsTable {

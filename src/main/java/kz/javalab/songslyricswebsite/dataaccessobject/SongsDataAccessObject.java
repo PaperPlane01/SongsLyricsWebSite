@@ -1,12 +1,9 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
-import kz.javalab.songslyricswebsite.entity.artist.Artist;
-import kz.javalab.songslyricswebsite.entity.lyrics.Line;
-import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
-import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
-import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,11 +17,36 @@ import java.util.*;
  */
 public class SongsDataAccessObject extends AbstractDataAccessObject {
 
+    private static Logger logger = Logger.getLogger(SongsRatingsDataAccessObject.class.getName());
+
     /**
      * Constructs <Code>SongsDataAccessObject</Code> instance.
      */
     public SongsDataAccessObject() {
         super();
+    }
+
+    public int getLastSongID(Connection connection) {
+        String lastSongIDQuery = "SELECT max(song_id)\n" +
+                "FROM songs";
+        int lastSongID = 0;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(lastSongIDQuery);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                lastSongID = resultSet.getInt("max(song_id)");
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return lastSongID;
     }
 
     /**
@@ -113,7 +135,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LIST_OF_RECENTLY_ADDED_SONGS, e);
         }
 
         return songIDs;
@@ -153,7 +175,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE, e);
         }
 
         return result;
@@ -176,7 +198,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE_BY_SONG_ID);
         }
 
         return result;
@@ -205,7 +227,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_PERFORMED_BY_ARTIST, e);
         }
 
         return songIDs;
@@ -231,7 +253,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_NOT_APPROVED_SONGS, e);
         }
 
         return songIDs;
@@ -261,7 +283,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_CONTRIBUTED_BY_USER, e);
         }
 
         return songIDs;
@@ -274,7 +296,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @throws SQLException Thrown if some error occurred when attempted to insert data into database.
      */
     public void addDataToSongsTable(Song song, Connection connection) throws SQLException {
-        String addSongQuery = "INSERT INTO songs (artist_id, song_name, is_approved, youtube_link, has_featuring)\n" +
+        String addSongQuery = "INSERT INTO songs (artist_id, song_name, is_approved, youtube_link, has_featuring, contributed_user_id)\n" +
                     "VALUES (?, ?, ?, ?, ?, ?)";
 
         int artistIDParameter = 1;
@@ -282,6 +304,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         int isApprovedParameter = 3;
         int youTubeLinkParameter = 4;
         int hasFeaturingParameter = 5;
+        int contributedUserIDParameter = 6;
 
         int isApprovedValue = 0;
 
@@ -295,14 +318,16 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);;
         preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
         preparedStatement.setString(songNameParameter, song.getName());
-        preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
         preparedStatement.setInt(isApprovedParameter, isApprovedValue);
+        preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
 
         if (song.hasFeaturedArtists()) {
             preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
         } else {
             preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
         }
+
+        preparedStatement.setInt(contributedUserIDParameter, song.getContributedUser().getID());
 
         preparedStatement.execute();
         preparedStatement.close();
@@ -361,6 +386,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 boolean approved = convertIntToBoolean(approvedValue);
                 int hasFeaturingsValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING);
                 boolean hasFeaturings = convertIntToBoolean(hasFeaturingsValue);
+                int contributedUserID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID);
 
                 data.put(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID, songID);
                 data.put(DatabaseConstants.ColumnLabels.SongsTable.ARTIST_ID, artistID);
@@ -368,12 +394,13 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 data.put(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED, approved);
                 data.put(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK, youTubeVideoID);
                 data.put(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING, hasFeaturings);
+                data.put(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID, contributedUserID);
             }
 
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_SONG_DATA, e);
         }
 
         return data;

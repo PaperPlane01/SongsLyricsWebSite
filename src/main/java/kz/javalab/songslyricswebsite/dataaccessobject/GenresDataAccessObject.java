@@ -2,6 +2,8 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
  * This class contains methods for receiving, inserting and updating data of "Genres" table.
  */
 public class GenresDataAccessObject extends AbstractDataAccessObject {
+
+    private Logger logger = Logger.getLogger(GenresDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>GenresDataAccessObject</Code> instance.
@@ -64,7 +68,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
 
             result = checkEntityExistenceByStringValue(preparedStatement, genreName);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_GENRE_EXISTENCE, e);
         }
 
         return  result;
@@ -98,7 +102,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_GENRE_ID, e);
         }
 
         return genreID;

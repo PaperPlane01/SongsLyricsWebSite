@@ -2,13 +2,14 @@ package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
-import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.UsersDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.exception.*;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,17 +17,38 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by PaperPlane on 05.08.2017.
+ * This class is designated for managing users.
  */
 public class UsersManager {
 
+    /**
+     * <Code>RequestWrapper</Code> instance which contains data sent by user.
+     */
     private RequestWrapper requestWrapper;
-    public static final int CHECK_BY_USERNAME = 1;
-    public static final int CHECK_BY_USER_ID = 2;
 
+    /**
+     * Constant for {@link #checkIfUserExists(User, int, Connection)} method.
+     * Indicates that checking of user's existence should be done using username.
+     */
+    public static final int CHECK_BY_USERNAME = 1;
+
+    /**
+     * Constant for {@link #checkIfUserExists(User, int, Connection)} method.
+     * Indicates that checking of user's existence should be done using user ID.
+     */
+    public static final int CHECK_BY_USER_ID = 2;
+    private static Logger logger = Logger.getLogger(UsersManager.class.getName());
+
+    /**
+     * Constructs <Code>UsersManager</Code> instance.
+     */
     public UsersManager() {
     }
 
+    /**
+     * Constructs <Code>UsersManager</Code> instance with pre-defined request wrapper.
+     * @param requestWrapper <Code>RequestWrapper</Code> instance which contains data sent by user.
+     */
     public UsersManager(RequestWrapper requestWrapper) {
         this.requestWrapper = requestWrapper;
     }
@@ -86,16 +108,16 @@ public class UsersManager {
 
         try {
             connection.setAutoCommit(false);
-            usersDataAccessObject.registerNewUser(user, connection);
+            usersDataAccessObject.addNewUser(user, connection);
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_REGISTERING_USER, e);
 
             try {
                 connection.rollback();
                 throw new RegistrationFailedException();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                 throw new RegistrationFailedException();
             }
 
@@ -290,6 +312,13 @@ public class UsersManager {
         return usersDataAccessObject.getUserTypeByUserID(userID, connection);
     }
 
+    /**
+     * Blocks user.
+     * @throws NoPermissionException Thrown if attempt of blocking has been made by not logged in user,
+     *                               or by user who does not have moderator's privileges.
+     * @throws UserBlockingException Thrown if some error occurred when attempted to update data.
+     * @throws InvalidUserIDException Thrown of there is no user with received ID.
+     */
     public void blockUser() throws NoPermissionException, UserBlockingException, InvalidUserIDException {
         User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -305,39 +334,37 @@ public class UsersManager {
             throw new NoPermissionException();
         }
 
-        String regex = "[0-9]+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
-
-        if (!matcher.matches()) {
-            throw new InvalidUserIDException();
-        }
-
-        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
-        User user = new User();
-        user.setID(userID);
-
         try {
-            connection.setAutoCommit(false);
+            int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+            User user = new User();
+            user.setID(userID);
 
-            if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
-                ConnectionPool.getInstance().returnConnection(connection);
-                throw new InvalidUserIDException();
-            }
-
-            usersDataAccessObject.blockUser(userID, connection);
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
             try {
-                connection.rollback();
-                throw new UserBlockingException();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                throw new UserBlockingException();
+                connection.setAutoCommit(false);
+
+                if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
+                    ConnectionPool.getInstance().returnConnection(connection);
+                    throw new InvalidUserIDException();
+                }
+
+                usersDataAccessObject.markUserAsBlocked(userID, connection);
+                connection.commit();
+            } catch (SQLException e) {
+                logger.error(LoggingConstants.EXCEPTION_WHILE_BLOCKING_USER, e);
+
+                try {
+                    connection.rollback();
+                    throw new UserBlockingException();
+                } catch (SQLException e1) {
+                    logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
+                    throw new UserBlockingException();
+                }
+
+            } finally {
+                ConnectionPool.getInstance().returnConnection(connection);
             }
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
+        } catch (NumberFormatException e) {
+            throw new InvalidUserIDException();
         }
 
     }
@@ -359,43 +386,41 @@ public class UsersManager {
             throw new NoPermissionException();
         }
 
-        String regex = "[0-9]+";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
 
-        if (!matcher.matches()) {
-            ConnectionPool.getInstance().returnConnection(connection);
+        try {
+            int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
+            user.setID(userID);
+
+            try {
+                connection.setAutoCommit(false);
+
+                if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
+                    ConnectionPool.getInstance().returnConnection(connection);
+                    throw new InvalidUserIDException();
+                }
+
+                usersDataAccessObject.markUserAsUnblocked(user.getID(), connection);
+
+                System.out.println(connection.getAutoCommit());
+
+                connection.commit();
+            } catch (SQLException e) {
+                logger.error(LoggingConstants.EXCEPTION_WHILE_UNBLOCKING_USER, e);
+
+                try {
+                    connection.rollback();
+                    throw new UserUnblockingException();
+                } catch (SQLException e1) {
+                    logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
+                    throw new UserUnblockingException();
+                }
+            } finally {
+                ConnectionPool.getInstance().returnConnection(connection);
+            }
+        } catch (NumberFormatException e) {
             throw new InvalidUserIDException();
         }
 
-        int userID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USER_ID));
-        user.setID(userID);
-
-        try {
-            connection.setAutoCommit(false);
-
-            if (!checkIfUserExists(user, CHECK_BY_USER_ID, connection)) {
-                ConnectionPool.getInstance().returnConnection(connection);
-                throw new InvalidUserIDException();
-            }
-
-            usersDataAccessObject.unblockUser(user.getID(), connection);
-
-            System.out.println(connection.getAutoCommit());
-
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                e.printStackTrace();
-                connection.rollback();
-                throw new UserUnblockingException();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                throw new UserUnblockingException();
-            }
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
-        }
     }
 
     public void changePassword() throws UserNotLoggedInException, WrongPasswordException, InvalidPasswordException, PasswordsAreNotEqualException, PasswordChangingException {
@@ -441,20 +466,16 @@ public class UsersManager {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHANGING_PASSWORD, e);
             try {
                 connection.rollback();
                 throw new PasswordChangingException();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                 throw new PasswordChangingException();
             }
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }
-    }
-
-    public void changeUserType(int userID, UserType newUserType) {
-
     }
 }

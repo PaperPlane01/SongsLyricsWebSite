@@ -2,21 +2,19 @@ package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsRatingsDataAccessObject;
-import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.exception.SongRatingException;
 import kz.javalab.songslyricswebsite.exception.UserNotLoggedInException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * This class is responsible for managing ratings of songs.
@@ -27,6 +25,8 @@ public class SongsRatingsManager {
      * <Code>RequestWrapper</Code> which contains data sent by user.
      */
     private RequestWrapper requestWrapper;
+
+    private Logger logger = Logger.getLogger(SongsRatingsManager.class.getName());
 
     /**
      * Constructs <Code>SongsRatingsManager</Code> instance.
@@ -90,22 +90,26 @@ public class SongsRatingsManager {
                     throw new InvalidRatingValueException();
                 }
 
-                SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-
                 connection.setAutoCommit(false);
 
-                songsRatingsDataAccessObject.rateSong(user.getID(), songID, rating, connection);
+                if (checkIfUserHasRatedSong(user.getID(), songID, connection)) {
+                    SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+
+                    songsRatingsDataAccessObject.rateSong(user.getID(), songID, rating, connection);
+                } else {
+                    updateSongRating(user.getID(), songID, rating, connection);
+                }
 
                 connection.commit();
             } catch (NumberFormatException e) {
                 throw new InvalidRatingValueException();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_RATING_THE_SONG, e);
                 try {
                     connection.rollback();
                     throw new SongRatingException();
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                     throw new SongRatingException();
                 }
             } finally {
@@ -146,24 +150,37 @@ public class SongsRatingsManager {
      * @return <Code>True</Code> if user has rated the song, <Code>False</Code> if not.
      */
     public boolean checkIfUserRatedSong(int userID, int songID) {
-        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
-        boolean result = songsRatingsDataAccessObject.checkIfUserRatedSong(userID, songID, connection);
+        boolean result = checkIfUserHasRatedSong(userID, songID, connection);
         ConnectionPool.getInstance().returnConnection(connection);
         return result;
     }
 
-    public void updateSongRating(int userID, int songID, int newRating) throws InvalidRatingValueException {
-        if (!validateRatingValue(newRating)) {
-            throw new InvalidRatingValueException();
-        }
-
+    /**
+     * Checks if user rated the song.
+     * @param userID ID of the user.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if user has rated the song, <Code>False</Code> if not.
+     */
+    private boolean checkIfUserHasRatedSong(int userID, int songID, Connection connection) {
         SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
-        Connection connection = ConnectionPool.getInstance().getConnection();
+        return songsRatingsDataAccessObject.checkIfUserRatedSong(userID, songID, connection);
+    }
+
+    /**
+     * Updates song's rating.
+     * @param userID ID of the user.
+     * @param songID ID of the song.
+     * @param newRating New rating value.
+     * @param connection Connection to be used.
+     */
+    private void updateSongRating(int userID, int songID, int newRating, Connection connection) {
+        SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
 
         try {
             connection.setAutoCommit(false);
-            songsRatingsDataAccessObject.alterSongRating(userID, songID, newRating, connection);
+            songsRatingsDataAccessObject.updateSongRating(userID, songID, newRating, connection);
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();

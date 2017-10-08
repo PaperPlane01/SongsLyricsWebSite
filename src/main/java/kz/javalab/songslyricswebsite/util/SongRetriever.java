@@ -17,6 +17,12 @@ import java.util.StringTokenizer;
 public class SongRetriever {
 
     /**
+     * Constructs <Code>SongRetriever</Code> instance.
+     */
+    public SongRetriever() {
+    }
+
+    /**
      * Retrieves <Code>Song</Code> object from <Code>HttpServletRequest</Code>
      * @param request Request to be handled
      * @return <Code>Song</Code> object retrieved from <Code>HttpServletRequest</Code>

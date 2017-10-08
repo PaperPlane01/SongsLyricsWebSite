@@ -6,7 +6,7 @@ import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.UsersManager;
@@ -84,7 +84,7 @@ public class ProfileCommand implements ActionCommand {
         request.setAttribute(RequestConstants.RequestAttributes.CONTRIBUTED_SONGS, songsContributedByUser);
         request.setAttribute(RequestConstants.RequestAttributes.NUMBER_OF_COMMENTS, numberOfComments);
 
-        String page = ConfigurationManager.getProperty(ResponseConstants.Pages.MY_PROFILE_PAGE);
+        String page = Config.getProperty(ResponseConstants.Pages.MY_PROFILE_PAGE);
         request.getRequestDispatcher(page).forward(request, response);
     }
 
@@ -112,7 +112,7 @@ public class ProfileCommand implements ActionCommand {
         request.setAttribute(RequestConstants.RequestAttributes.CONTRIBUTED_SONGS, songsContributedByUser);
         request.setAttribute(RequestConstants.RequestAttributes.NUMBER_OF_COMMENTS, numberOfComments);
 
-        page = ConfigurationManager.getProperty(ResponseConstants.Pages.PROFILE_PAGE);
+        page = Config.getProperty(ResponseConstants.Pages.PROFILE_PAGE);
         request.getRequestDispatcher(page).forward(request, response);
     }
 
@@ -124,7 +124,7 @@ public class ProfileCommand implements ActionCommand {
      * @throws IOException Thrown if some error occurred when attempted to send response.
      */
     private void sendToErrorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_USER_PAGE);
+        String page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_USER_PAGE);
         request.getRequestDispatcher(page).forward(request, response);
     }
 }

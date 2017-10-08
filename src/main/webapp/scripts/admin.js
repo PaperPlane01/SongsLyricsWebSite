@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let userBlockingManager = new UserBlockingManager();
     let commentDeletingManager = new CommentDeletingManager();
+    let songApprovingManager = new SongApprovingManager();
 
     $(".block-user").on('click', function () {
         let userID = $(this).children(".comment-author-id").html();
@@ -15,6 +16,11 @@ $(document).ready(function () {
     $(".delete-comment").on('click', function () {
         let commentID = $(this).children(".deleted-comment-id").html();
         commentDeletingManager.deleteComment(commentID);
+    });
+
+    $("#approve-song-button").on('click', function () {
+        let songID = $("#song-id").html();
+        songApprovingManager.approveSong(songID);
     })
 });
 
@@ -119,5 +125,41 @@ function CommentDeletingManager() {
     this._showErrorMessage = function (message) {
         $("#admin-messages").css('display', 'block');
         $("#admin-messages").html("<span style = \"color:red\">" + message + "</span>")
+    }
+}
+
+function SongApprovingManager() {
+    let self = this;
+
+    this.approveSong = function (songID) {
+        $.post(
+            {
+                url : 'controller',
+
+                data : {
+                    command : 'approve_song',
+                    songID : songID
+                },
+
+                success : function (response) {
+                    self._handleResponse(response);
+                }
+            }
+        )
+    };
+
+    this._handleResponse = function (response) {
+        let message = response.message;
+
+        switch (response.status) {
+            case "SUCCESS":
+                $("#song-approving-message").css('display', 'block');
+                $("#song-approving-message").html("<span style = \"color:green\">" + message + "</span>");
+                break;
+            case "FAILURE":
+                $("#song-approving-message").css('display', 'block');
+                $("#song-approving-message").html("<span style = \"color:red\">" + message + "</span>");
+                break;
+        }
     }
 }

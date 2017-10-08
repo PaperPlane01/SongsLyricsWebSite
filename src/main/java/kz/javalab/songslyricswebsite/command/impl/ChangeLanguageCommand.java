@@ -33,8 +33,11 @@ public class ChangeLanguageCommand implements ActionCommand {
 
         String[] languageAndCountry = localeAsString.split("_");
 
-        Locale language = new Locale(languageAndCountry[languageIndex], languageAndCountry[countryIndex]);
+        if (languageAndCountry.length == 2) {
+            Locale language = new Locale(languageAndCountry[languageIndex], languageAndCountry[countryIndex]);
 
-        request.getSession().setAttribute(RequestConstants.SessionAttributes.LANGUAGE, language);
+            request.getSession().setAttribute(RequestConstants.SessionAttributes.LANGUAGE, language);
+        }
+
     }
 }

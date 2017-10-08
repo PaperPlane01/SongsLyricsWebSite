@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.entity.song;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
+import kz.javalab.songslyricswebsite.entity.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,8 @@ public class Song {
      * ID of YouTube's video of the song.
      */
     private String youTubeVideoID;
+
+    private User contributedUser;
 
     /**
      * Constructs <Code>Song</Code> instance.
@@ -194,6 +197,14 @@ public class Song {
      */
     public void setYouTubeVideoID(String youTubeVideoID) {
         this.youTubeVideoID = youTubeVideoID;
+    }
+
+    public User getContributedUser() {
+        return contributedUser;
+    }
+
+    public void setContributedUser(User contributedUser) {
+        this.contributedUser = contributedUser;
     }
 
     /**

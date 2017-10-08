@@ -42,7 +42,7 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
         try {
             songsManager.updateSong();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
-            responseMap.put(ResponseConstants.Messages.MESSAGE, "Everything is ok!");
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCCESSFUL_SONG_MODIFYING));
             sendJsonResponse(responseMap, response);
         } catch (LyricsParsingException e) {
             e.printStackTrace();

@@ -6,7 +6,6 @@ import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.exception.LyricsParsingException;
 
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -88,9 +87,7 @@ public class LyricsParser {
 
         SongLyricsComposite lyricsPart = new SongLyricsComposite();
 
-        for (int lineIndex = 0; lineIndex < lines.size(); lineIndex++) {
-            String line = lines.get(lineIndex);
-
+        for (String line : lines) {
             switch (line.trim()) {
                 case INTRO:
                     lyricsPart = new SongLyricsComposite();

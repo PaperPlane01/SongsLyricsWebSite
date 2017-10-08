@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.service;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.*;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
@@ -14,6 +15,7 @@ import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.util.SongRetriever;
 import kz.javalab.songslyricswebsite.util.Songs;
+import org.apache.log4j.Logger;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Connection;
@@ -31,6 +33,7 @@ public class SongsManager {
      * <Code>RequestWrapper</Code> which contains data sent by user.
      */
     private RequestWrapper requestWrapper;
+    private static Logger logger = Logger.getLogger(SongsManager.class.getName());
 
     /**
      * Constructs <Code>SongsManager</Code> instance.
@@ -407,6 +410,7 @@ public class SongsManager {
         GenresOfSongsDataAccessObject genresOfSongsDataAccessObject = new GenresOfSongsDataAccessObject();
         LinesDataAccessObject linesDataAccessObject = new LinesDataAccessObject();
         SongsRatingsDataAccessObject songsRatingsDataAccessObject = new SongsRatingsDataAccessObject();
+        UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
 
         if (songsDataAccessObject.checkIfSongExists(songID, connection)) {
             Song song = new Song();
@@ -418,6 +422,7 @@ public class SongsManager {
             String youTubeVideoID = (String) data.get(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK);
             Boolean approved = (Boolean) data.get(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED);
             Boolean hasFeaturings = (Boolean) data.get(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING);
+            Integer contributedUserID = (Integer) data.get(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID);
 
             Artist artist = artistDataAccessObject.getArtistByID(artistID, connection);
             song.setID(songID);
@@ -445,15 +450,19 @@ public class SongsManager {
                 song.setLyrics(linesDataAccessObject.getSongLyricsBySongID(songID, connection));
             }
 
-            return song;
+            User user = new User();
+            user.setID(contributedUserID);
+            user.setUsername(usersDataAccessObject.getUserNameByUserID(contributedUserID, connection));
+            song.setContributedUser(user);
 
+            return song;
         } else {
             throw new NoSuchSongException();
         }
     }
 
     /**
-     * Adda new song to database.
+     * Adds new song to database.
      * @throws SongAddingException Thrown if some error occurred when attempted to insert information into database.
      * @throws SuchSongAlreadyExistsException Thrown if such song already exists.
      * @throws LyricsParsingException Thrown if song lyrics are invalid.
@@ -475,10 +484,15 @@ public class SongsManager {
 
        if (user == null) {
            song.setApproved(false);
+           User anonymousUser = new User();
+           anonymousUser.setID(0);
+           song.setContributedUser(anonymousUser);
        } else if (user.getUserType() == UserType.MODERATOR) {
            song.setApproved(true);
+           song.setContributedUser(user);
        } else {
            song.setApproved(false);
+           song.setContributedUser(user);
        }
 
        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
@@ -495,8 +509,15 @@ public class SongsManager {
        try {
            connection.setAutoCommit(false);
 
+           if (!artistDataAccessObject.checkIfArtistExists(song.getArtist(), connection)) {
+               artistDataAccessObject.addArtistToDatabase(song.getArtist(), connection);
+           }
+
+           song.getArtist().setID(artistDataAccessObject.getArtistID(song.getArtist(), connection));
+
            songsDataAccessObject.addDataToSongsTable(song, connection);
-           artistDataAccessObject.addArtistToDatabase(song.getArtist(), connection);
+           song.setID(songsDataAccessObject.getLastSongID(connection));
+           System.out.println("Song ID " + song.getID());
 
            if (song.hasFeaturedArtists()) {
                for (Artist featuredArtist : song.getFeaturedArtists()) {
@@ -511,7 +532,8 @@ public class SongsManager {
 
            if (!song.getGenres().isEmpty()) {
                for (String genre : song.getGenres()) {
-                   if (genresDataAccessObject.checkIfGenreExists(genre, connection)) {
+
+                   if (!genresDataAccessObject.checkIfGenreExists(genre, connection)) {
                        genresDataAccessObject.addGenreToDatabase(genre, connection);
                    }
 
@@ -524,11 +546,12 @@ public class SongsManager {
            connection.commit();
 
        } catch (SQLException e) {
-           e.printStackTrace();
+           logger.error(LoggingConstants.EXCEPTION_WHILE_ADDING_SONG, e);
            try {
                connection.rollback();
                throw new SongAddingException();
            } catch (SQLException e1) {
+               logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                throw new SongAddingException();
            }
        } finally {
@@ -565,6 +588,7 @@ public class SongsManager {
                 e.printStackTrace();
             }
         }
+
         ConnectionPool.getInstance().returnConnection(connection);
         return songsByArtist;
     }
@@ -687,27 +711,41 @@ public class SongsManager {
 
     /**
      * Marks song with specific ID as approved.
-     * @param songID ID of song which is to be approved.
      */
-    public void approveSong(int songID) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
+    public void approveSong() throws NoPermissionException, NoSuchSongException, SongApprovingException {
+        User user = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
 
-        SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
-
-        try {
-            connection.setAutoCommit(false);
-            songsDataAccessObject.markSongAsApproved(songID, connection);
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-        } finally {
-            ConnectionPool.getInstance().returnConnection(connection);
+        if (user == null || user.getUserType() != UserType.MODERATOR) {
+            throw new NoPermissionException();
         }
 
+        try {
+            int songID = Integer.valueOf(requestWrapper.getRequestParameter(RequestConstants.RequestParameters.SONG_ID));
+
+            Connection connection = ConnectionPool.getInstance().getConnection();
+            SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
+
+            if (!songsDataAccessObject.checkIfSongExists(songID, connection)) {
+                ConnectionPool.getInstance().returnConnection(connection);
+                throw new NoSuchSongException();
+            }
+
+            try {
+                songsDataAccessObject.markSongAsApproved(songID, connection);
+            } catch (SQLException e) {
+                logger.error(LoggingConstants.EXCEPTION_WHILE_APPROVING_SONG, e);
+                try {
+                    connection.rollback();
+                    throw new SongApprovingException();
+                } catch (SQLException e1) {
+                    logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK);
+                    throw new SongApprovingException();
+                }
+            } finally {
+                ConnectionPool.getInstance().returnConnection(connection);
+            }
+        } catch (NumberFormatException ex) {
+            throw new NoSuchSongException();
+        }
     }
 }

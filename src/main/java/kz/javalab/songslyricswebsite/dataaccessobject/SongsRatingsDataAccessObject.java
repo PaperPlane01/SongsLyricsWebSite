@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.util.Map;
  * This class contains methods for receiving, inserting and updating data of "songs_ratings" table.
  */
 public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
+
+    private static Logger logger = Logger.getLogger(SongsRatingsDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>SongsRatingsDataAccessObject</Code> instance.
@@ -64,11 +68,11 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
     }
 
     /**
-     * Retrieves value of rating
-     * @param userID
-     * @param songID
-     * @param connection
-     * @return
+     * Retrieves user's rating of song value.
+     * @param userID User ID.
+     * @param songID Song ID.
+     * @param connection Connection to be used.
+     * @return User's rating of song value.
      */
     public int getUserRatingOfSong(int userID, int songID, Connection connection) {
         String userRatingOfSongQuery = "SELECT rating FROM songs_ratings\n" +
@@ -94,7 +98,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USERS_RATING_OF_SONG_VALUE, e);
         }
 
         return rating;
@@ -108,7 +112,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @throws SQLException Thrown if some error occurred when attempted to modify data.
      */
-    public void alterSongRating(int userID, int songID, int newRating, Connection connection) throws SQLException {
+    public void updateSongRating(int userID, int songID, int newRating, Connection connection) throws SQLException {
         String alterSongRatingQuery = "UPDATE songs_ratings\n" +
                 "SET rating = ?\n" +
                 "WHERE vote_id = ?";
@@ -157,7 +161,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_AVERAGE_RATING_OF_SONG, e);
         }
 
         return averageRating;
@@ -192,7 +196,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_TOP_TEN_RATED_SONGS_IDS_AND_RATINGS, e);
         }
 
         return map;
@@ -229,7 +233,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_VOTE_ID, e);
         }
 
         return voteID;

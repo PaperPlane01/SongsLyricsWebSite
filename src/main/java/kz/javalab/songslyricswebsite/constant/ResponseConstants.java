@@ -1,12 +1,11 @@
 package kz.javalab.songslyricswebsite.constant;
 
 /**
- * Created by PaperPlane on 18.09.2017.
+ * Contains constants related to responses sent by server to the client.
  */
 public class ResponseConstants {
 
     private ResponseConstants() {
-
     }
 
     public class ContentTypes {
@@ -62,6 +61,9 @@ public class ResponseConstants {
         public static final String USER_NOT_LOGGED_IN = "labels.errors.usernologgedin";
         public static final String SUCCESSFUL_PASSWORD_CHANGING = "labels.successfulpasswordchanging";
         public static final String ERROR_WHILE_CHANGING_PASSWORD = "labels.errors.errorwhilechangingpassword";
+        public static final String SUCCESSFUL_SONG_APPROVING = "labels.songhasbeenapproved";
+        public static final String ERROR_WHILE_APPROVING_SONG = "labels.errors.errorwhileapprovingsong";
+        public static final String SUCCESSFUL_SONG_MODIFYING = "labels.successfulsongmodifying";
     }
 
     public class Pages {

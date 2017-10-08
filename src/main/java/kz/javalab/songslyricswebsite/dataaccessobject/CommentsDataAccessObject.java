@@ -1,9 +1,11 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
  * This class contains methods for receiving, inserting and updating data of "Comments" table.
  */
 public class CommentsDataAccessObject extends AbstractDataAccessObject {
+
+    private static Logger logger = Logger.getLogger(CommentsDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>CommentsDataAccessObject</Code> instance.
@@ -94,7 +98,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_COMMENTS_OF_SONG, e);
         }
 
         return comments;
@@ -118,7 +122,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_SONG_HAS_COMMENTS, e);
         }
 
         return result;
@@ -198,7 +202,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_NUMBER_OF_COMMENTS_OF_USER, e);
         }
 
         return numberOfComments;

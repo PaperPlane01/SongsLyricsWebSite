@@ -9,7 +9,7 @@ import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.util.LyricsParser;
 
@@ -40,7 +40,7 @@ public class EditSongCommand implements ActionCommand {
         String page = new String();
 
         if (user == null || user.getUserType() != UserType.MODERATOR) {
-            page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_PERMISSION_PAGE);
+            page = Config.getProperty(ResponseConstants.Pages.NO_PERMISSION_PAGE);
             request.getRequestDispatcher(page).forward(request, response);
             return;
         }
@@ -85,15 +85,15 @@ public class EditSongCommand implements ActionCommand {
                 request.setAttribute(RequestConstants.RequestAttributes.YOUTUBE_VIDEO_ID, youTubeLink);
                 request.setAttribute(RequestConstants.RequestAttributes.SONG_ID, songID);
 
-                page = ConfigurationManager.getProperty(ResponseConstants.Pages.EDIT_SONG_PAGE);
+                page = Config.getProperty(ResponseConstants.Pages.EDIT_SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
-                page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+                page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 
         } catch (NumberFormatException ex) {
-            page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+            page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

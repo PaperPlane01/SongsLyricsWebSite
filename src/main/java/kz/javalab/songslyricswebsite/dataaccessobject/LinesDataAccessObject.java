@@ -1,12 +1,13 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.lyrics.Line;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
-import kz.javalab.songslyricswebsite.exception.SongAddingException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,6 +21,8 @@ import java.util.List;
  * This class contains methods for receiving, inserting and updating data of "Lines" table.
  */
 public class LinesDataAccessObject extends AbstractDataAccessObject {
+
+    private Logger logger = Logger.getLogger(LinesDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>LinesDataAccessObject</Code> instance.
@@ -152,7 +155,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LINE_ID, e);
         }
 
         return lineID;
@@ -233,7 +236,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LYRICS_OF_SONG, e);
         }
 
         return songLyrics;

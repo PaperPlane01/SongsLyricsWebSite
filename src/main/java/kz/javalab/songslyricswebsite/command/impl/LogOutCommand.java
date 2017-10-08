@@ -1,7 +1,6 @@
 package kz.javalab.songslyricswebsite.command.impl;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

@@ -71,11 +71,11 @@
                                 </b>
                                 <c:if test="${not empty sessionScope.user}">
                                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
-                                        <form method="post" action="/controller">
-                                            <input type="hidden" name="command" value="approve_song"/>
-                                            <input type="hidden" name="songID" value="${requestScope.songID}"/>
-                                            <input type="submit" value="<fmt:bundle basename="labels"><fmt:message key="labels.approvesong"/> </fmt:bundle>"/>
-                                        </form>
+                                        <a class="btn btn-default" id="approve-song-button">
+                                            <fmt:bundle basename="labels">
+                                                <fmt:message key="labels.approvesong"/>
+                                            </fmt:bundle>
+                                        </a> <span id="song-approving-message" style="display: none"></span>
                                     </c:if>
                                 </c:if>
                             </div>

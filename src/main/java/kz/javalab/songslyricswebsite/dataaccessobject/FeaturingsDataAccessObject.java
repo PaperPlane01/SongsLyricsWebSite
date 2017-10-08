@@ -1,6 +1,8 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,8 @@ import java.util.List;
  * This class contains methods for receiving, inserting and updating data of "Featurings" table.
  */
 public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
+
+    private static Logger logger = Logger.getLogger(FeaturingsDataAccessObject.class.getName());
 
     /**
      * Constructs <Code>FeaturingsDataAccessObject</Code> instance.
@@ -54,7 +58,7 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_FEATURING_ID, e);
         }
 
         return  featuringID;
@@ -118,7 +122,7 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
             resultSet.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_FEATURED_ARTISTS, e);
         }
 
         return featuredArtistsIDs;

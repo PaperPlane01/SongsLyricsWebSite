@@ -3,7 +3,6 @@ package kz.javalab.songslyricswebsite.command.impl.jsoncommand;
 import kz.javalab.songslyricswebsite.command.JSONCommand;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.service.SongsManager;
-import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

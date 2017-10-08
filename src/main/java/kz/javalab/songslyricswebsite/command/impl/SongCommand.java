@@ -9,11 +9,10 @@ import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
-import sun.misc.Request;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -86,15 +85,15 @@ public class SongCommand implements ActionCommand {
                     }
                 }
 
-                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.SONG_PAGE);
+                String page = Config.getProperty(ResponseConstants.Pages.SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
-                String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+                String page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 
         } catch (NumberFormatException ex) {
-            String page = ConfigurationManager.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+            String page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

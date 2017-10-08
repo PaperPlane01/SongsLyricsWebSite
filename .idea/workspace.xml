@@ -8,33 +8,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="48f9b468-bc73-4c89-833e-0c4d18ebd106" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/css/profile.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/change-password.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/songs.jsp" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApproveSongCommand.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LoggingConstants.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/exception/SongApprovingException.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/resource/ConfigurationManager.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/resource/ConfigurationManager.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/resource/ConfigurationManager.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite.war" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite.war" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" />
@@ -44,45 +42,31 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/artist/Artist.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/artist/Artist.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/comment/Comment.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/comment/Comment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/password/Password.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/password/Password.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/song/Song.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/song/Song.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/user/User.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/user/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/user/UserType.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/entity/user/UserType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/ArtistsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/ArtistsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/CommentsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/CommentsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/SongsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/SongsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/UsersManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/service/UsersManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/LyricsParser.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/LyricsParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/SongRetriever.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/SongRetriever.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/Songs.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/kz/javalab/songslyricswebsite/util/Songs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" />
@@ -92,45 +76,31 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/artist/Artist.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/artist/Artist.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/comment/Comment.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/comment/Comment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/password/Password.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/password/Password.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/song/Song.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/song/Song.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/user/User.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/user/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/user/UserType.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/entity/user/UserType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/ArtistsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/ArtistsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/CommentsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/CommentsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/SongsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/SongsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/UsersManager.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/service/UsersManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/LyricsParser.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/LyricsParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/SongRetriever.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/SongRetriever.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/Songs.class" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/kz/javalab/songslyricswebsite/util/Songs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/factory/ActionFactory.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/SongCommand.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$ArtistsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$CommentsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$FeaturingsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresOfSongsTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$GenresTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$LinesTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsRatingsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$SongsTable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels$UsersTable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants$ColumnLabels.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/DatabaseConstants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$Commands.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$RequestAttributes.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/RequestConstants$SessionAttributes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$ContentTypes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Messages.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Pages.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants$Status.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/constant/ResponseConstants.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.class" />
@@ -140,36 +110,27 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/artist/Artist.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/artist/Artist.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/comment/Comment.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/comment/Comment.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/Line.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/password/Password.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/password/Password.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/song/Song.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/song/Song.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/user/User.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/user/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/user/UserType.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/entity/user/UserType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/ArtistsManager.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/ArtistsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/CommentsManager.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/CommentsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/SongsManager.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/SongsManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/SongsRatingsManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/UsersManager.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/service/UsersManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/LyricsParser$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/LyricsParser.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/LyricsParser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/SongRetriever.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/SongRetriever.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/Songs.class" afterPath="$PROJECT_DIR$/target/classes/kz/javalab/songslyricswebsite/util/Songs.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/factory/ActionFactory.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/factory/ActionFactory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ChangeLanguageCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ChangeLanguageCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EmptyCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/LogOutCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/NewSongCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/SongCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/SongCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/RequestConstants.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/RequestConstants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/ResponseConstants.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/ResponseConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/controller/Controller.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.java" />
@@ -179,63 +140,23 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/artist/Artist.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/artist/Artist.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/comment/Comment.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/comment/Comment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/Line.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/Line.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyrics.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyrics.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/password/Password.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/password/Password.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/User.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/UserType.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/UserType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/LanguageFilter.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/LanguageFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/ArtistsManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/ArtistsManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/UsersManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/UsersManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/SongRetriever.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/SongRetriever.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/Songs.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/Songs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config.properties" afterPath="$PROJECT_DIR$/src/main/resources/config.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/labels.properties" afterPath="$PROJECT_DIR$/src/main/resources/labels.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/labels_en_US.properties" afterPath="$PROJECT_DIR$/src/main/resources/labels_en_US.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties" afterPath="$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/menu.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/menu.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/profile.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/profile.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/log4j.properties" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/song.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/song.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/add-comment.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/add-comment.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/add-song.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/add-song.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/admin.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/admin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/core.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/core.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/edit-song.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/edit-song.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/song-rating.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/song-rating.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/scripts/songs-loader.js" afterPath="$PROJECT_DIR$/src/main/webapp/scripts/songs-loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/config.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels_en_US.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels_en_US.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels_ru_RU.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/labels_ru_RU.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/config.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels_en_US.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels_en_US.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels_ru_RU.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/labels_ru_RU.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/menu.jsp" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/menu.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/my-profile.jsp" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/my-profile.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/profile.jsp" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/profile.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/song.jsp" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/pages/song.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/add-comment.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/add-comment.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/add-song.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/add-song.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/admin.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/admin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/core.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/core.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/edit-song.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/edit-song.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/song-rating.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/song-rating.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/songs-loader.js" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/scripts/songs-loader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/config.properties" afterPath="$PROJECT_DIR$/target/classes/config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/labels.properties" afterPath="$PROJECT_DIR$/target/classes/labels.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/labels_en_US.properties" afterPath="$PROJECT_DIR$/target/classes/labels_en_US.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/labels_ru_RU.properties" afterPath="$PROJECT_DIR$/target/classes/labels_ru_RU.properties" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/songs.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/not-approved-songs.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/log4j.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/classes/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/log4j.properties" afterPath="$PROJECT_DIR$/target/SongsLyricsWebSite/WEB-INF/log4j.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/log4j.properties" afterPath="$PROJECT_DIR$/target/classes/log4j.properties" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/resource/ConfigurationManager.java" afterPath="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/resource/Config.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -265,114 +186,116 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LyricsParser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java">
+      <file leaf-file-name="ResponseConstants.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/ResponseConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-37">
-              <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+            <state relative-caret-position="1105">
+              <caret line="65" column="96" lean-forward="false" selection-start-line="65" selection-start-column="96" selection-end-line="65" selection-end-column="96" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="my-profile.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp">
+      <file leaf-file-name="ApproveSongCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApproveSongCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="64" lean-forward="false" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProfileCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="83" column="71" lean-forward="true" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RequestConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/RequestConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="52" column="72" lean-forward="false" selection-start-line="52" selection-start-column="56" selection-end-line="52" selection-end-column="72" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginCommand.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/LoginCommand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsersManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/UsersManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="201" column="62" lean-forward="false" selection-start-line="201" selection-start-column="62" selection-end-line="201" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UsersDataAccessObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
-              <caret line="169" column="16" lean-forward="true" selection-start-line="169" selection-start-column="16" selection-end-line="169" selection-end-column="16" />
+            <state relative-caret-position="312">
+              <caret line="37" column="126" lean-forward="false" selection-start-line="37" selection-start-column="126" selection-end-line="37" selection-end-column="126" />
               <folding>
-                <marker date="1507136356303" expanded="true" signature="937:1055" ph="INSERT INTO users... " />
-                <marker date="1507136356303" expanded="true" signature="2743:2817" ph="SELECT user_... users" />
-                <marker date="1507136356303" expanded="true" signature="3524:3589" ph="SELECT user_... users" />
-                <marker date="1507136356303" expanded="true" signature="4393:4466" ph="SELECT hashe... users" />
-                <marker date="1507136356303" expanded="true" signature="5506:5573" ph="SELECT user_... users" />
-                <marker date="1507136356303" expanded="true" signature="6524:6591" ph="SELECT user_... users" />
-                <marker date="1507136356303" expanded="true" signature="7545:7618" ph="SELECT hashe... users" />
-                <marker date="1507136356303" expanded="true" signature="8645:8712" ph="SELECT user_... users" />
-                <marker date="1507136356303" expanded="true" signature="9637:9730" ph="UPDATE users... " />
-                <marker date="1507136356303" expanded="true" signature="10088:10181" ph="UPDATE users... " />
-                <marker date="1507136356303" expanded="true" signature="10838:10928" ph="SELECT is_bl... users" />
-                <marker date="1507136356303" expanded="true" signature="12355:12453" ph="UPDATE users... " />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2791#2792#0" expanded="true" />
+                <element signature="e#2849#2850#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SongsRatingsManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java">
+      <file leaf-file-name="RecentlyAddedSongsCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/RecentlyAddedSongsCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1124">
-              <caret line="55" column="7" lean-forward="true" selection-start-line="52" selection-start-column="4" selection-end-line="55" selection-end-column="7" />
+            <state relative-caret-position="119">
+              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/profile.jsp">
+      <file leaf-file-name="JSONCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/JSONCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="64" />
+            <state relative-caret-position="306">
+              <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChangeLanguageCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ChangeLanguageCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="561">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserType.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/UserType.java">
+      <file leaf-file-name="EditSongCommand.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+            <state relative-caret-position="-340">
+              <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApplySongChangesCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="44" column="141" lean-forward="false" selection-start-line="44" selection-start-column="141" selection-end-line="44" selection-end-column="141" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="labels.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/labels.properties">
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2465">
+              <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="119" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="labels_ru_RU.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties">
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2278">
+              <caret line="134" column="119" lean-forward="false" selection-start-line="134" selection-start-column="119" selection-end-line="134" selection-end-column="119" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="labels_en_US.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/labels_en_US.properties">
+          <provider editor-type-id="ResourceBundle">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2278">
+              <caret line="134" column="119" lean-forward="false" selection-start-line="134" selection-start-column="119" selection-end-line="134" selection-end-column="119" />
               <folding />
             </state>
           </provider>
@@ -387,8 +310,8 @@
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Jsp File" />
-        <option value="Class" />
         <option value="CSS File" />
+        <option value="Class" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -428,57 +351,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/scripts/admin.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/scripts/edit-song.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/scripts/song-rating.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/scripts/songs-loader.js" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/SongRetriever.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/Songs.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/factory/ActionFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/labels.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties" />
-        <option value="$PROJECT_DIR$/src/main/resources/labels_en_US.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/UserType.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/profile.css" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/RequestConstants.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/profile.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/song.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsPartType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyrics.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/Line.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/artist/Artist.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/SongCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresDataAccessObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/controller/Controller.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/comment/Comment.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/password/Password.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresOfSongsDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/CharactersEncodingFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/LanguageFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/LinesDataAccessObject.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/ArtistsManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/scripts/core.js" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/scripts/change-password.js" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/User.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp" />
+        <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresOfSongsDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/LinesDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LogsConstants.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java" />
         <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/UsersManager.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LoggingsConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/resource/ConfigurationManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/SongRetriever.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LoggingConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/exception/SongApprovingException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ApproveSongCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/song.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/scripts/approve-song.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/scripts/admin.js" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ChangeLanguageCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApproveSongCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/labels.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/ResponseConstants.java" />
+        <option value="$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/labels_en_US.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties" />
       </list>
     </option>
   </component>
@@ -547,9 +470,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -651,6 +572,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
+              <item name="constant" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
               <item name="dataaccessobject" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -670,46 +600,7 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
               <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="artist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="comment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
-              <item name="song" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
               <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SongsLyricsWebSite" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="songslyricswebsite" type="462c0819:PsiDirectoryNode" />
-              <item name="exception" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SongsLyricsWebSite" type="b2602c69:ProjectViewProjectNode" />
@@ -873,7 +764,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1224,12 +1117,17 @@
       <workItem from="1506793940141" duration="13894000" />
       <workItem from="1506946539697" duration="8971000" />
       <workItem from="1507052642392" duration="8109000" />
-      <workItem from="1507132368218" duration="3136000" />
+      <workItem from="1507132368218" duration="9369000" />
+      <workItem from="1507219906356" duration="6395000" />
+      <workItem from="1507310965068" duration="2597000" />
+      <workItem from="1507369915471" duration="6339000" />
+      <workItem from="1507404217085" duration="4362000" />
+      <workItem from="1507461868161" duration="535000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="793346000" />
+    <option name="totallyTimeSpent" value="819807000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1242,30 +1140,30 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20238096" sideWeight="0.14498934" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.4936034" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.8550107" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.8550107" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2979744" sideWeight="0.71364987" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3139659" sideWeight="0.71364987" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23400854" sideWeight="0.28635016" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1275,6 +1173,8 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.4936034" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28787878" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1284,17 +1184,18 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20238096" sideWeight="0.14498934" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20238096" sideWeight="0.14498934" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1305,11 +1206,11 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.4978678" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35281384" sideWeight="0.8550107" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.8550107" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.49573562" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27878466" sideWeight="0.71364987" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3107676" sideWeight="0.71364987" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23400854" sideWeight="0.28635016" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28787878" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1334,168 +1235,102 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/Arrays.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2070">
-          <caret line="4179" column="22" lean-forward="false" selection-start-line="4179" selection-start-column="22" selection-end-line="4179" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/util/Objects.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="127" column="25" lean-forward="true" selection-start-line="127" selection-start-column="25" selection-end-line="127" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/factory/ActionFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-131">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/NotApprovedSongsCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/SongCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="897">
-          <caret line="91" column="104" lean-forward="false" selection-start-line="91" selection-start-column="104" selection-end-line="91" selection-end-column="104" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/AbstractDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="39" lean-forward="false" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+        <state relative-caret-position="8">
+          <caret line="212" column="84" lean-forward="false" selection-start-line="212" selection-start-column="84" selection-end-line="212" selection-end-column="84" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/CommentsDataAccessObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="17" column="48" lean-forward="true" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="48" />
-          <folding>
-            <element signature="e#666#667#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
-            <marker date="1506951059383" expanded="true" signature="1055:1359" ph="SELECT comme... comments" />
-            <marker date="1506951059383" expanded="true" signature="4326:4419" ph="SELECT comme... comments" />
-            <marker date="1506951059383" expanded="true" signature="5105:5242" ph="INSERT INTO comments... " />
-            <marker date="1506951059383" expanded="true" signature="6164:6263" ph="UPDATE comme... " />
-            <marker date="1506951059383" expanded="true" signature="6865:6936" ph="SELECT comme... comments" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="16" column="63" lean-forward="false" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/javax/javaee-api/7.0/javaee-api-7.0.jar!/javax/servlet/Servlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="9" lean-forward="false" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/javax/javaee-api/7.0/javaee-api-7.0.jar!/javax/servlet/GenericServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="54" lean-forward="false" selection-start-line="3" selection-start-column="54" selection-end-line="3" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/conntectionpool/ConnectionPool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/math/BigInteger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="353" column="11" lean-forward="false" selection-start-line="353" selection-start-column="11" selection-end-line="353" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/password/Password.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="65" column="32" lean-forward="false" selection-start-line="65" selection-start-column="32" selection-end-line="65" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/ArtistDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3026">
-          <caret line="189" column="22" lean-forward="false" selection-start-line="189" selection-start-column="22" selection-end-line="189" selection-end-column="22" />
+        <state relative-caret-position="805">
+          <caret line="195" column="67" lean-forward="true" selection-start-line="195" selection-start-column="67" selection-end-line="195" selection-end-column="67" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/FeaturingsDataAccessObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="123" column="34" lean-forward="false" selection-start-line="123" selection-start-column="34" selection-end-line="123" selection-end-column="34" />
+        <state relative-caret-position="199">
+          <caret line="113" column="35" lean-forward="false" selection-start-line="113" selection-start-column="35" selection-end-line="113" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresDataAccessObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="95" column="56" lean-forward="true" selection-start-line="95" selection-start-column="56" selection-end-line="95" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/GenresOfSongsDataAccessObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1598">
-          <caret line="103" column="10" lean-forward="false" selection-start-line="103" selection-start-column="10" selection-end-line="103" selection-end-column="10" />
+        <state relative-caret-position="195">
+          <caret line="125" column="0" lean-forward="true" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
           <folding>
-            <marker date="1506953635689" expanded="true" signature="1081:1208" ph="INSERT INTO genres_of_songs... " />
-            <marker date="1506953635689" expanded="true" signature="1807:1914" ph="UPDATE genre... " />
-            <marker date="1506953635689" expanded="true" signature="2537:2630" ph="SELECT match... genres_of_songs" />
-            <marker date="1506953635689" expanded="true" signature="3758:4135" ph="SELECT genre... genre_name" />
-            <marker date="1506953635689" expanded="true" signature="3804:3937" ph="SELECT genre... genres_of_songs" />
+            <marker date="1507370275457" expanded="true" signature="1278:1405" ph="INSERT INTO genres_of_songs... " />
+            <marker date="1507370275457" expanded="true" signature="2004:2111" ph="UPDATE genre... " />
+            <marker date="1507370275457" expanded="true" signature="2734:2827" ph="SELECT match... genres_of_songs" />
+            <marker date="1507370275457" expanded="true" signature="4013:4390" ph="SELECT genre... genre_name" />
+            <marker date="1507370275457" expanded="true" signature="4059:4192" ph="SELECT genre... genres_of_songs" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/LinesDataAccessObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-864">
+          <caret line="237" column="38" lean-forward="true" selection-start-line="237" selection-start-column="38" selection-end-line="237" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsRatingsDataAccessObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="139" column="51" lean-forward="false" selection-start-line="139" selection-start-column="51" selection-end-line="139" selection-end-column="51" />
-          <folding>
-            <marker date="1506953930840" expanded="true" signature="1171:1284" ph="INSERT INTO songs_ratings... " />
-            <marker date="1506953930840" expanded="true" signature="1948:2037" ph="SELECT vote_... songs_ratings" />
-            <marker date="1506953930840" expanded="true" signature="2607:2695" ph="SELECT ratin... songs_ratings" />
-            <marker date="1506953930840" expanded="true" signature="3940:4037" ph="UPDATE songs... " />
-            <marker date="1506953930840" expanded="true" signature="4831:4930" ph="SELECT avg(s... songs_rating" />
-            <marker date="1506953930840" expanded="true" signature="5909:6093" ph="SELECT song_... songs_ratings" />
-            <marker date="1506953930840" expanded="true" signature="6961:7050" ph="SELECT vote_... songs_ratings" />
-          </folding>
+        <state relative-caret-position="3689">
+          <caret line="228" column="38" lean-forward="false" selection-start-line="228" selection-start-column="38" selection-end-line="228" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/org/apache/log4j/Appender.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="32" column="48" lean-forward="false" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+        <state relative-caret-position="255">
+          <caret line="20" column="9" lean-forward="false" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/org/apache/log4j/helpers/AppenderAttachableImpl.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="39" column="31" lean-forward="true" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/org/apache/log4j/Category.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="55" column="41" lean-forward="true" selection-start-line="55" selection-start-column="41" selection-end-line="55" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.17/log4j-1.2.17.jar!/org/apache/log4j/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="489">
+          <caret line="42" column="22" lean-forward="false" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="33" column="19" lean-forward="false" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="64" lean-forward="false" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="64" />
           <folding />
         </state>
       </provider>
@@ -1507,108 +1342,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/LanguageFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="72" column="22" lean-forward="false" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="22" />
-          <folding>
-            <marker date="1507078563910" expanded="true" signature="1428:1520" ph="UPDATE songs... " />
-            <marker date="1507078563910" expanded="true" signature="2157:2249" ph="UPDATE songs... " />
-            <marker date="1507078563910" expanded="true" signature="2935:3030" ph="UPDATE songs... " />
-            <marker date="1507078563910" expanded="true" signature="3662:3783" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="4938:5131" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="6170:6235" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="6712:6820" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="7652:7721" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="8521:8598" ph="SELECT song_... songs" />
-            <marker date="1507078563910" expanded="true" signature="9675:9809" ph="INSERT INTO songs... " />
-            <marker date="1507078563910" expanded="true" signature="11228:11322" ph="UPDATE songs... " />
-            <marker date="1507078563910" expanded="true" signature="11916:11935" ph="SELECT * FRO... songs" />
-            <marker date="1507078563910" expanded="true" signature="11916:11975" ph="SELECT * FRO... songsWHERE" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="42" column="38" lean-forward="true" selection-start-line="42" selection-start-column="38" selection-end-line="42" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="59" column="7" lean-forward="true" selection-start-line="56" selection-start-column="4" selection-end-line="59" selection-end-column="7" />
-          <folding>
-            <element signature="e#1799#1800#0" expanded="true" />
-            <element signature="e#1836#1837#0" expanded="true" />
-            <element signature="e#2042#2043#0" expanded="true" />
-            <element signature="e#2094#2095#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/LinesDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="62" column="80" lean-forward="false" selection-start-line="62" selection-start-column="80" selection-end-line="62" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/ArtistsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="618">
-          <caret line="71" column="32" lean-forward="false" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/comment/Comment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="839">
-          <caret line="131" column="27" lean-forward="false" selection-start-line="131" selection-start-column="27" selection-end-line="131" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/Line.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="509">
-          <caret line="80" column="33" lean-forward="false" selection-start-line="79" selection-start-column="15" selection-end-line="80" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/lyrics/SongLyricsComposite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="110" column="17" lean-forward="false" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/Songs.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1617,79 +1350,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/labels.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/ArtistsManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="969">
+          <caret line="71" column="32" lean-forward="false" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="32" />
+        </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/filter/LanguageFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="32" lean-forward="false" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="58" column="5" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="58" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/CommentsManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2788">
+          <caret line="182" column="4" lean-forward="false" selection-start-line="182" selection-start-column="4" selection-end-line="182" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/UnblockUserCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="63" column="30" lean-forward="true" selection-start-line="63" selection-start-column="30" selection-end-line="63" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/menu.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/TopTenRatedSongsCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="122" column="46" lean-forward="false" selection-start-line="122" selection-start-column="46" selection-end-line="122" selection-end-column="46" />
+        <state relative-caret-position="68">
+          <caret line="4" column="58" lean-forward="false" selection-start-line="4" selection-start-column="58" selection-end-line="4" selection-end-column="58" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ChangePasswordCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/AddCommentCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="40" column="30" lean-forward="false" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
+        <state relative-caret-position="119">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/core.js">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="355" column="35" lean-forward="true" selection-start-line="355" selection-start-column="35" selection-end-line="355" selection-end-column="87" />
+        <state relative-caret-position="51">
+          <caret line="3" column="53" lean-forward="false" selection-start-line="3" selection-start-column="53" selection-end-line="3" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/SongRetriever.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="39" column="31" lean-forward="false" selection-start-line="39" selection-start-column="31" selection-end-line="39" selection-end-column="31" />
           <folding>
-            <marker date="1507078564469" expanded="true" signature="811:820" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="1018:1027" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="5834:5845" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="6060:6069" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="9899:9908" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="10213:10222" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="10525:10534" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="10835:10844" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="11368:11377" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="11682:11691" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="11994:12003" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="12304:12313" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="12887:12896" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="13163:13172" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="14471:14482" ph="..." />
-            <marker date="1507078564469" expanded="true" signature="14627:14636" ph="..." />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/change-password.js">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/DatabaseConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="58" column="87" lean-forward="false" selection-start-line="58" selection-start-column="87" selection-end-line="58" selection-end-column="87" />
-          <folding>
-            <marker date="1507135609990" expanded="true" signature="1972:1981" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="3396:3405" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="3710:3719" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="4022:4031" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="4332:4341" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="5020:5029" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="6286:6297" ph="..." />
-            <marker date="1507135609990" expanded="true" signature="6511:6520" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/requestwrapper/RequestWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="66" column="78" lean-forward="false" selection-start-line="66" selection-start-column="78" selection-end-line="66" selection-end-column="78" />
+        <state relative-caret-position="901">
+          <caret line="53" column="83" lean-forward="false" selection-start-line="53" selection-start-column="83" selection-end-line="53" selection-end-column="83" />
           <folding />
         </state>
       </provider>
@@ -1702,106 +1442,211 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/artist/Artist.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/resource/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="23" selection-end-line="97" selection-end-column="23" />
+        <state relative-caret-position="255">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/song/Song.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2771">
+          <caret line="201" column="38" lean-forward="false" selection-start-line="201" selection-start-column="38" selection-end-line="201" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/SongsDataAccessObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="48" column="26" lean-forward="false" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
           <folding>
-            <element signature="e#2258#2259#0" expanded="true" />
-            <element signature="e#2303#2304#0" expanded="true" />
+            <marker date="1507382045114" expanded="true" signature="947:999" ph="SELECT max(s... songs" />
+            <marker date="1507382045114" expanded="true" signature="1951:2043" ph="UPDATE songs... " />
+            <marker date="1507382045114" expanded="true" signature="2680:2772" ph="UPDATE songs... " />
+            <marker date="1507382045114" expanded="true" signature="3458:3553" ph="UPDATE songs... " />
+            <marker date="1507382045114" expanded="true" signature="4185:4306" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="5528:5721" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="6814:6879" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="7418:7526" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="8429:8498" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="9362:9439" ph="SELECT song_... songs" />
+            <marker date="1507382045114" expanded="true" signature="10587:10742" ph="INSERT INTO songs... " />
+            <marker date="1507382045114" expanded="true" signature="12303:12397" ph="UPDATE songs... " />
+            <marker date="1507382045114" expanded="true" signature="12991:13050" ph="SELECT * FRO... songs" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/entity/user/UserType.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/exception/SongApprovingException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="25" column="22" lean-forward="false" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsRatingsManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1124">
-          <caret line="55" column="7" lean-forward="true" selection-start-line="52" selection-start-column="4" selection-end-line="55" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/util/LyricsParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-37">
-          <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/LoginCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="42" column="29" lean-forward="false" selection-start-line="42" selection-start-column="29" selection-end-line="42" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/dataaccessobject/UsersDataAccessObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="169" column="16" lean-forward="true" selection-start-line="169" selection-start-column="16" selection-end-line="169" selection-end-column="16" />
-          <folding>
-            <marker date="1507136356303" expanded="true" signature="937:1055" ph="INSERT INTO users... " />
-            <marker date="1507136356303" expanded="true" signature="2743:2817" ph="SELECT user_... users" />
-            <marker date="1507136356303" expanded="true" signature="3524:3589" ph="SELECT user_... users" />
-            <marker date="1507136356303" expanded="true" signature="4393:4466" ph="SELECT hashe... users" />
-            <marker date="1507136356303" expanded="true" signature="5506:5573" ph="SELECT user_... users" />
-            <marker date="1507136356303" expanded="true" signature="6524:6591" ph="SELECT user_... users" />
-            <marker date="1507136356303" expanded="true" signature="7545:7618" ph="SELECT hashe... users" />
-            <marker date="1507136356303" expanded="true" signature="8645:8712" ph="SELECT user_... users" />
-            <marker date="1507136356303" expanded="true" signature="9637:9730" ph="UPDATE users... " />
-            <marker date="1507136356303" expanded="true" signature="10088:10181" ph="UPDATE users... " />
-            <marker date="1507136356303" expanded="true" signature="10838:10928" ph="SELECT is_bl... users" />
-            <marker date="1507136356303" expanded="true" signature="12355:12453" ph="UPDATE users... " />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="7" column="37" lean-forward="false" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/UsersManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="201" column="62" lean-forward="false" selection-start-line="201" selection-start-column="62" selection-end-line="201" selection-end-column="62" />
+        <state relative-caret-position="-1475">
+          <caret line="240" column="20" lean-forward="false" selection-start-line="240" selection-start-column="20" selection-end-line="240" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ProfileCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/service/SongsManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="83" column="71" lean-forward="true" selection-start-line="83" selection-start-column="71" selection-end-line="83" selection-end-column="71" />
+        <state relative-caret-position="788">
+          <caret line="747" column="44" lean-forward="false" selection-start-line="747" selection-start-column="44" selection-end-line="747" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/RequestConstants.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/AddSongCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="52" column="72" lean-forward="false" selection-start-line="52" selection-start-column="56" selection-end-line="52" selection-end-column="72" />
+        <state relative-caret-position="663">
+          <caret line="51" column="123" lean-forward="false" selection-start-line="51" selection-start-column="123" selection-end-line="51" selection-end-column="123" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/profile.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/LoggingConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="64" />
+        <state relative-caret-position="754">
+          <caret line="49" column="97" lean-forward="false" selection-start-line="49" selection-start-column="97" selection-end-line="49" selection-end-column="97" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/my-profile.jsp">
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/LocaleBasedCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="64" lean-forward="false" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="64" />
+        <state relative-caret-position="459">
+          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/approve-song.js" />
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/admin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/add-comment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/song.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1771">
+          <caret line="75" column="75" lean-forward="false" selection-start-line="75" selection-start-column="75" selection-end-line="75" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/scripts/change-password.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="74" column="100" lean-forward="false" selection-start-line="74" selection-start-column="48" selection-end-line="74" selection-end-column="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/JSONCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="24" column="19" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/constant/ResponseConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1105">
+          <caret line="65" column="96" lean-forward="false" selection-start-line="65" selection-start-column="96" selection-end-line="65" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApplySongChangesCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="44" column="141" lean-forward="false" selection-start-line="44" selection-start-column="141" selection-end-line="44" selection-end-column="141" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/labels.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2465">
+          <caret line="145" column="0" lean-forward="false" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/labels_en_US.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2278">
+          <caret line="134" column="119" lean-forward="false" selection-start-line="134" selection-start-column="119" selection-end-line="134" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/labels_ru_RU.properties">
+      <provider editor-type-id="ResourceBundle">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2278">
+          <caret line="134" column="119" lean-forward="false" selection-start-line="134" selection-start-column="119" selection-end-line="134" selection-end-column="119" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/jsoncommand/RecentlyAddedSongsCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/localebasedcommand/ApproveSongCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="37" column="126" lean-forward="false" selection-start-line="37" selection-start-column="126" selection-end-line="37" selection-end-column="126" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2791#2792#0" expanded="true" />
+            <element signature="e#2849#2850#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/ChangeLanguageCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/kz/javalab/songslyricswebsite/command/impl/EditSongCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding />
         </state>
       </provider>

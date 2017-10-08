@@ -1,10 +1,12 @@
 package kz.javalab.songslyricswebsite.dataaccessobject;
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 
 import kz.javalab.songslyricswebsite.service.UsersManager;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,8 @@ import java.sql.SQLException;
  * Created by PaperPlane on 05.08.2017.
  */
 public class UsersDataAccessObject extends AbstractDataAccessObject {
+
+    private static Logger logger = Logger.getLogger(UsersDataAccessObject.class.getName());
 
     /**
      * Constructs new <Code>UsersDataAccessObject</Code> instance.
@@ -27,7 +31,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * Add new user do database.
      * @param user User to be added.
      */
-    public void registerNewUser(User user, Connection connection) {
+    public void addNewUser(User user, Connection connection) throws SQLException {
 
         String registerNewUserQuery = "INSERT INTO users\n" +
                 "(user_name, hashed_password, user_role)\n" +
@@ -37,17 +41,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         int hashedPasswordParameter = 2;
         int userRoleParameter = 3;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(registerNewUserQuery);
-            preparedStatement.setString(userNameParameter, user.getUsername());
-            preparedStatement.setString(hashedPasswordParameter, user.getPassword().getHashedPassword());
-            preparedStatement.setString(userRoleParameter, "COMMON");
-            preparedStatement.execute();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        PreparedStatement preparedStatement = connection.prepareStatement(registerNewUserQuery);
+        preparedStatement.setString(userNameParameter, user.getUsername());
+        preparedStatement.setString(hashedPasswordParameter, user.getPassword().getHashedPassword());
+        preparedStatement.setString(userRoleParameter, "COMMON");
+        preparedStatement.execute();
+        preparedStatement.close();
     }
 
     /**
@@ -83,7 +82,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
             result = checkEntityExistenceByStringValue(preparedStatement, username);
         } catch (SQLException e) {
-            e.printStackTrace();
+           logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_USER_EXISTENCE_BY_USERNAME, e);
         }
 
         return result;
@@ -105,7 +104,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             PreparedStatement preparedStatement = connection.prepareStatement(checkingUserQuery);
             result = checkEntityExistence(preparedStatement, userID);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_USER_EXISTENCE_BY_USER_ID, e);
         }
 
         return result;
@@ -134,13 +133,13 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
 
             while (resultSet.next()) {
                 String hashedPasswordFromDatabase = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.HASHED_PASSWORD);
-                result = password.getHashedPassword().trim().equals(hashedPasswordFromDatabase.trim());
+                result = password.getHashedPassword().equals(hashedPasswordFromDatabase.trim());
             }
 
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_PASSWORD_CORRECTNESS, e);
         }
 
         return result;
@@ -173,7 +172,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USER_ID_BY_USERNAME, e);
         }
 
         return userID;
@@ -207,7 +206,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USERNAME_BY_USER_ID);
         }
 
         return userName;
@@ -224,9 +223,11 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         String getHashedPasswordQuery = "SELECT hashed_password FROM users\n" +
                 "WHERE user_id = ?";
 
+        int userIDParameter = 1;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getHashedPasswordQuery);
-            preparedStatement.setInt(1, userID);
+            preparedStatement.setInt(userIDParameter, userID);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -237,7 +238,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_PASSWORD, e);
         }
 
         Password password = new Password();
@@ -257,10 +258,10 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         String getUserTypeQuery = "SELECT user_role FROM users\n" +
                 "WHERE user_id = ?";
 
+        int userIDParameter = 1;
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(getUserTypeQuery);
-
-            int userIDParameter = 1;
 
             preparedStatement.setInt(userIDParameter, userID);
 
@@ -269,8 +270,11 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             while (resultSet.next()) {
                 result = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_ROLE);
             }
+
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USER_TYPE_BY_USER_ID, e);
         }
 
         return UserType.valueOf(result);
@@ -282,7 +286,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @throws SQLException Thrown if some error occurred when attempted to update data.
      */
-    public void blockUser(int userID, Connection connection) throws SQLException {
+    public void markUserAsBlocked(int userID, Connection connection) throws SQLException {
         String blockUserQuery = "UPDATE users\n" +
                 "SET is_blocked = ?\n" +
                 "WHERE user_id = ?";
@@ -294,7 +298,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
     }
 
-    public void unblockUser(int userID, Connection connection) throws SQLException {
+    public void markUserAsUnblocked(int userID, Connection connection) throws SQLException {
         String unblockUserQuery = "UPDATE users\n" +
                 "SET is_blocked = ?\n" +
                 "WHERE user_id = ?";
@@ -346,7 +350,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_USER_IS_BLOCKED, e);
         }
 
         return isBlocked;

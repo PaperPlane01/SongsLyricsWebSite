@@ -2,7 +2,7 @@ package kz.javalab.songslyricswebsite.command.impl;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
-import kz.javalab.songslyricswebsite.resource.ConfigurationManager;
+import kz.javalab.songslyricswebsite.resource.Config;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class EmptyCommand implements ActionCommand {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = ConfigurationManager.getProperty(ResponseConstants.Pages.INDEX_PAGE);
+        String page = Config.getProperty(ResponseConstants.Pages.INDEX_PAGE);
 
         request.getRequestDispatcher(page).forward(request, response);
     }
