@@ -274,44 +274,44 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
             String content = entry.get(lineContent);
 
-            switch (partType) {
-                case "verse":
+            switch (SongLyricsPartType.valueOf(partType.toUpperCase())) {
+                case VERSE:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.VERSE);
                     }
                     break;
-                case "chorus":
+                case CHORUS:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.CHORUS);
                     }
                     break;
-                case "hook":
+                case HOOK:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.HOOK);
                     }
                     break;
-                case "bridge":
+                case BRIDGE:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.BRIDGE);
                     }
                     break;
-                case "intro":
+                case INTRO:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.INTRO);
                     }
                     break;
-                case "outro":
+                case OUTRO:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.OUTRO);
                     }
                     break;
-                case "other":
+                case OTHER:
                     if (lyricsPart == null) {
                         lyricsPart = new SongLyricsComposite();
                         lyricsPart.setType(SongLyricsPartType.OTHER);
