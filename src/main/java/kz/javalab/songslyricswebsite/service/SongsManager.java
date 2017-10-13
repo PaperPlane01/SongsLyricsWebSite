@@ -754,6 +754,13 @@ public class SongsManager {
         }
     }
 
+    /**
+     * Checks if song with the specified ID exists.
+     * @param songID ID of the song which is to be checked.
+     * @param connection Connection to be used.
+     * @return <Code>True</Code> if there is a song with such ID, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data. 
+     */
     private boolean checkIfSongExists(int songID, Connection connection) throws DataAccessException {
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
         boolean result = false;

@@ -290,7 +290,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
 
     /**
      * Marks user as blocked.
-     * @param userID ID of the user which is to be blocked.
+     * @param userID ID of the user who is to be blocked.
      * @param connection Connection to be used.
      * @throws SQLException Thrown if some error occurred when attempted to update data.
      */
@@ -306,6 +306,12 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
     }
 
+    /**
+     * Marks the user as unblocked.
+     * @param userID ID of the user who is to be unblocked.
+     * @param connection Connection to be used.
+     * @throws SQLException Thrown if some error occurred when attempted to update data.
+     */
     public void markUserAsUnblocked(int userID, Connection connection) throws SQLException {
         String unblockUserQuery = "UPDATE users\n" +
                 "SET is_blocked = ?\n" +
