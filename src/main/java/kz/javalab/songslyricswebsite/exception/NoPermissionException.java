@@ -1,8 +1,5 @@
 package kz.javalab.songslyricswebsite.exception;
 
-/**
- * Created by PaperPlane on 22.09.2017.
- */
 public class NoPermissionException extends Exception {
 
     public NoPermissionException() {

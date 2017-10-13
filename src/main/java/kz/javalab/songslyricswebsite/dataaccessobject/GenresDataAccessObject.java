@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -37,16 +38,13 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
                 "(?)";
         int genreNameParameter = 1;
 
-        if (!checkIfGenreExists(genreName, connection)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
+        PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
 
-            preparedStatement.setString(genreNameParameter, genreName);
+        preparedStatement.setString(genreNameParameter, genreName);
 
-            preparedStatement.execute();
+        preparedStatement.execute();
 
-            preparedStatement.close();
-
-        }
+        preparedStatement.close();
 
     }
 
@@ -55,8 +53,9 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
      * @param genreName Name of the genre.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if such genre exists, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfGenreExists(String genreName, Connection connection) {
+    public boolean checkIfGenreExists(String genreName, Connection connection) throws DataAccessException {
         boolean result = false;
 
         String checkGenreQuery = "SELECT genre_id\n" +
@@ -69,6 +68,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistenceByStringValue(preparedStatement, genreName);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_GENRE_EXISTENCE, e);
+            throw new DataAccessException();
         }
 
         return  result;
@@ -79,8 +79,9 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
      * @param genreName Name of the genre.
      * @param connection Connection to be used.
      * @return ID of the genre with specific name.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public int getGenreID(String genreName, Connection connection) {
+    public int getGenreID(String genreName, Connection connection) throws DataAccessException {
         int genreID = 0;
 
         String genreIDQuery = "SELECT genre_id\n" +
@@ -103,6 +104,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_GENRE_ID, e);
+            throw new DataAccessException();
         }
 
         return genreID;

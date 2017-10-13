@@ -5,10 +5,7 @@ import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.user.User;
-import kz.javalab.songslyricswebsite.exception.InvalidRatingValueException;
-import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
-import kz.javalab.songslyricswebsite.exception.SongRatingException;
-import kz.javalab.songslyricswebsite.exception.UserNotLoggedInException;
+import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.service.SongsRatingsManager;
 
 import javax.servlet.ServletException;
@@ -59,8 +56,10 @@ public class RateSongCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_SUCH_SONG));
             sendJsonResponse(responseMap, response);;
-        } catch (SongRatingException e) {
-            e.printStackTrace();
+        } catch (SongRatingException | DataAccessException e) {
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_RATING_SONG));
+            sendJsonResponse(responseMap, response);;
         }
     }
 

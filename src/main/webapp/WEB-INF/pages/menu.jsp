@@ -5,7 +5,7 @@
 <fmt:setLocale value="${sessionScope.language}"/>
 <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-dark">
 
-    <a class="navbar-brand" href="/controller">Song Lyrics Website</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}">Song Lyrics Website</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -14,7 +14,7 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/controller?command=new_song">
+                <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=new_song">
                     <fmt:bundle basename="labels">
                         <fmt:message key="labels.addsong"/>
                     </fmt:bundle>
@@ -24,7 +24,7 @@
             <c:choose>
                 <c:when test="${not empty sessionScope.user}">
                     <li class="nav-item">
-                        <a class="nav-link" href="/controller?command=profile&userID=${sessionScope.user.getID()}" id="my-profile">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=profile&userID=${sessionScope.user.getID()}" id="my-profile">
                             <fmt:bundle basename="labels">
                                 <fmt:message key="labels.myprofile"/>
                             </fmt:bundle>
@@ -33,7 +33,7 @@
 
                     <c:if test="${sessionScope.user.getUserType() == UserType.MODERATOR}">
                         <li class="nav-item">
-                            <a class="nav-link" href="/controller?command=not_approved_songs">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/controller?command=not_approved_songs">
                                 <fmt:bundle basename="labels">
                                     <fmt:message key="labels.songstoapprove"/>
                                 </fmt:bundle>
@@ -128,19 +128,7 @@
 
             </div>
             <div class="modal-footer">
-                <div class="options text-center text-md-right mt-1">
-                    <p>
-                        <fmt:bundle basename="labels">
-                            <fmt:message key="labels.notamember"/>
-                        </fmt:bundle>
-                        <a href="/controller?command=registration">
-                            <fmt:bundle basename="labels">
-                                <fmt:message key="labels.singup"/>
-                            </fmt:bundle>
-                        </a>
-                    </p>
-                </div>
-                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal"><fmt:bundle basename="labels">
+                <button type="button" id="login-form-closing-button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal"><fmt:bundle basename="labels">
                     <fmt:message key="labels.close"/>
                 </fmt:bundle></button>
             </div>
@@ -153,7 +141,7 @@
         <div class="modal-content">
 
             <div class="modal-header light-blue darken-3 white-text">
-                <h4 class="title"><i class="fa fa-user-plus"></i> Register</h4>
+                <h4 class="title"><i class="fa fa-user-plus"></i> <fmt:bundle basename="labels"><fmt:message key="labels.singup"/> </fmt:bundle></h4>
                 <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -163,35 +151,32 @@
                 <div class="md-form form-sm">
                     <i class="fa fa-envelope prefix"></i>
                     <input type="text" id="username-for-signup" class="form-control">
-                    <label for="username-for-signup">Your username</label>
+                    <label for="username-for-signup"><fmt:bundle basename="labels"><fmt:message key="labels.enterusername"/> </fmt:bundle></label>
                 </div>
 
                 <div id="password-message" style="display: none"></div>
                 <div class="md-form form-sm">
                     <i class="fa fa-lock prefix"></i>
                     <input type="password" id="password-for-sign-up" class="form-control">
-                    <label for="password-for-sign-up">Your password</label>
+                    <label for="password-for-sign-up"><fmt:bundle basename="labels"><fmt:message key="labels.enterpassword"/> </fmt:bundle></label>
                 </div>
 
                 <div id="second-password-message" style="display: none"></div>
                 <div class="md-form form-sm">
                     <i class="fa fa-lock prefix"></i>
                     <input type="password" id="repeat-password-for-sign-up" class="form-control">
-                    <label for="repeat-password-for-sign-up">Repeat password</label>
+                    <label for="repeat-password-for-sign-up"><fmt:bundle basename="labels"><fmt:message key="labels.repeatpassword"/> </fmt:bundle></label>
                 </div>
 
                 <div id="sign-up-message" style="display: none"></div>
 
                 <div class="text-center mt-2">
-                    <button class="btn btn-info" id="sign-up-button">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+                    <button class="btn btn-info" id="sign-up-button"><fmt:bundle basename="labels"><fmt:message key="labels.singup"/> </fmt:bundle> <i class="fa fa-sign-in ml-1"></i></button>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <div class="options text-center text-md-right mt-1">
-                    <p>Already have an account? <a href="#">Log In</a></p>
-                </div>
-                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+                <button type="button" id="sign-up-form-closing-button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal"><fmt:bundle basename="labels"><fmt:message key="labels.close"/> </fmt:bundle></button>
             </div>
         </div>
     </div>

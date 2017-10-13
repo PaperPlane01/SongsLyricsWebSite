@@ -3,10 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
-import kz.javalab.songslyricswebsite.exception.CommentAddingException;
-import kz.javalab.songslyricswebsite.exception.InvalidCommentContentException;
-import kz.javalab.songslyricswebsite.exception.UserIsBlockedException;
-import kz.javalab.songslyricswebsite.exception.UserNotLoggedInException;
+import kz.javalab.songslyricswebsite.exception.*;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
 
 import javax.servlet.ServletException;
@@ -45,8 +42,7 @@ public class AddCommentCommand extends LocaleBasedCommand {
             commentsManager.addCommentToDatabase();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
             sendJsonResponse(responseMap, response);
-        } catch (CommentAddingException e) {
-            e.printStackTrace();
+        } catch (CommentAddingException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_ADDING_COMMENT));
             sendJsonResponse(responseMap, response);

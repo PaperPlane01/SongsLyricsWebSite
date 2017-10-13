@@ -58,8 +58,9 @@ public class CommentsManager {
      * Returns comments of song with the specified ID.
      * @param songID ID of the song.
      * @return Comments of song with the specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Comment> getCommentsOfSong(int songID) {
+    public List<Comment> getCommentsOfSong(int songID) throws DataAccessException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
         List<Comment> comments = commentsDataAccessObject.getCommentsOfSong(songID, connection);
@@ -71,8 +72,9 @@ public class CommentsManager {
      * Checks if the specified song has comments.
      * @param songID ID of the song to be checked.
      * @return <Code>True</Code> if song has comments, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfSongHasComments(int songID) {
+    public boolean checkIfSongHasComments(int songID) throws DataAccessException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
         boolean result = commentsDataAccessObject.checkIfSongHasComments(songID, connection);
@@ -87,7 +89,7 @@ public class CommentsManager {
      * @throws UserNotLoggedInException Thrown if comment received from not logged in user.
      * @throws UserIsBlockedException Thrown if comment received from blocked user.
      */
-    public void addCommentToDatabase() throws CommentAddingException, InvalidCommentContentException, UserNotLoggedInException, UserIsBlockedException {
+    public void addCommentToDatabase() throws CommentAddingException, InvalidCommentContentException, UserNotLoggedInException, UserIsBlockedException, DataAccessException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
@@ -180,7 +182,13 @@ public class CommentsManager {
         }
     }
 
-    public int getNumberOfCommentsOfUser(int userID) {
+    /**
+     * Returns number of comments of user with the specified ID.
+     * @param userID ID of the user.
+     * @return Number of comments of user with the specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public int getNumberOfCommentsOfUser(int userID) throws DataAccessException {
         CommentsDataAccessObject commentsDataAccessObject = new CommentsDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
 

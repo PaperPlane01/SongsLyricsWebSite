@@ -12,7 +12,7 @@
     <div class="card card-body">
         <div class="card-header">
             <strong>
-                <a href="/controller?command=profile&userID=${authorID}" class="author-name">${authorName}</a><span class="text-muted comment-date">${date}</span>
+                <a href="${pageContext.request.contextPath}/controller?command=profile&userID=${authorID}" class="author-name">${authorName}</a><span class="text-muted comment-date">${date}</span>
                 <span class="comment-id">&#x2116;${id}</span>
             </strong>
         </div>

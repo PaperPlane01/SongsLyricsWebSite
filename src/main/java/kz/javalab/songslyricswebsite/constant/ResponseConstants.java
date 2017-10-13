@@ -22,7 +22,8 @@ public class ResponseConstants {
         public static final String LABELS = "labels";
         public static final String MESSAGE = "message";
         public static final String REASON = "reason";
-        public static final String INVALID_COMMENT_CONTENT = "labels.errors.invalidcommentcontent";
+        public static final String DATA = "data";
+        public static final String INVALID_COMMENT_CONTENT = "labels.errors.invalidcomment";
         public static final String ERROR_WHILE_ADDING_COMMENT = "labels.errors.errorwhileaddingcomment";
         public static final String SONG_HAS_BEEN_ADDED = "labels.songhasbeenadded";
         public static final String INVALID_ARTIST_NAME = "labels.errors.artistname.invalid";
@@ -33,7 +34,7 @@ public class ResponseConstants {
         public static final String TOO_LONG_LYRICS = "labels.errors.youtubevideoid.invalid";
         public static final String FEATURED_ARTIST_NAME_IS_TOO_LONG = "labels.errors.featuredartists.artistnametoolong";
         public static final String INVALID_SONG_LYRICS = "labels.errors.songlyrics.invalid";
-        public static final String SUCH_SONG_ALREADY_EXISTS = "labels.errors.suchsongalreadyexists";
+        public static final String SUCH_SONG_ALREADY_EXISTS = "labels.suchsongalreadyexists";
         public static final String ERROR_WHILE_ADDING_SONG = "labels.errors.errorwhileadding";
         public static final String NO_SUCH_SONG = "labels.errors.nosuchsong.explained";
         public static final String NO_SUCH_USER = "labels.errors.nosuchuser.explained";
@@ -44,7 +45,7 @@ public class ResponseConstants {
         public static final String WRONG_USERNAME = "labels.wrongusername";
         public static final String SONG_RATING_RECEIVED_FROM_NOT_LOGGED_IN_USER = "labels.errors.songratingreceivedfromnonloggedinuser";
         public static final String INVALID_RATING_VALUE = "labels.errors.invalidratingvalue";
-        public static final String SUCH_USER_ALREADY_EXISTS = "labels.suchuseraleadyexists";
+        public static final String SUCH_USER_ALREADY_EXISTS = "labels.suchuseralreadyexists";
         public static final String REGISTRATION_FAILED = "labels.registrationfailed";
         public static final String INVALID_USERNAME = "labels.errors.invalidusername.general";
         public static final String INVALID_PASSWORD = "labels.errors.invalidpassword.general";
@@ -64,6 +65,9 @@ public class ResponseConstants {
         public static final String SUCCESSFUL_SONG_APPROVING = "labels.songhasbeenapproved";
         public static final String ERROR_WHILE_APPROVING_SONG = "labels.errors.errorwhileapprovingsong";
         public static final String SUCCESSFUL_SONG_MODIFYING = "labels.successfulsongmodifying";
+        public static final String FAILED_TO_LOAD_DATA = "labels.errors.failedtoloaddata";
+        public static final String ERROR_WHILE_RATING_SONG = "labels.errors.errorwhileratingsong";
+        public static final String REGISTRATION_SUCCESS = "labels.registrationsuccess";
     }
 
     public class Pages {
@@ -77,6 +81,8 @@ public class ResponseConstants {
         public static final String PROFILE_PAGE = "path.page.profile";
         public static final String NO_SUCH_USER_PAGE = "path.page.nosuchuser";
         public static final String SONG_PAGE = "path.page.song";
+        public static final String DATA_LOADING_ERROR_PAGE = "path.page.dataloagingerror";
+        public static final String PAGE_NOT_FOUND = "path.page.pagenotfound";
     }
 
 }

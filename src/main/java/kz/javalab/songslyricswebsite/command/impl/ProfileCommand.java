@@ -5,6 +5,7 @@ import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
 import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
@@ -44,12 +45,18 @@ public class ProfileCommand implements ActionCommand {
 
             if (sessionUser != null) {
                 if (requestedUser.getID() == sessionUser.getID()) {
-                    sendToMyProfilePage(request, response);
+                    try {
+                        sendToMyProfilePage(request, response);
+                    } catch (DataAccessException e) {
+                        sendToDataLoadingErrorPage(request, response);
+                    }
                 } else {
                     try {
                         sendToProfilePage(request, response, requestedUser);
                     } catch (InvalidUserIDException e) {
                         sendToErrorPage(request, response);
+                    } catch (DataAccessException e) {
+                        sendToDataLoadingErrorPage(request, response);
                     }
                 }
             } else {
@@ -57,6 +64,8 @@ public class ProfileCommand implements ActionCommand {
                     sendToProfilePage(request, response, requestedUser);
                 } catch (InvalidUserIDException e) {
                     sendToErrorPage(request, response);
+                } catch (DataAccessException e) {
+                    sendToDataLoadingErrorPage(request, response);;
                 }
             }
         } catch (NumberFormatException e) {
@@ -73,7 +82,7 @@ public class ProfileCommand implements ActionCommand {
      * @throws ServletException Thrown if there is a server problem.
      * @throws IOException Thrown if some error occurred when attempted to send response.
      */
-    private void sendToMyProfilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void sendToMyProfilePage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DataAccessException {
         User user = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);
         SongsManager songsManager = new SongsManager();
         CommentsManager commentsManager = new CommentsManager();
@@ -97,7 +106,7 @@ public class ProfileCommand implements ActionCommand {
      * @throws IOException Thrown if some error occurred when attempted to send response.
      * @throws InvalidUserIDException Thrown if user ID is invalid.
      */
-    private void sendToProfilePage(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, InvalidUserIDException {
+    private void sendToProfilePage(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, InvalidUserIDException, DataAccessException {
         String page = new String();
         UsersManager usersManager = new UsersManager();
         SongsManager songsManager = new SongsManager();
@@ -125,6 +134,11 @@ public class ProfileCommand implements ActionCommand {
      */
     private void sendToErrorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_USER_PAGE);
+        request.getRequestDispatcher(page).forward(request, response);
+    }
+
+    private void sendToDataLoadingErrorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String page = Config.getProperty(ResponseConstants.Pages.DATA_LOADING_ERROR_PAGE);
         request.getRequestDispatcher(page).forward(request, response);
     }
 }

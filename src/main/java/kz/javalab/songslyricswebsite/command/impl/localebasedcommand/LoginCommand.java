@@ -5,6 +5,7 @@ import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.WrongPasswordException;
 import kz.javalab.songslyricswebsite.exception.WrongUsernameException;
 import kz.javalab.songslyricswebsite.service.UsersManager;
@@ -58,6 +59,8 @@ public class LoginCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Messages.REASON, labels.getString(ResponseConstants.Messages.WRONG_USERNAME));
 
             sendJsonResponse(responseMap, response);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
         }
 
     }

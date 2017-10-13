@@ -14,7 +14,7 @@
             <div class="list-of-songs">
                 <ul>
                     <c:forEach items="${requestScope.notApprovedSongs}" var="song">
-                        <li><a href="/controller?command=song&songID=${song.getID()}"}><c:out value="${song.getTitle()}"/></a> </li>
+                        <li><a href="${pageContext.request.contextPath}/controller?command=song&songID=${song.getID()}"}><c:out value="${song.getTitle()}"/></a> </li>
                     </c:forEach>
                 </ul>
             </div>

@@ -1,8 +1,5 @@
 package kz.javalab.songslyricswebsite.exception;
 
-/**
- * Created by PaperPlane on 03.09.2017.
- */
 public class WrongUsernameException extends Exception {
 
     public WrongUsernameException() {

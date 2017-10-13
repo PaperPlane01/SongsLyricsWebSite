@@ -81,7 +81,7 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_SUCH_SONG));
             sendJsonResponse(responseMap, response);
-        } catch (SongAlteringException e) {
+        } catch (SongAlteringException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_ALTERING_SONG));
             sendJsonResponse(responseMap, response);

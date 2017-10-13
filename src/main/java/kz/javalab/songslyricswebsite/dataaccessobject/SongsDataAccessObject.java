@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -26,7 +27,13 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         super();
     }
 
-    public int getLastSongID(Connection connection) {
+    /**
+     * Returns ID of last added song.
+     * @param connection Connection to be used.
+     * @return ID of last added song.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public int getLastSongID(Connection connection) throws DataAccessException {
         String lastSongIDQuery = "SELECT max(song_id)\n" +
                 "FROM songs";
         int lastSongID = 0;
@@ -44,6 +51,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
 
         return lastSongID;
@@ -108,8 +116,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @param numberOfSongs Number of recently added songs to be retrieved.
      * @param connection Connection to be used.
      * @return List of IDs of recently added songs.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Integer> getIDsOfRecentlyAddedSongs(int numberOfSongs, Connection connection) {
+    public List<Integer> getIDsOfRecentlyAddedSongs(int numberOfSongs, Connection connection) throws DataAccessException {
         List<Integer> songIDs = new ArrayList<>();
 
         String getRecentlyAddedSongIDsQuery = "SELECT song_id\n" +
@@ -136,6 +145,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LIST_OF_RECENTLY_ADDED_SONGS, e);
+            throw new DataAccessException();
         }
 
         return songIDs;
@@ -146,8 +156,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @param song Song to be checked.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if such song exists, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfSongExists(Song song, Connection connection) {
+    public boolean checkIfSongExists(Song song, Connection connection) throws DataAccessException {
         String songName = song.getName();
         String artistName = song.getArtist().getName();
 
@@ -176,6 +187,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE, e);
+            throw new DataAccessException();
         }
 
         return result;
@@ -186,8 +198,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @param songID Song ID to be checked.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if song with such ID exists, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfSongExists(int songID, Connection connection) {
+    public boolean checkIfSongExists(int songID, Connection connection) throws DataAccessException {
         boolean result = false;
 
         String checkSongQuery = "SELECT song_id FROM songs\n" +
@@ -199,12 +212,20 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE_BY_SONG_ID);
+            throw new DataAccessException();
         }
 
         return result;
     }
 
-    public List<Integer> getIDsOfSongsPerformedByArtist(int artistID, Connection connection) {
+    /**
+     * Returns IDs of songs performed by artist with the specified ID.
+     * @param artistID ID of the artist.
+     * @param connection Connection to be used.
+     * @return List of songs performed by artist with the specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public List<Integer> getIDsOfSongsPerformedByArtist(int artistID, Connection connection) throws DataAccessException {
         List<Integer> songIDs = new ArrayList<>();
 
         String getSongsByArtistID = "SELECT song_id FROM songs\n" +
@@ -228,12 +249,19 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_PERFORMED_BY_ARTIST, e);
+            throw new DataAccessException();
         }
 
         return songIDs;
     }
 
-    public List<Integer> getIDsOfNotApprovedSongs(Connection connection) {
+    /**
+     * Returns IDs of not approved songs.
+     * @param connection Connection to be used.
+     * @return IDs of not approved songs.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public List<Integer> getIDsOfNotApprovedSongs(Connection connection) throws DataAccessException {
         List<Integer> songIDs = new ArrayList<>();
 
         String listOfNotApprovedSongsQuery = "SELECT song_id FROM songs\n" +
@@ -254,13 +282,21 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_NOT_APPROVED_SONGS, e);
+            throw new DataAccessException();
         }
 
         return songIDs;
 
     }
 
-    public List<Integer> getIDsOfSongsContributedByUser(int userID, Connection connection) {
+    /**
+     * Returns IDs of songs contributed by user with the specified ID.
+     * @param userID ID of the user.
+     * @param connection Connection to be used.
+     * @return IDs of songs contributed by user with the specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public List<Integer> getIDsOfSongsContributedByUser(int userID, Connection connection) throws DataAccessException {
         List<Integer> songIDs = new ArrayList<>();
 
         String getListOfSongsContributedByUserQuery = "SELECT song_id FROM songs\n" +
@@ -284,6 +320,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_CONTRIBUTED_BY_USER, e);
+            throw new DataAccessException();
         }
 
         return songIDs;
@@ -363,8 +400,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song.
      * @param connection Connection to be used.
      * @return Data related to the specified song.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public Map<String, Object> getSongData(int songID, Connection connection) {
+    public Map<String, Object> getSongData(int songID, Connection connection) throws DataAccessException {
         String getSongDataQuery = "SELECT * FROM songs\n" +
                 "WHERE song_id = ?";
         int songIDParameter = 1;
@@ -401,11 +439,17 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_SONG_DATA, e);
+            throw new DataAccessException();
         }
 
         return data;
     }
 
+    /**
+     * Converts integer to boolean.
+     * @param integer Integer number which is to be converted to boolean. Must be 0 or 1.
+     * @return Boolean value.
+     */
     private boolean convertIntToBoolean(int integer) {
         boolean booleanValue = false;
 

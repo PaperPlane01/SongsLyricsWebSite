@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.constant;
 
 /**
- * Created by PaperPlane on 18.09.2017.
+ * This class contains constants related to requests sent by the client.
  */
 public class RequestConstants {
 
@@ -19,7 +19,7 @@ public class RequestConstants {
         public static final String FEATURED_ARTISTS = "featuredArtists";
         public static final String SONG_GENRES = "songGenres";
         public static final String SONG_LYRICS = "songLyrics";
-        public static final String YOUTUBE_VIDEO_ID = "youTubeLink";
+        public static final String YOUTUBE_VIDEO_ID = "youTubeVideoID";
         public static final String USERNAME = "username";
         public static final String PASSWORD = "password";
         public static final String SECOND_PASSWORD = "secondPassword";
@@ -49,9 +49,9 @@ public class RequestConstants {
         public static final String SONG_LYRICS = "songLyrics";
         public static final String PROFILE_OWNER = "profileOwner";
         public static final String NOT_APPROVED_SONGS = "notApprovedSongs";
-        public static final String RECENT_COMMENTS = "recentComments";
         public static final String CONTRIBUTED_SONGS = "contributedSongs";
         public static final String NUMBER_OF_COMMENTS = "numberOfComments";
+        public static final String SONG = "song";
     }
 
     public class SessionAttributes {
@@ -70,7 +70,6 @@ public class RequestConstants {
         public static final String ADD_COMMENT = "add_comment";
         public static final String ADD_SONG = "add_song";
         public static final String APPLY_SONG_CHANGES = "apply_song_changes";
-        public static final String GET_LABEL = "get_label";
         public static final String LOGIN = "login";
         public static final String RATE_SONG = "rate_song";
         public static final String REGISTER = "register";

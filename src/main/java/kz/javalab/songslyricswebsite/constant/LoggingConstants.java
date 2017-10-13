@@ -47,5 +47,9 @@ public class LoggingConstants {
     public static final String EXCEPTION_WHILE_CHANGING_PASSWORD = "Exception while changing password";
     public static final String EXCEPTION_WHILE_RATING_THE_SONG = "Exception while rating the song";
     public static final String EXCEPTION_WHILE_ADDING_SONG = "Exception while adding the song";
-    public static final String EXCEPTION_WHILE_APPROVING_SONG = "Exception whule approving song";
+    public static final String EXCEPTION_WHILE_APPROVING_SONG = "Exception while approving song";
+    public static final String EXCEPTION_WHILE_UPDATING_SONG = "Exception while updating song";
+    public static final String EXCEPTION_WHILE_CREATING_CONNECTION = "Exception while creating connection";
+    public static final String EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_FALSE = "Exception while setting autocommit to false";
+    public static final String EXCEPTION_WHILE_CLOSING_CONNECTION = "Exception while closing connection";
 }

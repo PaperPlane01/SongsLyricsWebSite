@@ -5,6 +5,7 @@ import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -30,8 +31,9 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song, comments of which are to be retrieved.
      * @param connection Connection to be used.
      * @return List of comments of the specific song.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Comment> getCommentsOfSong(int songID, Connection connection) {
+    public List<Comment> getCommentsOfSong(int songID, Connection connection) throws DataAccessException {
         String getCommentsQuery = "SELECT comment_id, comments.user_id, comment_content, time, user_name, user_role, is_blocked\n" +
                 "FROM comments INNER JOIN users\n" +
                 "ON comments.user_id = users.user_id\n" +
@@ -99,6 +101,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_COMMENTS_OF_SONG, e);
+            throw new DataAccessException();
         }
 
         return comments;
@@ -109,8 +112,9 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song which is to be checked.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if the song has comments, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfSongHasComments(int songID, Connection connection) {
+    public boolean checkIfSongHasComments(int songID, Connection connection) throws DataAccessException {
         boolean result = false;
 
         String checkIfSongHasCommentsQuery = "SELECT comment_id\n" +
@@ -123,6 +127,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_SONG_HAS_COMMENTS, e);
+            throw new DataAccessException();
         }
 
         return result;
@@ -181,8 +186,9 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
      * @param userID ID of the user.
      * @param connection Connection to be used.
      * @return Number of comments written by the specified user.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public int getNumberOfCommentsOfUser(int userID, Connection connection) {
+    public int getNumberOfCommentsOfUser(int userID, Connection connection) throws DataAccessException {
         String numberOfCommentsQuery = "SELECT comment_id FROM comments\n" +
                 "WHERE user_id = ?";
         int userIDParameter = 1;
@@ -203,6 +209,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_NUMBER_OF_COMMENTS_OF_USER, e);
+            throw new DataAccessException();
         }
 
         return numberOfComments;

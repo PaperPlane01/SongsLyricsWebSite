@@ -2,6 +2,7 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -50,7 +51,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if user has rated this song, <Code>False</Code> if not.
      */
-    public boolean checkIfUserRatedSong (int userID, int songID, Connection connection) {
+    public boolean checkIfUserRatedSong (int userID, int songID, Connection connection) throws DataAccessException {
         boolean result = false;
 
         String checkIfUserRatedSongQuery = "SELECT vote_id FROM songs_ratings\n" +
@@ -62,6 +63,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistence(preparedStatement, userID, songID);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new DataAccessException();
         }
 
         return  result;
@@ -74,7 +76,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return User's rating of song value.
      */
-    public int getUserRatingOfSong(int userID, int songID, Connection connection) {
+    public int getUserRatingOfSong(int userID, int songID, Connection connection) throws DataAccessException {
         String userRatingOfSongQuery = "SELECT rating FROM songs_ratings\n" +
                 "WHERE user_id = ? AND song_id = ?";
 
@@ -99,6 +101,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USERS_RATING_OF_SONG_VALUE, e);
+            throw new DataAccessException();
         }
 
         return rating;
@@ -112,7 +115,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @throws SQLException Thrown if some error occurred when attempted to modify data.
      */
-    public void updateSongRating(int userID, int songID, int newRating, Connection connection) throws SQLException {
+    public void updateSongRating(int userID, int songID, int newRating, Connection connection) throws SQLException, DataAccessException {
         String alterSongRatingQuery = "UPDATE songs_ratings\n" +
                 "SET rating = ?\n" +
                 "WHERE vote_id = ?";
@@ -138,7 +141,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return Average rating of the specified song.
      */
-    public double getAverageRatingOfSong(int songID, Connection connection) {
+    public double getAverageRatingOfSong(int songID, Connection connection) throws DataAccessException {
         double averageRating = 0;
 
         String getAverageRatingQuery = "SELECT avg(rating)\n" +
@@ -162,6 +165,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_AVERAGE_RATING_OF_SONG, e);
+            throw new DataAccessException();
         }
 
         return averageRating;
@@ -172,13 +176,13 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return Map with IDs and average ratings of top ten rated songs.
      */
-    public Map<Integer, Double> getTopTenRatedSongsIDsAndRatings(Connection connection) {
+    public Map<Integer, Double> getTopTenRatedSongsIDsAndRatings(Connection connection) throws DataAccessException {
         Map<Integer, Double> map = new LinkedHashMap<>();
 
         String query = "SELECT song_id, avg(rating)\n" +
                 "FROM songs_ratings\n" +
                 "GROUP BY song_id\n" +
-                "ORDER BY avg(rating)\n" +
+                "ORDER BY avg(rating)\n DESC\n" +
                 "LIMIT 0, 10";
 
         try {
@@ -197,6 +201,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_TOP_TEN_RATED_SONGS_IDS_AND_RATINGS, e);
+            throw new DataAccessException();
         }
 
         return map;
@@ -209,7 +214,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
      * @param connection
      * @return
      */
-    private int getVoteID(int userID, int songID, Connection connection) {
+    private int getVoteID(int userID, int songID, Connection connection) throws DataAccessException {
         int voteID = 0;
 
         String voteIDQuery = "SELECT vote_id FROM songs_ratings\n" +
@@ -234,6 +239,7 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_VOTE_ID, e);
+            throw new DataAccessException();
         }
 
         return voteID;

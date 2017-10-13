@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.InvalidUserIDException;
 import kz.javalab.songslyricswebsite.exception.NoPermissionException;
 import kz.javalab.songslyricswebsite.exception.UserUnblockingException;
@@ -48,7 +49,7 @@ public class UnblockUserCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.NO_SUCH_USER));
             sendJsonResponse(responseMap, response);
-        } catch (UserUnblockingException e) {
+        } catch (UserUnblockingException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_UNBLOCKING));
             sendJsonResponse(responseMap, response);

@@ -208,7 +208,7 @@ $(document).ready(function () {
                     songArtist : artistName,
                     songFeaturedArtists : featuredArtists,
                     songGenres : songGenres,
-                    youTubeLink : youTubeVideoID,
+                    youTubeVideoID : youTubeVideoID,
                     songLyrics : songLyrics
                 },
 

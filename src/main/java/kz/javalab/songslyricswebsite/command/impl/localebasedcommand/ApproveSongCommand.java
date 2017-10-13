@@ -3,6 +3,7 @@ package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.NoPermissionException;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.exception.SongApprovingException;
@@ -45,7 +46,7 @@ public class ApproveSongCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, ResponseConstants.Messages.NO_SUCH_SONG);
             sendJsonResponse(responseMap, response);
-        } catch (SongApprovingException e) {
+        } catch (SongApprovingException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, ResponseConstants.Messages.ERROR_WHILE_APPROVING_SONG);
             sendJsonResponse(responseMap, response);

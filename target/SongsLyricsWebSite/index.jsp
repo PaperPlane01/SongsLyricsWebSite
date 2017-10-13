@@ -7,8 +7,8 @@
   <head>
     <title>Song Lyrics Website</title>
     <jsp:include page="/WEB-INF/pages/css.jsp"/>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/spinning-loader.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/spinning-loader.css">
   </head>
   <body>
   <jsp:include page="/WEB-INF/pages/menu.jsp"/>
@@ -32,7 +32,7 @@
                       <div class="card-body">
                           <p class="card-text">
                               <fmt:bundle basename="labels">
-                                  <fmt:message key="labels.mainpage.decription"/> <a href="/controller?command=newsong"><fmt:message key="labels.mainpage.addsong"/></a><fmt:message key="labels.mainpage.dot"/>
+                                  <fmt:message key="labels.mainpage.decription"/> <a href="${pageContext.request.contextPath}/controller?command=newsong"><fmt:message key="labels.mainpage.addsong"/></a><fmt:message key="labels.mainpage.dot"/>
                               </fmt:bundle>
                           </p>
                       </div>
@@ -54,6 +54,7 @@
                       </div>
                       <div class="card-body">
                           <div class="loader" id="top-ten-rated-songs-loader"></div>
+                          <div id="top-ten-rated-songs-message" style="display: none"></div>
                           <ul class="list-group" id="top-ten-rated-songs-list">
 
                           </ul>
@@ -74,6 +75,7 @@
                       </div>
                       <div class="card-body">
                           <div class="loader" id="recently-added-songs-loader"></div>
+                          <div id="recently-added-songs-message" style="display: none"></div>
                           <ul class="list-group" id="recently-added-songs-list">
 
                           </ul>
@@ -87,6 +89,6 @@
       <jsp:include page="/WEB-INF/pages/messages/login-and-sign-up-messages.jsp"/>
   </div>
   <jsp:include page="/WEB-INF/pages/scripts.jsp"/>
-  <script src="/scripts/songs-loader.js"></script>
+  <script src="${pageContext.request.contextPath}/scripts/songs-loader.js"></script>
   </body>
 </html>

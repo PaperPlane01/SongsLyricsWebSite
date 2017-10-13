@@ -47,11 +47,14 @@ public class RegisterCommand extends LocaleBasedCommand {
 
         try {
             usersManager.registerNewUser();
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.REGISTRATION_SUCCESS));
+            sendJsonResponse(responseMap, response);
         } catch (SuchUserAlreadyExistsException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCH_USER_ALREADY_EXISTS));
             sendJsonResponse(responseMap, response);
-        } catch (RegistrationFailedException e) {
+        } catch (RegistrationFailedException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.REGISTRATION_FAILED));
             sendJsonResponse(responseMap, response);

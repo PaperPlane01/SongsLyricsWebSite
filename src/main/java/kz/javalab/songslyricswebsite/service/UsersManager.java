@@ -69,7 +69,7 @@ public class UsersManager {
      * @throws InvalidPasswordException Thrown if password is invalid.
      * @throws PasswordsAreNotEqualException Thrown if first password and second password sent by user are not equal.
      */
-    public void registerNewUser() throws SuchUserAlreadyExistsException, RegistrationFailedException, InvalidUserNameException, InvalidPasswordException, PasswordsAreNotEqualException {
+    public void registerNewUser() throws SuchUserAlreadyExistsException, RegistrationFailedException, InvalidUserNameException, InvalidPasswordException, PasswordsAreNotEqualException, DataAccessException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
@@ -151,7 +151,8 @@ public class UsersManager {
             return  false;
         }
 
-        Pattern pattern = Pattern.compile("[a-zA-Zа-яА-Я_.#$%^&]*");
+        String regex = "[a-zA-Zа-яА-Я_.#$%^&]*";
+        Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(userName);
 
         if (!matcher.matches()) {
@@ -201,7 +202,7 @@ public class UsersManager {
      * @throws WrongPasswordException Thrown if password is wrong.
      * @throws WrongUsernameException Thrown if username is wrong.
      */
-    public void doLogin() throws WrongPasswordException, WrongUsernameException { ;
+    public void doLogin() throws WrongPasswordException, WrongUsernameException, DataAccessException { ;
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         String userName = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.USERNAME);
@@ -237,7 +238,7 @@ public class UsersManager {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if such user exists, <Code>False</Code> if not.
      */
-    private boolean checkIfUserExists(User user, int parameterOfChecking, Connection connection) {
+    private boolean checkIfUserExists(User user, int parameterOfChecking, Connection connection) throws DataAccessException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.checkIfUserExists(user, connection, parameterOfChecking);
     }
@@ -249,7 +250,7 @@ public class UsersManager {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if password is correct, <Code>False</Code> if not.
      */
-    private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
+    private boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) throws DataAccessException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.checkIfPasswordCorrect(userName, password, connection);
     }
@@ -260,7 +261,7 @@ public class UsersManager {
      * @param connection Connection to be used.
      * @return User ID.
      */
-    private int getUserIDByUserName(String userName, Connection connection) {
+    private int getUserIDByUserName(String userName, Connection connection) throws DataAccessException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.getUserIDByUserName(userName, connection);
     }
@@ -271,7 +272,7 @@ public class UsersManager {
      * @return Username.
      * @throws InvalidUserIDException Thrown if there is no user with such ID.
      */
-    public String getUserNameByUserID(int userID) throws InvalidUserIDException {
+    public String getUserNameByUserID(int userID) throws InvalidUserIDException, DataAccessException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         Connection connection = ConnectionPool.getInstance().getConnection();
 
@@ -294,7 +295,7 @@ public class UsersManager {
      * @param userID User ID.
      * @return User type of the user with specific ID.
      */
-    public UserType getUserTypeByUserID(int userID) {
+    public UserType getUserTypeByUserID(int userID) throws DataAccessException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         UserType userType = getUserTypeByUserID(userID, connection);
         ConnectionPool.getInstance().returnConnection(connection);
@@ -307,7 +308,7 @@ public class UsersManager {
      * @param connection Connection to be used.
      * @return User type of the user with specific ID.
      */
-    private UserType getUserTypeByUserID(int userID, Connection connection) {
+    private UserType getUserTypeByUserID(int userID, Connection connection) throws DataAccessException {
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
         return usersDataAccessObject.getUserTypeByUserID(userID, connection);
     }
@@ -319,7 +320,7 @@ public class UsersManager {
      * @throws UserBlockingException Thrown if some error occurred when attempted to update data.
      * @throws InvalidUserIDException Thrown of there is no user with received ID.
      */
-    public void blockUser() throws NoPermissionException, UserBlockingException, InvalidUserIDException {
+    public void blockUser() throws NoPermissionException, UserBlockingException, InvalidUserIDException, DataAccessException {
         User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
         Connection connection = ConnectionPool.getInstance().getConnection();
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
@@ -369,7 +370,14 @@ public class UsersManager {
 
     }
 
-    public void unblockUser() throws InvalidUserIDException, UserUnblockingException, NoPermissionException {
+    /**
+     * Unblocks specified user.
+     * @throws InvalidUserIDException Thrown if user ID is invalid.
+     * @throws UserUnblockingException Thrown if some error occurred when attempted to modify data.
+     * @throws NoPermissionException Thrown if attempt of unblocking has been made by user who does not have a permission to do it.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public void unblockUser() throws InvalidUserIDException, UserUnblockingException, NoPermissionException, DataAccessException {
         User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
         User user = new User();
         UsersDataAccessObject usersDataAccessObject = new UsersDataAccessObject();
@@ -401,8 +409,6 @@ public class UsersManager {
 
                 usersDataAccessObject.markUserAsUnblocked(user.getID(), connection);
 
-                System.out.println(connection.getAutoCommit());
-
                 connection.commit();
             } catch (SQLException e) {
                 logger.error(LoggingConstants.EXCEPTION_WHILE_UNBLOCKING_USER, e);
@@ -423,7 +429,16 @@ public class UsersManager {
 
     }
 
-    public void changePassword() throws UserNotLoggedInException, WrongPasswordException, InvalidPasswordException, PasswordsAreNotEqualException, PasswordChangingException {
+    /**
+     * Changes password of user.
+     * @throws UserNotLoggedInException Thrown if attempt of changing password has been made by not logged in user.
+     * @throws WrongPasswordException Thrown if old password sent by the user is wrong.
+     * @throws InvalidPasswordException Thrown if new password sent by user is invalid.
+     * @throws PasswordsAreNotEqualException Thrown if duplicated password does not equal to new password sent by the user.
+     * @throws PasswordChangingException Thrown if some error occurred when attempted to modify data.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public void changePassword() throws UserNotLoggedInException, WrongPasswordException, InvalidPasswordException, PasswordsAreNotEqualException, PasswordChangingException, DataAccessException {
         User currentUser = (User) requestWrapper.getSessionAttribute(RequestConstants.SessionAttributes.USER);
 
         if (currentUser == null) {

@@ -29,10 +29,10 @@
                     </strong>
                 </div>
                 <div class="card-body">
-                    <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.userid"/> </fmt:bundle></strong>: ${sessionScope.user.getID()}</p>
-                    <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.username"/> </fmt:bundle></strong>: ${sessionScope.user.getUsername()}</p>
-                    <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.userrole"/> </fmt:bundle></strong>: ${sessionScope.user.getUserType().toLocalizedString(sessionScope.language)}</p>
-                    <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.numberofcomments"/> </fmt:bundle></strong>: ${requestScope.numberOfComments}</p>
+                    <p><b><fmt:bundle basename="labels"><fmt:message key="labels.userid"/> </fmt:bundle></b>: ${sessionScope.user.getID()}</p>
+                    <p><b><fmt:bundle basename="labels"><fmt:message key="labels.username"/> </fmt:bundle></b>: ${sessionScope.user.getUsername()}</p>
+                    <p><b><fmt:bundle basename="labels"><fmt:message key="labels.userrole"/> </fmt:bundle></b>: ${sessionScope.user.getUserType().toLocalizedString(sessionScope.language)}</p>
+                    <p><b><fmt:bundle basename="labels"><fmt:message key="labels.numberofcomments"/> </fmt:bundle></b>: ${requestScope.numberOfComments}</p>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     <ul class="list-group" id="contributed-songs-list">
                         <c:forEach var="song" items="${requestScope.contributedSongs}">
                             <li class="list-group-item">
-                                <a href="/controller?command=song&songID=${song.getID()}">${song.getTitle()}</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=song&songID=${song.getID()}">${song.getTitle()}</a>
                             </li>
                         </c:forEach>
                     </ul>
@@ -119,6 +119,6 @@
     <jsp:include page="messages/login-and-sign-up-messages.jsp"/>
 </div>
 <jsp:include page="scripts.jsp"/>
-<script src="/scripts/change-password.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/change-password.js"></script>
 </body>
 </html>

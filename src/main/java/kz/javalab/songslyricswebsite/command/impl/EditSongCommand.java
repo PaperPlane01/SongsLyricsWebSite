@@ -1,5 +1,6 @@
 package kz.javalab.songslyricswebsite.command.impl;
 
+import com.sun.org.apache.regexp.internal.RE;
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
@@ -8,6 +9,7 @@ import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.SongsManager;
@@ -89,6 +91,9 @@ public class EditSongCommand implements ActionCommand {
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
                 page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+                request.getRequestDispatcher(page).forward(request, response);
+            } catch (DataAccessException e) {
+                page = Config.getProperty(ResponseConstants.Pages.DATA_LOADING_ERROR_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 

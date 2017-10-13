@@ -6,7 +6,7 @@
 <head>
     <title>Add new song</title>
     <jsp:include page="css.jsp"/>
-    <link rel="stylesheet" href="/css/addsong.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addsong.css">
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
@@ -18,7 +18,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="song-adding-panel">
+            <div id="song-adding-panel">
                 <form>
                     <div class="form-group">
                         <label for="artist-name">
@@ -155,7 +155,7 @@
     <jsp:include page="messages/song-validation-messages.jsp"/>
 </div>
 <jsp:include page="scripts.jsp"/>
-<script src="/scripts/song-validation.js"></script>
-<script src="/scripts/add-song.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/song-validation.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/add-song.js"></script>
 </body>
 </html>

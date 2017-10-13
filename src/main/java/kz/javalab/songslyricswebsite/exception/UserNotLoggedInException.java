@@ -1,8 +1,5 @@
 package kz.javalab.songslyricswebsite.exception;
 
-/**
- * Created by PaperPlane on 18.09.2017.
- */
 public class UserNotLoggedInException extends Exception {
 
     public UserNotLoggedInException() {

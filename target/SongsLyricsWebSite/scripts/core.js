@@ -47,16 +47,23 @@ $(document).ready(function () {
     });
 
     $("#song-name-select").on('change', function () {
-        let selectedSong = $(this).find("option:selected").val();
-        let selectedSongID = quickSongAccessManager.getSelectedSongID(selectedSong);
-        $("#go-to-song-button").attr('href', '/controller?command=song&songID=' + selectedSongID);
-
         quickSongAccessManager.enableGoToSongButton();
     });
 
     $("#go-to-song-button").on('click', function () {
+        let selectedSong = $("#song-name-select").find("option:selected").val();
+        let selectedSongID = quickSongAccessManager.getSelectedSongID(selectedSong);
+
         if (!$(this).is('disabled')) {
-            window.location.href = $(this).attr('href');
+            let newHref = window.location.origin + window.location.pathname;
+            if (window.location.pathname.indexOf("/controller") === -1) {
+                newHref += "/controller";
+                newHref += "?command=song&songID=" + selectedSongID;
+            } else {
+                newHref += "?command=song&songID=" + selectedSongID;
+            }
+
+            window.location.href = newHref;
         }
     });
 
@@ -119,12 +126,11 @@ $(document).ready(function () {
         } else {
             signUpValidatorView.showErrorMessage();
         }
-    })
+    });
 });
 
 PageGlobals = {
     currentLocale : "",
-    labelsManager : new LabelsManager()
 };
 
 function LoginManager  () {
@@ -425,9 +431,16 @@ function QuickSongAccessManager  () {
                     command : 'artists_letters'
                 },
 
-                success : function (artistsLetters) {
-                    console.log(artistsLetters);
-                    self.displayArtistsLetters(artistsLetters);
+                success : function (response) {
+                    switch (response.status) {
+                        case "SUCCESS":
+                            self._hideErrorMessage();
+                            self.displayArtistsLetters(response.data);
+                            break;
+                        case "FAILURE":
+                            self._displayErrorMessage(response.message);
+                            break;
+                    }
                 }
             }
         )
@@ -436,12 +449,11 @@ function QuickSongAccessManager  () {
     this.displayArtistsLetters = function (artistsLetters) {
         let element = document.getElementById("artist-letter-select");
 
-        let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistletter", PageGlobals.locale);
+        let label = $("#choose-artist-letter-message").html();
 
         element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
         $.each(artistsLetters, function (index, letter) {
-            console.log(letter);
             $('#artist-letter-select').append("<option>" + letter + "</option>");
         });
 
@@ -458,8 +470,16 @@ function QuickSongAccessManager  () {
                     letter : letter
                 },
 
-                success : function (artists) {
-                    self.displayArtists(artists);
+                success : function (response) {
+                    switch (response.status) {
+                        case "SUCCESS":
+                            self._hideErrorMessage();
+                            self.displayArtists(response.data);
+                            break;
+                        case "FAILURE":
+                            self._displayErrorMessage(response.message);
+                            break
+                    }
                 }
             }
         )
@@ -468,7 +488,7 @@ function QuickSongAccessManager  () {
     this.displayArtists = function (artists) {
         let element = document.getElementById("artist-name-select");
 
-        let label = PageGlobals.labelsManager.getLabelContent("labels.chooseartistname", PageGlobals.locale);
+        let label = $("#choose-artist-name-message").html();
 
         element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -489,8 +509,16 @@ function QuickSongAccessManager  () {
                     artistName : artistName
                 },
 
-                success : function (responseData) {
-                    self.displaySongs(responseData);
+                success : function (response) {
+                    switch (response.status) {
+                        case "SUCCESS":
+                            self._hideErrorMessage();
+                            self.displaySongs(response.data);
+                            break;
+                        case "FAILURE":
+                            self._displayErrorMessage(response.message);
+                            break;
+                    }
                 }
             }
         )
@@ -503,7 +531,7 @@ function QuickSongAccessManager  () {
 
         this.songs.length = 0;
 
-        let label = PageGlobals.labelsManager.getLabelContent("labels.choosesong", PageGlobals.locale);
+        let label = $("#choose-song-message").html();
 
         element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
@@ -522,6 +550,7 @@ function QuickSongAccessManager  () {
         for (let index = 0; index < this.songs.length; index++) {
             if (this.songs[index].name === songName) {
                 songID = this.songs[index].ID;
+                break;
             }
         }
 
@@ -538,6 +567,15 @@ function QuickSongAccessManager  () {
 
     this.enableGoToSongButton = function () {
         $('#go-to-song-button').removeAttr('disabled');
+    };
+
+    this._displayErrorMessage = function (message) {
+        $("#quick-song-access-message").css('display', 'block');
+        $("#quick-song-access-message").html("<span style = \"color:red\">" + message + "</span>");
+    };
+
+    this._hideErrorMessage = function () {
+        $("#quick-song-access-message").css('display', 'none');
     }
 }
 
@@ -558,82 +596,3 @@ function LanguageManager () {
         )
     }
 }
-
-function LabelsManager() {
-    this.keys = [];
-    this.labels = [];
-
-    let self = this;
-
-    this.getLabelContent = function (key, locale) {
-        let label;
-
-        if (self.isKeyReceived(key)) {
-            label = self.getStoredLabelByKey(key);
-        } else {
-            self.receiveLabel(key, locale);
-            console.log("receiving label");
-            label = self.getStoredLabelByKey(key);
-        }
-
-        return label.content;
-    };
-
-    this.getStoredLabelByKey = function (key) {
-        let label;
-
-        for (let index = 0; index < self.labels.length; index++) {
-            if (self.labels[index].key === key) {
-                label = self.labels[index];
-                console.log('label found!');
-                break;
-            }
-        }
-
-        return label;
-    };
-
-    this.receiveLabel = function (key, locale) {
-        self.keys.push(key);
-
-        let label;
-
-        $.ajax(
-            {
-                url : 'controller',
-                async : false,
-                data : {
-                    command : 'get_label',
-                    labelKey : key,
-                    locale : locale
-                },
-
-                success : function (responseData) {
-                    label = new Label(key, responseData);
-                    self.labels.push(label);
-                }
-            }
-        )
-    };
-
-    this.isKeyReceived = function (key) {
-        let result = false;
-
-        for (let index = 0; index < self.keys.length; index++) {
-            if (key === self.keys[index]) {
-                result = true;
-                break;
-            }
-        }
-
-        return result;
-    };
-
-    function Label(key, content) {
-        this.key = key;
-        this.content = content;
-    }
-}
-
-
-

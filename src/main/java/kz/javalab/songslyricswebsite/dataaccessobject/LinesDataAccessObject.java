@@ -7,6 +7,7 @@ import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsComposite;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyricsPartType;
 import kz.javalab.songslyricswebsite.entity.song.Song;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -130,8 +131,9 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song which contains specified line.
      * @param connection Connection to be used.
      * @return ID of the specific line.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public int getLineID(int linePosition, int songID, Connection connection) {
+    public int getLineID(int linePosition, int songID, Connection connection) throws DataAccessException {
         int lineID = 0;
 
         String getLineIDQuery = "SELECT line_id FROM websitedatabase.lines\n" +
@@ -156,6 +158,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LINE_ID, e);
+            throw new DataAccessException();
         }
 
         return lineID;
@@ -181,7 +184,6 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         for (SongLyrics songPart : song.getLyrics().getComponents()) {
 
             for (SongLyrics line : songPart.getComponents()) {
-                linePosition++;
 
                 PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
 
@@ -193,6 +195,8 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
                 preparedStatement.execute();
 
                 preparedStatement.close();
+
+                linePosition++;
             }
         }
 
@@ -203,8 +207,9 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song.
      * @param connection Connection to be used.
      * @return Lyrics of the song.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public SongLyrics getSongLyricsBySongID(int songID, Connection connection) {
+    public SongLyrics getSongLyricsBySongID(int songID, Connection connection) throws DataAccessException {
         SongLyrics songLyrics = new SongLyricsComposite();
 
         String songLyricsQuery = "SELECT song_part, content\n" +
@@ -237,6 +242,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LYRICS_OF_SONG, e);
+            throw new DataAccessException();
         }
 
         return songLyrics;

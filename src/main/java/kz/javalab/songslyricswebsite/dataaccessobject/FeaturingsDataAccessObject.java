@@ -2,6 +2,7 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -31,8 +32,9 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song.
      * @param connection Connection to be used.
      * @return ID of featuring with specified parameters.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public int getFeaturingID(int artistID, int songID, Connection connection) {
+    public int getFeaturingID(int artistID, int songID, Connection connection) throws DataAccessException {
         String checkFeaturingQuery = "SELECT featuring_id\n" +
                 "FROM featurings\n" +
                 "WHERE artist_id = ?\n" +
@@ -59,6 +61,7 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_FEATURING_ID, e);
+            throw new DataAccessException();
         }
 
         return  featuringID;
@@ -101,7 +104,14 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
     }
 
-    public List<Integer> getIDsOfFeaturedArtists(int songID, Connection connection) {
+    /**
+     * Returns list of featured artists of song with specified ID.
+     * @param songID ID of the song.
+     * @param connection Connection to be used.
+     * @return List of featured artists of song with specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public List<Integer> getIDsOfFeaturedArtists(int songID, Connection connection) throws DataAccessException {
         List<Integer> featuredArtistsIDs = new ArrayList<>();
 
         String listOfIDsQuery = "SELECT artist_id FROM featurings\n" +
@@ -123,6 +133,7 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
             resultSet.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_FEATURED_ARTISTS, e);
+            throw new DataAccessException();
         }
 
         return featuredArtistsIDs;

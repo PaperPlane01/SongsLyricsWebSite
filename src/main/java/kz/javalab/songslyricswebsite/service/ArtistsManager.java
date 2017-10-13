@@ -5,6 +5,7 @@ import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.ArtistDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 
 
 import java.sql.Connection;
@@ -53,8 +54,9 @@ public class ArtistsManager {
     /**
      * Returns list of artists whose names begin with specified letter.
      * @return List of artists whose names begin with specified letter.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Artist> getArtistsByLetter() {
+    public List<Artist> getArtistsByLetter() throws DataAccessException {
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.getConnection();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
@@ -71,8 +73,9 @@ public class ArtistsManager {
     /**
      * Returns list of beginning letters of names of artists.
      * @return List of beginning letters of names of artists.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Character> getArtistsLetters() {
+    public List<Character> getArtistsLetters() throws DataAccessException {
         Connection connection = ConnectionPool.getInstance().getConnection();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 

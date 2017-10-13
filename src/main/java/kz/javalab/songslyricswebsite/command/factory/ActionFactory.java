@@ -2,7 +2,6 @@ package kz.javalab.songslyricswebsite.command.factory;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.command.impl.*;
-import kz.javalab.songslyricswebsite.command.impl.jsoncommand.*;
 import kz.javalab.songslyricswebsite.command.impl.localebasedcommand.*;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 
@@ -24,10 +23,8 @@ public class ActionFactory {
      * @return Appropriate <Code>ActionCommand</Code> instance, which is based on "command" attribute of  HTTP request.
      */
     public ActionCommand defineCommand(HttpServletRequest request) {
-        ActionCommand command = new EmptyCommand();
+        ActionCommand command = new UnknownCommand();
         String action = request.getParameter(RequestConstants.RequestParameters.COMMAND);
-
-        System.out.println(action);
 
         if (action == null || action.isEmpty()) {
             return command;
@@ -67,9 +64,6 @@ public class ActionFactory {
             case RequestConstants.Commands.EDIT_SONG:
                 command = new EditSongCommand();
                 break;
-            case RequestConstants.Commands.GET_LABEL:
-                command = new GetLabelCommand();
-                break;
             case RequestConstants.Commands.LOG_OUT:
                 command = new LogOutCommand();
                 break;
@@ -107,7 +101,7 @@ public class ActionFactory {
                 command = new UnblockUserCommand();
                 break;
             default:
-                command = new EmptyCommand();
+                command = new UnknownCommand();
                 break;
         }
 

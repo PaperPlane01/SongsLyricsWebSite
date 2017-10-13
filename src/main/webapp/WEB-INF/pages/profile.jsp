@@ -6,7 +6,7 @@
 <head>
     <title>${requestScope.profileOwner.getUsername()}</title>
     <jsp:include page="css.jsp"/>
-    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/profile.css">
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
@@ -20,17 +20,17 @@
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
            <div class="card card-body user-information">
                <div class="card-header user-information-header">
-                   <strong>
+                   <b>
                        <fmt:bundle basename="labels">
                            <fmt:message key="labels.userinformation"/>
                        </fmt:bundle>
-                   </strong>
+                   </b>
                </div>
                <div class="card-body">
-                   <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.userid"/> </fmt:bundle></strong>: ${requestScope.profileOwner.getID()}</p>
-                   <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.username"/> </fmt:bundle></strong>: ${requestScope.profileOwner.getUsername()}</p>
-                   <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.userrole"/> </fmt:bundle></strong>: ${requestScope.profileOwner.getUserType().toLocalizedString(sessionScope.language)}</p>
-                   <p><strong><fmt:bundle basename="labels"><fmt:message key="labels.numberofcomments"/> </fmt:bundle></strong>: ${requestScope.numberOfComments}</p>
+                   <p><b><fmt:bundle basename="labels"><fmt:message key="labels.userid"/> </fmt:bundle></b>: ${requestScope.profileOwner.getID()}</p>
+                   <p><b><fmt:bundle basename="labels"><fmt:message key="labels.username"/> </fmt:bundle></b>: ${requestScope.profileOwner.getUsername()}</p>
+                   <p><b><fmt:bundle basename="labels"><fmt:message key="labels.userrole"/> </fmt:bundle></b>: ${requestScope.profileOwner.getUserType().toLocalizedString(sessionScope.language)}</p>
+                   <p><b><fmt:bundle basename="labels"><fmt:message key="labels.numberofcomments"/> </fmt:bundle></b>: ${requestScope.numberOfComments}</p>
                </div>
            </div>
         </div>
@@ -47,7 +47,7 @@
                     <ul class="list-group" id="contributed-songs-list">
                         <c:forEach var="song" items="${requestScope.contributedSongs}">
                             <li class="list-group-item">
-                                <a href="/controller?command=song&songID=${song.getID()}">${song.getTitle()}</a>
+                                <a href="${pageContext.request.contextPath}/controller?command=song&songID=${song.getID()}">${song.getTitle()}</a>
                             </li>
                         </c:forEach>
                     </ul>

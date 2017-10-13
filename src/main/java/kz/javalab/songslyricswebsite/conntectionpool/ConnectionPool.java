@@ -1,5 +1,9 @@
 package kz.javalab.songslyricswebsite.conntectionpool;
 
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import kz.javalab.songslyricswebsite.resource.DatabaseConfiguration;
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -40,6 +44,8 @@ public class ConnectionPool {
      */
     private String driverName;
 
+    private static final Logger logger = Logger.getLogger(ConnectionPool.class);
+
     /**
      * Initializes connection pool.
      */
@@ -71,11 +77,11 @@ public class ConnectionPool {
      * Creates initialized <code>ConnectionPool</code> instance.
      */
     private ConnectionPool() {
-        this.databaseURL = "jdbc:mysql://localhost:3306/websitedatabase";
-        this.maxSize = 10;
-        this.userName = "root";
-        this.password = "admin";
-        this.driverName = "com.mysql.jdbc.Driver";
+        this.databaseURL = DatabaseConfiguration.getDatabaseURL();
+        this.maxSize = DatabaseConfiguration.getMaxSize();
+        this.userName = DatabaseConfiguration.getUsername();
+        this.password = DatabaseConfiguration.getPassword();
+        this.driverName = DatabaseConfiguration.getDriverName();
         this.connections = new ArrayBlockingQueue<>(maxSize);
 
         while (!isConnectionPoolFull()) {
@@ -106,9 +112,8 @@ public class ConnectionPool {
         try {
             Class.forName(driverName);
             connection = DriverManager.getConnection(databaseURL, userName, password);
-        }
-        catch(SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch(SQLException | ClassNotFoundException e) {
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CREATING_CONNECTION, e);
         }
 
         return connection;
@@ -132,7 +137,7 @@ public class ConnectionPool {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+           logger.error(LoggingConstants.EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_FALSE, e);
         }
 
         connections.add(connection);
@@ -146,7 +151,7 @@ public class ConnectionPool {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_CLOSING_CONNECTION);
             }
         }
     }

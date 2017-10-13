@@ -11,12 +11,8 @@
     <jsp:include page="../css.jsp"/>
 </head>
 <body>
+<jsp:include page="../menu.jsp"/>
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <jsp:include page="../menu.jsp"/>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xs-12">
             <jsp:include page="../quick-acсess.jsp"/>

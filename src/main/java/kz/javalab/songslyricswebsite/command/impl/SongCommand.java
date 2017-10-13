@@ -8,6 +8,7 @@ import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.lyrics.SongLyrics;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.exception.NoSuchSongException;
 import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.CommentsManager;
@@ -64,6 +65,7 @@ public class SongCommand implements ActionCommand {
                 request.setAttribute(RequestConstants.RequestAttributes.YOUTUBE_VIDEO_ID, youTubeLink);
                 request.setAttribute(RequestConstants.RequestAttributes.IS_APPROVED, isApproved);
                 request.setAttribute(RequestConstants.RequestAttributes.SONG_ID, songID);
+                request.setAttribute(RequestConstants.RequestAttributes.SONG, song);
 
                 if (commentsManager.checkIfSongHasComments(songID)) {
                     List<Comment> comments = commentsManager.getCommentsOfSong(songID);
@@ -81,6 +83,7 @@ public class SongCommand implements ActionCommand {
 
                     if (userHasRatedSong) {
                         int userRatingOfSong = songsRatingsManager.getUserRatingOfSong(currentUser.getID(), song.getID());
+                        System.out.println(userHasRatedSong);
                         request.setAttribute(RequestConstants.RequestAttributes.USER_RATING, userRatingOfSong);
                     }
                 }
@@ -89,6 +92,9 @@ public class SongCommand implements ActionCommand {
                 request.getRequestDispatcher(page).forward(request, response);
             } catch (NoSuchSongException e) {
                 String page = Config.getProperty(ResponseConstants.Pages.NO_SUCH_SONG_PAGE);
+                request.getRequestDispatcher(page).forward(request, response);
+            } catch (DataAccessException e) {
+                String page = Config.getProperty(ResponseConstants.Pages.DATA_LOADING_ERROR_PAGE);
                 request.getRequestDispatcher(page).forward(request, response);
             }
 

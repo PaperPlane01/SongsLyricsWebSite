@@ -1,8 +1,5 @@
 package kz.javalab.songslyricswebsite.exception;
 
-/**
- * Created by PaperPlane on 28.08.2017.
- */
 public class LyricsParsingException extends Exception{
 
     public LyricsParsingException() {

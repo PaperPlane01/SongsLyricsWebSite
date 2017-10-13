@@ -5,6 +5,7 @@ import kz.javalab.songslyricswebsite.entity.password.Password;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.service.UsersManager;
 import org.apache.log4j.Logger;
 
@@ -54,7 +55,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param user User to be checked.
      * @return <Code>True</Code> if database contains such user, <Code>False</Code> if not.
      */
-    public boolean checkIfUserExists(User user, Connection connection, int parameterOfChecking) {
+    public boolean checkIfUserExists(User user, Connection connection, int parameterOfChecking) throws DataAccessException {
         boolean result = false;
 
         if (parameterOfChecking == UsersManager.CHECK_BY_USERNAME) {
@@ -72,7 +73,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if user with such username exists, <Code>False</Code> if not.
      */
-    private boolean checkIfUserExistsByUserName(String username, Connection connection) {
+    private boolean checkIfUserExistsByUserName(String username, Connection connection) throws DataAccessException {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_name = BINARY ?";
 
@@ -83,6 +84,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistenceByStringValue(preparedStatement, username);
         } catch (SQLException e) {
            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_USER_EXISTENCE_BY_USERNAME, e);
+           throw new DataAccessException();
         }
 
         return result;
@@ -94,7 +96,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if user with such ID exists, <Code>False</Code> if not.
      */
-    private boolean checkIfUserExistsByUserID(int userID, Connection connection) {
+    private boolean checkIfUserExistsByUserID(int userID, Connection connection) throws DataAccessException {
         String checkingUserQuery = "SELECT user_id FROM users\n" +
                 "WHERE user_id = ?";
 
@@ -105,6 +107,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistence(preparedStatement, userID);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_USER_EXISTENCE_BY_USER_ID, e);
+            throw new DataAccessException();
         }
 
         return result;
@@ -116,7 +119,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param password Password to be checked.
      * @return <Code>True</Code> if password is correct, <Code>False</Code> if not.
      */
-    public boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) {
+    public boolean checkIfPasswordCorrect(String userName, Password password, Connection connection) throws DataAccessException {
         boolean result = false;
 
         int userID = getUserIDByUserName(userName, connection);
@@ -140,6 +143,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_PASSWORD_CORRECTNESS, e);
+            throw new DataAccessException();
         }
 
         return result;
@@ -150,7 +154,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param userName Username to be checked.
      * @return ID of specific user.
      */
-    public int getUserIDByUserName(String userName, Connection connection) {
+    public int getUserIDByUserName(String userName, Connection connection) throws DataAccessException {
 
         int userID = 0;
 
@@ -173,6 +177,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USER_ID_BY_USERNAME, e);
+            throw new DataAccessException();
         }
 
         return userID;
@@ -184,7 +189,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return Username of the user with specified ID.
      */
-    public String getUserNameByUserID(int userID, Connection connection) {
+    public String getUserNameByUserID(int userID, Connection connection) throws DataAccessException {
         String userName = new String();
 
         String getUsrNameQuery = "SELECT user_name FROM users\n" +
@@ -207,6 +212,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USERNAME_BY_USER_ID);
+            throw new DataAccessException();
         }
 
         return userName;
@@ -217,7 +223,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param userID ID of the user.
      * @return Password of the specific user
      */
-    public Password getPasswordByUserID(int userID, Connection connection) {
+    public Password getPasswordByUserID(int userID, Connection connection) throws DataAccessException {
         String hashedPassword = new String();
 
         String getHashedPasswordQuery = "SELECT hashed_password FROM users\n" +
@@ -239,6 +245,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_PASSWORD, e);
+            throw new DataAccessException();
         }
 
         Password password = new Password();
@@ -252,7 +259,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param userID ID of the user.
      * @return <Code>UserType</Code> of the specific user.
      */
-    public UserType getUserTypeByUserID(int userID, Connection connection) {
+    public UserType getUserTypeByUserID(int userID, Connection connection) throws DataAccessException {
         String result = new String();
 
         String getUserTypeQuery = "SELECT user_role FROM users\n" +
@@ -275,6 +282,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USER_TYPE_BY_USER_ID, e);
+            throw new DataAccessException();
         }
 
         return UserType.valueOf(result);
@@ -316,7 +324,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return <Code>True</Code> if user with such ID is blocked, <Code>False</Code> if not.
      */
-    public boolean checkIfUserIsBlocked(int userID, Connection connection) {
+    public boolean checkIfUserIsBlocked(int userID, Connection connection) throws DataAccessException {
         boolean isBlocked = false;
 
         String checkIfUserIsBlockedQuery = "SELECT is_blocked\n" +
@@ -351,6 +359,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_USER_IS_BLOCKED, e);
+            throw new DataAccessException();
         }
 
         return isBlocked;

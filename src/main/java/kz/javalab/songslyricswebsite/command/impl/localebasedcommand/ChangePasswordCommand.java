@@ -58,8 +58,7 @@ public class ChangePasswordCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.PASSWORDS_ARE_NOT_EQUAL));
             sendJsonResponse(responseMap, response);
-        } catch (PasswordChangingException e) {
-            e.printStackTrace();
+        } catch (PasswordChangingException | DataAccessException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_CHANGING_PASSWORD));
             sendJsonResponse(responseMap, response);

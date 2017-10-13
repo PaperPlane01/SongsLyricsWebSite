@@ -9,7 +9,7 @@
         </fmt:bundle>
     </title>
     <jsp:include page="css.jsp"/>
-    <link rel="stylesheet" href="/css/edit-song.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/edit-song.css"/>
 </head>
 <body>
 <jsp:include page="menu.jsp"/>
@@ -168,8 +168,8 @@
         <jsp:include page="messages/song-validation-messages.jsp"/>
     </div>
     <jsp:include page="scripts.jsp"/>
-    <script src="/scripts/song-validation.js"></script>
-    <script src="/scripts/edit-song.js"></script>
+    <script src="${pageContext.request.contextPath}/scripts/song-validation.js"></script>
+    <script src="${pageContext.request.contextPath}/scripts/edit-song.js"></script>
 </div>
 </body>
 </html>

@@ -1,8 +1,5 @@
 package kz.javalab.songslyricswebsite.exception;
 
-/**
- * Created by PaperPlane on 07.09.2017.
- */
 public class InvalidRatingValueException extends Exception {
 
     public InvalidRatingValueException() {

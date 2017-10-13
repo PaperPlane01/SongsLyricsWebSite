@@ -2,6 +2,7 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -69,8 +70,9 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
      * @param genreID ID of the genre.
      * @param connection Connection to be used.
      * @return "song" - "genre" match ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public int getSongGenreMatchID(int songID, int genreID, Connection connection) {
+    public int getSongGenreMatchID(int songID, int genreID, Connection connection) throws DataAccessException {
         int songGenreMatchID = 0;
 
         String getMatchID = "SELECT match_id FROM genres_of_songs\n" +
@@ -94,6 +96,7 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_SONG_GENRE_MATCH_ID, e);
+            throw new DataAccessException();
         }
 
         return songGenreMatchID;
@@ -104,8 +107,9 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
      * @param songID ID of the song.
      * @param connection Connection to be used.
      * @return List of genres of the song with specific ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<String> getGenresOfSongBySongID(int songID, Connection connection) {
+    public List<String> getGenresOfSongBySongID(int songID, Connection connection) throws DataAccessException {
         List<String> genres = new ArrayList<>();
 
         String getGenresOfSongQuery = "SELECT genre_name FROM\n" +
@@ -133,6 +137,7 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_GENRES_OF_SONGS, e);
+            throw new DataAccessException();
         }
 
         return genres;

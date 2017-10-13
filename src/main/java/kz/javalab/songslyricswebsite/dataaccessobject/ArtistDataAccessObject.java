@@ -3,9 +3,11 @@ package kz.javalab.songslyricswebsite.dataaccessobject;
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,8 +34,9 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      * @param letter First letter of the artists.
      * @param connection Connection to be used.
      * @return List of Artists whose names are beginning with a specific letter.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Artist> getArtistsByLetter(char letter, Connection connection) {
+    public List<Artist> getArtistsByLetter(char letter, Connection connection) throws DataAccessException {
 
         List<Artist> artists = new ArrayList<>();
 
@@ -65,6 +68,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_BY_LETTER, e);
+            throw new DataAccessException();
         }
 
         return artists;
@@ -74,8 +78,9 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      * Retrieves all starting letters of the artists from the database.
      * @param connection Connection to be used.
      * @return List of all starting letters of the artists.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public List<Character> getArtistLetters(Connection connection) {
+    public List<Character> getArtistLetters(Connection connection) throws DataAccessException {
         List<Character> artistLetters = new ArrayList<>();
 
         String getArtistLettersQuery = "SELECT artist_letter FROM artists\n" +
@@ -100,6 +105,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_LETTERS, e);
+            throw new DataAccessException();
         }
 
         return artistLetters;
@@ -113,33 +119,32 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      */
     public void addArtistToDatabase(Artist artist, Connection connection) throws SQLException {
 
-        if (!checkIfArtistExists(artist, connection)) {
-            int lastID = getLastArtistID(connection);
+        int lastID = getLastArtistID(connection);
 
-            String addArtistQuery = "INSERT INTO artists (artist_id, artist_name, artist_letter)\n" +
+        String addArtistQuery = "INSERT INTO artists (artist_id, artist_name, artist_letter)\n" +
                     "VALUES (?, ?, ?)";
 
-            int artistIDParameter = 1;
-            int artistNameParameter = 2;
-            int artistLetterParameter = 3;
+        int artistIDParameter = 1;
+        int artistNameParameter = 2;
+        int artistLetterParameter = 3;
 
-            PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);
-            preparedStatement.setInt(artistIDParameter,lastID + 1);
-            preparedStatement.setString(artistNameParameter, artist.getName());
-            preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
-            preparedStatement.execute();
-            preparedStatement.close();
+        PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);
+        preparedStatement.setInt(artistIDParameter,lastID + 1);
+        preparedStatement.setString(artistNameParameter, artist.getName());
+        preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
+        preparedStatement.execute();
+        preparedStatement.close();
 
-        }
     }
 
     /**
      * Retrieves ID of the specific artist from the database.
      * @param artist Artist whose ID is to be retrieved.
      * @param connection Connection to be used.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      * @return ID of the specific artist
      */
-    public int getArtistID(Artist artist, Connection connection) {
+    public int getArtistID(Artist artist, Connection connection) throws DataAccessException {
         int id = 0;
 
         if (checkIfArtistExists(artist, connection)) {
@@ -159,13 +164,21 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
                 preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_ID, e);
+                throw new DataAccessException();
             }
         }
 
         return id;
     }
 
-    public Artist getArtistByID(int artistID, Connection connection) {
+    /**
+     * Returns artist with specified ID.
+     * @param artistID ID of Artist.
+     * @param connection Connection ro be used.
+     * @return Artist with specified ID.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public Artist getArtistByID(int artistID, Connection connection) throws DataAccessException {
         Artist artist = new Artist();
         artist.setID(artistID);
 
@@ -189,6 +202,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_BY_ID, e);
+            throw new DataAccessException();
         }
 
         return artist;
@@ -199,8 +213,9 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      * @param artist Artist to be checked.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if such artist is in database, <Code>False</Code> if not.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
      */
-    public boolean checkIfArtistExists(Artist artist, Connection connection) {
+    public boolean checkIfArtistExists(Artist artist, Connection connection) throws DataAccessException {
         boolean result = false;
 
         String checkArtistQuery = "SELECT artist_id FROM artists\n" +
@@ -211,6 +226,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
             result = checkEntityExistenceByStringValue(preparedStatement, artist.getName());
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_ARTIST_EXISTENCE, e);
+            throw new DataAccessException();
         }
 
         return result;

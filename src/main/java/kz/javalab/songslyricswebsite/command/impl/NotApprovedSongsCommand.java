@@ -6,6 +6,7 @@ import kz.javalab.songslyricswebsite.constant.ResponseConstants;
 import kz.javalab.songslyricswebsite.entity.song.Song;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
+import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import kz.javalab.songslyricswebsite.resource.Config;
 import kz.javalab.songslyricswebsite.service.SongsManager;
 
@@ -42,14 +43,19 @@ public class NotApprovedSongsCommand implements ActionCommand {
             } else {
                 SongsManager songsManager = new SongsManager();
 
-                List<Song> notApprovedSongs = songsManager.getListOfNotApprovedSongs();
-                request.setAttribute(RequestConstants.RequestAttributes.NOT_APPROVED_SONGS, notApprovedSongs);
+                try {
+                    List<Song> notApprovedSongs = songsManager.getListOfNotApprovedSongs();
+                    request.setAttribute(RequestConstants.RequestAttributes.NOT_APPROVED_SONGS, notApprovedSongs);
+                    page = Config.getProperty(ResponseConstants.Pages.NOT_APPROVED_SONGS_PAGE);
+                } catch (DataAccessException e) {
+                    page = Config.getProperty(ResponseConstants.Pages.DATA_LOADING_ERROR_PAGE);
+                }
 
-                page = Config.getProperty(ResponseConstants.Pages.NOT_APPROVED_SONGS_PAGE);
             }
         } else {
             page = Config.getProperty(ResponseConstants.Pages.NO_PERMISSION_PAGE);
         }
+
         request.getRequestDispatcher(page).forward(request, response);
     }
 }
