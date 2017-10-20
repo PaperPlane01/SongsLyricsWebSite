@@ -39,9 +39,9 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
                 "(user_id, song_id, rating)\n" +
                 "VALUES (?, ?, ?)";
 
-         PreparedStatement preparedStatement = connection.prepareStatement(rateSongQuery);
-
-         executePreparedStatementWithMultipleIntegerValues(preparedStatement, userID, songID, rating);
+         try (PreparedStatement preparedStatement = connection.prepareStatement(rateSongQuery)) {
+             executePreparedStatementWithMultipleIntegerValues(preparedStatement, userID, songID, rating);
+         }
     }
 
     /**
@@ -57,12 +57,10 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         String checkIfUserRatedSongQuery = "SELECT vote_id FROM songs_ratings\n" +
                 "WHERE user_id = ? and song_id = ?\n";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserRatedSongQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserRatedSongQuery)) {
             result = checkEntityExistence(preparedStatement, userID, songID);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_USER_HAS_RATED_SONG, e);
             throw new DataAccessException();
         }
 
@@ -85,20 +83,15 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         int userIDParameter = 1;
         int songIDParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(userRatingOfSongQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userRatingOfSongQuery)) {
             preparedStatement.setInt(userIDParameter, userID);
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                rating = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.RATING);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    rating = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.RATING);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_USERS_RATING_OF_SONG_VALUE, e);
             throw new DataAccessException();
@@ -123,16 +116,14 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         int ratingParameter = 1;
         int voteIDParameter = 2;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(alterSongRatingQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(alterSongRatingQuery)) {
+            int voteID = getVoteID(userID, songID, connection);
 
-        int voteID = getVoteID(userID, songID, connection);
+            preparedStatement.setInt(ratingParameter, newRating);
+            preparedStatement.setInt(voteIDParameter, voteID);
 
-        preparedStatement.setInt(ratingParameter, newRating);
-        preparedStatement.setInt(voteIDParameter, voteID);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
+            preparedStatement.execute();
+        }
     }
 
     /**
@@ -150,19 +141,15 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
 
         int songIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getAverageRatingQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getAverageRatingQuery)) {
 
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                averageRating = resultSet.getDouble("avg(rating)");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    averageRating = resultSet.getDouble("avg(rating)");
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_AVERAGE_RATING_OF_SONG, e);
             throw new DataAccessException();
@@ -179,26 +166,22 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
     public Map<Integer, Double> getTopTenRatedSongsIDsAndRatings(Connection connection) throws DataAccessException {
         Map<Integer, Double> map = new LinkedHashMap<>();
 
-        String query = "SELECT song_id, avg(rating)\n" +
+        String getTopTenRatedSongsIDsAndRatingsQuery = "SELECT song_id, avg(rating)\n" +
                 "FROM songs_ratings\n" +
                 "GROUP BY song_id\n" +
                 "ORDER BY avg(rating)\n DESC\n" +
                 "LIMIT 0, 10";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getTopTenRatedSongsIDsAndRatingsQuery)) {
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.SONG_ID);
+                    double averageRating = resultSet.getDouble("avg(rating)");
 
-            while (resultSet.next()) {
-                int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.SONG_ID);
-                double averageRating = resultSet.getDouble("avg(rating)");
-
-                map.put(songID, averageRating);
+                    map.put(songID, averageRating);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_TOP_TEN_RATED_SONGS_IDS_AND_RATINGS, e);
             throw new DataAccessException();
@@ -223,20 +206,15 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
         int userIDParameter = 1;
         int songIDParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(voteIDQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(voteIDQuery)) {
             preparedStatement.setInt(userIDParameter, userID);
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                voteID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.VOTE_ID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    voteID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsRatingsTable.VOTE_ID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_VOTE_ID, e);
             throw new DataAccessException();

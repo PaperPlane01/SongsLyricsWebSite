@@ -23,7 +23,7 @@ public enum SongLyricsPartType {
      * @return Localized string value of lyrics part type.
      */
     public String toLocalizedString(Locale locale) {
-        String result = new String();
+        String result = "";
         String bundle = "labels";
 
         String bridgeKey = "labels.songparts.bridge";

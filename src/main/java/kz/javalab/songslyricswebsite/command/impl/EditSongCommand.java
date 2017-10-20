@@ -25,6 +25,8 @@ import java.io.IOException;
  */
 public class EditSongCommand implements ActionCommand {
 
+    private final String SEPARATOR = ";";
+
     public EditSongCommand() {
     }
 
@@ -39,7 +41,7 @@ public class EditSongCommand implements ActionCommand {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);
 
-        String page = new String();
+        String page = "";
 
         if (user == null || user.getUserType() != UserType.MODERATOR) {
             page = Config.getProperty(ResponseConstants.Pages.NO_PERMISSION_PAGE);
@@ -59,19 +61,17 @@ public class EditSongCommand implements ActionCommand {
                 StringBuilder featuredArtists = new StringBuilder();
                 StringBuilder songGenres = new StringBuilder();
 
-                String semicolon = ";";
-
                 if (song.hasFeaturedArtists()) {
                     for (Artist featuredArtist : song.getFeaturedArtists()) {
                         featuredArtists.append(featuredArtist.getName());
-                        featuredArtists.append(semicolon);
+                        featuredArtists.append(SEPARATOR);
                     }
                 }
 
                 if (!song.getGenres().isEmpty()) {
                     for (String genre : song.getGenres()) {
                         songGenres.append(genre);
-                        songGenres.append(semicolon);
+                        songGenres.append(SEPARATOR);
                     }
                 }
 

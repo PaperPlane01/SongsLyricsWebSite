@@ -536,7 +536,7 @@ function QuickSongAccessManager  () {
         element.innerHTML = "<option id=\"choose-artist-name\" data-hidden=\"true\">" + label + "</option>";
 
         $.each(songs, function (index, song) {
-            $("#song-name-select").append("<option id=\"" + song.ID + "\">" + song.name + "</option>");
+            $("#song-name-select").append("<option id=\"" + song.id + "\">" + song.name + "</option>");
             self.songs.push(song);
         });
 
@@ -549,7 +549,7 @@ function QuickSongAccessManager  () {
 
         for (let index = 0; index < this.songs.length; index++) {
             if (this.songs[index].name === songName) {
-                songID = this.songs[index].ID;
+                songID = this.songs[index].id;
                 break;
             }
         }

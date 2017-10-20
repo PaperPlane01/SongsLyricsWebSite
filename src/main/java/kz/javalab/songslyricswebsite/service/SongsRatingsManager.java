@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.connectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.SongsDataAccessObject;
@@ -23,7 +23,7 @@ public class SongsRatingsManager {
      */
     private RequestWrapper requestWrapper;
 
-    private Logger logger = Logger.getLogger(SongsRatingsManager.class.getName());
+    private static Logger logger = Logger.getLogger(SongsRatingsManager.class.getName());
 
     /**
      * Constructs <Code>SongsRatingsManager</Code> instance.
@@ -179,11 +179,11 @@ public class SongsRatingsManager {
             songsRatingsDataAccessObject.updateSongRating(userID, songID, newRating, connection);
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_UPDATING_SONG_RATING, e);
             try {
                 connection.rollback();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
             }
         }
     }

@@ -46,26 +46,22 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
 
         int artistLetterParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getArtistsByLetterQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getArtistsByLetterQuery)) {
             preparedStatement.setString(artistLetterParameter, (new Character(letter)).toString());
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Artist artist = new Artist();
 
-            while (resultSet.next()) {
-                Artist artist = new Artist();
+                    int artistID = resultSet.getInt(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_ID);
+                    String artistName = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_NAME);
 
-                int artistID = resultSet.getInt(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_ID);
-                String artistName = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_NAME);
+                    artist.setID(artistID);
+                    artist.setName(artistName);
 
-                artist.setID(artistID);
-                artist.setName(artistName);
-
-                artists.add(artist);
+                    artists.add(artist);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_BY_LETTER, e);
             throw new DataAccessException();
@@ -86,23 +82,19 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         String getArtistLettersQuery = "SELECT artist_letter FROM artists\n" +
                 "ORDER BY artist_letter";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getArtistLettersQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getArtistLettersQuery);) {
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                int charIndex = 0;
 
-            int charIndex = 0;
+                while (resultSet.next()) {
+                    Character artistLetter = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_LETTER).charAt(charIndex);
 
-            while (resultSet.next()) {
-                Character artistLetter = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_LETTER).charAt(charIndex);
-
-                if (!artistLetters.contains(artistLetter)) {
-                    artistLetters.add(artistLetter);
+                    if (!artistLetters.contains(artistLetter)) {
+                        artistLetters.add(artistLetter);
+                    }
                 }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTISTS_LETTERS, e);
             throw new DataAccessException();
@@ -128,12 +120,12 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         int artistNameParameter = 2;
         int artistLetterParameter = 3;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);
-        preparedStatement.setInt(artistIDParameter,lastID + 1);
-        preparedStatement.setString(artistNameParameter, artist.getName());
-        preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
-        preparedStatement.execute();
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);) {
+            preparedStatement.setInt(artistIDParameter,lastID + 1);
+            preparedStatement.setString(artistNameParameter, artist.getName());
+            preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
+            preparedStatement.execute();
+        }
 
     }
 
@@ -150,18 +142,17 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         if (checkIfArtistExists(artist, connection)) {
             String getArtistIDQuery = "SELECT artist_id FROM artists\n" +
                     "WHERE artist_name = ?";
+            int artistNameParameter = 1;
 
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(getArtistIDQuery);
-                preparedStatement.setString(1, artist.getName());
-                ResultSet resultSet = preparedStatement.executeQuery();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getArtistIDQuery)){
 
-                while (resultSet.next()) {
-                    id = resultSet.getInt(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_ID);
+                preparedStatement.setString(artistNameParameter, artist.getName());
+
+                try ( ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        id = resultSet.getInt(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_ID);
+                    }
                 }
-
-                resultSet.close();
-                preparedStatement.close();
             } catch (SQLException e) {
                 logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_ID, e);
                 throw new DataAccessException();
@@ -186,20 +177,16 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
                 "WHERE artist_id = ?";
         int artistIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getArtistByIDQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getArtistByIDQuery)){
 
             preparedStatement.setInt(artistIDParameter, artistID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                String artistName = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_NAME);
-                artist.setName(artistName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    String artistName = resultSet.getString(DatabaseConstants.ColumnLabels.ArtistsTable.ARTIST_NAME);
+                    artist.setName(artistName);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_ARTIST_BY_ID, e);
             throw new DataAccessException();
@@ -221,8 +208,7 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         String checkArtistQuery = "SELECT artist_id FROM artists\n" +
                 "WHERE artist_name = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkArtistQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkArtistQuery)) {
             result = checkEntityExistenceByStringValue(preparedStatement, artist.getName());
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_ARTIST_EXISTENCE, e);
@@ -237,22 +223,16 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      * @param connection Connection to be used.
      * @return Last artist ID
      */
-    private int getLastArtistID(Connection connection) {
+    private int getLastArtistID(Connection connection) throws SQLException {
         int lastID = 0;
         String getLastArtistIDQuery = "SELECT max(artist_id) FROM artists";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getLastArtistIDQuery);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                lastID = resultSet.getInt("max(artist_id)");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getLastArtistIDQuery)){
+            try (ResultSet resultSet = preparedStatement.executeQuery();){
+                while (resultSet.next()) {
+                    lastID = resultSet.getInt("max(artist_id)");
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
         return lastID;

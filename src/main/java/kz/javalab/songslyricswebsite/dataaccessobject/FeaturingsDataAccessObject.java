@@ -44,21 +44,15 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
         int featuringID = 0;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkFeaturingQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkFeaturingQuery)) {
             preparedStatement.setInt(artistIDParameter, artistID);
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                featuringID = resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.FEATURING_ID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    featuringID = resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.FEATURING_ID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
-
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_FEATURING_ID, e);
             throw new DataAccessException();
@@ -82,7 +76,6 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
         PreparedStatement preparedStatement = connection.prepareStatement(addFeaturingQuery);
 
         executePreparedStatementWithMultipleIntegerValues(preparedStatement, artistID, songID);
-
     }
 
     /**
@@ -118,19 +111,15 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
                 "WHERE song_id = ?";
         int songIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(listOfIDsQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(listOfIDsQuery)) {
 
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                featuredArtistsIDs.add(resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.ARTIST_ID));
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    featuredArtistsIDs.add(resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.ARTIST_ID));
+                }
             }
-
-            preparedStatement.close();
-            resultSet.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_FEATURED_ARTISTS, e);
             throw new DataAccessException();

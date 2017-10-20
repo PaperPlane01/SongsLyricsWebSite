@@ -38,14 +38,11 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
                 "(?)";
         int genreNameParameter = 1;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addGenreQuery)) {
+            preparedStatement.setString(genreNameParameter, genreName);
 
-        preparedStatement.setString(genreNameParameter, genreName);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
-
+            preparedStatement.execute();
+        }
     }
 
     /**
@@ -62,9 +59,7 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
                 "FROM genres\n" +
                 "WHERE genre_name = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkGenreQuery)) {
             result = checkEntityExistenceByStringValue(preparedStatement, genreName);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_GENRE_EXISTENCE, e);
@@ -89,19 +84,14 @@ public class GenresDataAccessObject extends AbstractDataAccessObject {
                 "WHERE genre_name = ?";
         int genreNameParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(genreIDQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(genreIDQuery)) {
             preparedStatement.setString(genreNameParameter, genreName);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                genreID = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresTable.GENRE_ID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    genreID = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresTable.GENRE_ID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_GENRE_ID, e);
             throw new DataAccessException();

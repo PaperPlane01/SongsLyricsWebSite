@@ -190,7 +190,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @return Username of the user with specified ID.
      */
     public String getUserNameByUserID(int userID, Connection connection) throws DataAccessException {
-        String userName = new String();
+        String userName = "";
 
         String getUsrNameQuery = "SELECT user_name FROM users\n" +
                 "WHERE user_id = ?";
@@ -224,7 +224,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @return Password of the specific user
      */
     public Password getPasswordByUserID(int userID, Connection connection) throws DataAccessException {
-        String hashedPassword = new String();
+        String hashedPassword = "";
 
         String getHashedPasswordQuery = "SELECT hashed_password FROM users\n" +
                 "WHERE user_id = ?";
@@ -260,7 +260,7 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
      * @return <Code>UserType</Code> of the specific user.
      */
     public UserType getUserTypeByUserID(int userID, Connection connection) throws DataAccessException {
-        String result = new String();
+        String result = "";
 
         String getUserTypeQuery = "SELECT user_role FROM users\n" +
                 "WHERE user_id = ?";
@@ -319,9 +319,9 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
 
         int isBlockedValue = 0;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(unblockUserQuery);
-
-        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(unblockUserQuery)) {
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isBlockedValue, userID);
+        }
     }
 
     /**
@@ -339,30 +339,15 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
 
         int userIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserIsBlockedQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkIfUserIsBlockedQuery)) {
             preparedStatement.setInt(userIDParameter, userID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
-
-                switch (isBlockedValue) {
-                    case 0:
-                        isBlocked = false;
-                        break;
-                    case 1:
-                        isBlocked = true;
-                        break;
-                    default:
-                        isBlocked = false;
-                        break;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
+                    isBlocked = convertIntToBoolean(isBlockedValue);
                 }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_USER_IS_BLOCKED, e);
             throw new DataAccessException();
@@ -386,13 +371,9 @@ public class UsersDataAccessObject extends AbstractDataAccessObject {
         int hashedPasswordParameter = 1;
         int userIDParameter = 2;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(changePasswordQuery);
-
-        preparedStatement.setString(hashedPasswordParameter, newPassword.getHashedPassword());
-        preparedStatement.setInt(userIDParameter, userID);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(changePasswordQuery)) {
+            preparedStatement.setString(hashedPasswordParameter, newPassword.getHashedPassword());
+            preparedStatement.setInt(userIDParameter, userID);
+        }
     }
 }

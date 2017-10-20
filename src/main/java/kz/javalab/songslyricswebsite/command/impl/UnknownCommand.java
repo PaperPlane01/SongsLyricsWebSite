@@ -18,7 +18,7 @@ public class UnknownCommand implements ActionCommand {
     }
 
     /**
-     * Handles unknown or empty command and sends the user to the main page.
+     * Handles unknown or empty command and sends the user to the error page.
      * @param request Request to be handled.
      * @param response Response to be sent.
      * @throws ServletException Thrown if there is a server problem.

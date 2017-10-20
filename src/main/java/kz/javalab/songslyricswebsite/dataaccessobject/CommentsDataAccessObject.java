@@ -44,61 +44,57 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
 
         List<Comment> comments = new ArrayList<>();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getCommentsQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getCommentsQuery)){
 
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Comment comment = new Comment();
+                    User commentAuthor = new User();
 
-            while (resultSet.next()) {
-                Comment comment = new Comment();
-                User commentAuthor = new User();
+                    int commentID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_ID);
+                    String content = resultSet.getString(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_CONTENT);
+                    Timestamp timestamp = resultSet.getTimestamp(DatabaseConstants.ColumnLabels.CommentsTable.TIME);
+                    int userID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.USER_ID);
+                    String userName = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_NAME);
+                    String userRole = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_ROLE);
+                    int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
 
-                int commentID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_ID);
-                String content = resultSet.getString(DatabaseConstants.ColumnLabels.CommentsTable.COMMENT_CONTENT);
-                Timestamp timestamp = resultSet.getTimestamp(DatabaseConstants.ColumnLabels.CommentsTable.TIME);
-                int userID = resultSet.getInt(DatabaseConstants.ColumnLabels.CommentsTable.USER_ID);
-                String userName = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_NAME);
-                String userRole = resultSet.getString(DatabaseConstants.ColumnLabels.UsersTable.USER_ROLE);
-                int isBlockedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.UsersTable.IS_BLOCKED);
+                    commentAuthor.setID(userID);
+                    commentAuthor.setUsername(userName);
 
-                commentAuthor.setID(userID);
-                commentAuthor.setUsername(userName);
+                    switch (userRole) {
+                        case "MODERATOR":
+                            commentAuthor.setUserType(UserType.MODERATOR);
+                            break;
+                        case "COMMON":
+                            commentAuthor.setUserType(UserType.COMMON);
+                            break;
+                        default:
+                            break;
+                    }
 
-                switch (userRole) {
-                    case "MODERATOR":
-                        commentAuthor.setUserType(UserType.MODERATOR);
-                        break;
-                    case "COMMON":
-                        commentAuthor.setUserType(UserType.COMMON);
-                        break;
-                    default:
-                        break;
+                    switch (isBlockedValue) {
+                        case 0:
+                            commentAuthor.setBlocked(false);
+                            break;
+                        case 1:
+                            commentAuthor.setBlocked(true);
+                            break;
+                        default:
+                            commentAuthor.setBlocked(false);
+                    }
+
+                    comment.setAuthor(commentAuthor);
+                    comment.setID(commentID);
+                    comment.setSongID(songID);
+                    comment.setTime(timestamp);
+                    comment.setContent(content);
+
+                    comments.add(comment);
                 }
-
-                switch (isBlockedValue) {
-                    case 0:
-                        commentAuthor.setBlocked(false);
-                        break;
-                    case 1:
-                        commentAuthor.setBlocked(true);
-                        break;
-                    default:
-                        commentAuthor.setBlocked(false);
-                }
-
-                comment.setAuthor(commentAuthor);
-                comment.setID(commentID);
-                comment.setSongID(songID);
-                comment.setTime(timestamp);
-                comment.setContent(content);
-
-                comments.add(comment);
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_COMMENTS_OF_SONG, e);
             throw new DataAccessException();
@@ -121,9 +117,7 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
                 "FROM comments\n" +
                 "WHERE song_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkIfSongHasCommentsQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkIfSongHasCommentsQuery)){
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_IF_SONG_HAS_COMMENTS, e);
@@ -150,15 +144,13 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
         int contentParameter = 3;
 
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addCommentQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addCommentQuery)) {
+            preparedStatement.setInt(songIDParameter, comment.getSongID());
+            preparedStatement.setInt(userIDParameter, comment.getAuthor().getID());
+            preparedStatement.setString(contentParameter, comment.getContent());
 
-        preparedStatement.setInt(songIDParameter, comment.getSongID());
-        preparedStatement.setInt(userIDParameter, comment.getAuthor().getID());
-        preparedStatement.setString(contentParameter, comment.getContent());
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
+            preparedStatement.execute();
+        }
 
     }
 
@@ -194,44 +186,19 @@ public class CommentsDataAccessObject extends AbstractDataAccessObject {
         int userIDParameter = 1;
         int numberOfComments = 0;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(numberOfCommentsQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(numberOfCommentsQuery)) {
             preparedStatement.setInt(userIDParameter, userID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                numberOfComments++;
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    numberOfComments++;
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_NUMBER_OF_COMMENTS_OF_USER, e);
             throw new DataAccessException();
         }
 
         return numberOfComments;
-    }
-
-    @Override
-    protected boolean checkEntityExistence(PreparedStatement preparedStatement, int... entityIDs) throws SQLException {
-        return super.checkEntityExistence(preparedStatement, entityIDs);
-    }
-
-    @Override
-    protected void updateStringValueByEntityID(PreparedStatement preparedStatement, int entityID, String newStringValue) throws SQLException {
-        super.updateStringValueByEntityID(preparedStatement, entityID, newStringValue);
-    }
-
-    @Override
-    protected void executePreparedStatementWithMultipleIntegerValues(PreparedStatement preparedStatement, int... values) throws SQLException {
-        super.executePreparedStatementWithMultipleIntegerValues(preparedStatement, values);
-    }
-
-    @Override
-    protected boolean checkEntityExistenceByStringValue(PreparedStatement preparedStatement, String value) throws SQLException {
-        return super.checkEntityExistenceByStringValue(preparedStatement, value);
     }
 }

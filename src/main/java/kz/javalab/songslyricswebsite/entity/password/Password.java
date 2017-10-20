@@ -66,7 +66,7 @@ public class Password {
      * @return Encoded password.
      */
     private String getEncodedPassword(String notEncodedPassword) {
-        String result = new String();
+        String result = "";
 
         String algorithm = "MD5";
         String charSet = "UTF-8";
@@ -78,7 +78,6 @@ public class Password {
             messageDigest.update(notEncodedPassword.getBytes(charSet));
             result = new BigInteger(signum, messageDigest.digest()).toString(radix);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            e.printStackTrace();
         }
 
         return result;

@@ -44,10 +44,9 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
                 "SET content = ?\n" +
                 "WHERE line_id = ?";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(updateLineQuery);
-
-        updateStringValueByEntityID(preparedStatement, lineID, newLine.toString());
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateLineQuery)){
+            updateStringValueByEntityID(preparedStatement, lineID, newLine.toString());
+        }
     }
 
     /**
@@ -64,15 +63,12 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         int songPartParameter = 1;
         int lineIDParameter = 2;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(updateLyricsPartQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateLyricsPartQuery)) {
+            preparedStatement.setString(songPartParameter, songLyricsPartType.toString().toLowerCase());
+            preparedStatement.setInt(lineIDParameter, lineID);
 
-        preparedStatement.setString(songPartParameter, songLyricsPartType.toString().toLowerCase());
-        preparedStatement.setInt(lineIDParameter, lineID);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
-
+            preparedStatement.execute();
+        }
     }
 
     /**
@@ -93,16 +89,14 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         int songPartParameter = 3;
         int linePositionParameter = 4;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery)) {
+            preparedStatement.setString(lineContentParameter, line.toString());
+            preparedStatement.setInt(songIDParameter, songID);
+            preparedStatement.setString(songPartParameter, songLyricsPartType.toString());
+            preparedStatement.setInt(linePositionParameter, linePosition);
 
-        preparedStatement.setString(lineContentParameter, line.toString());
-        preparedStatement.setInt(songIDParameter, songID);
-        preparedStatement.setString(songPartParameter, songLyricsPartType.toString());
-        preparedStatement.setInt(linePositionParameter, linePosition);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
+            preparedStatement.execute();
+        }
 
     }
 
@@ -119,10 +113,9 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
         int isDeletedValue = 1;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(markLineAsDeletedQuery);
-
-        executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, lineID);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(markLineAsDeletedQuery)) {
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, isDeletedValue, lineID);
+        }
     }
 
     /**
@@ -142,20 +135,15 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
         int songIDParameter = 1;
         int linePositionParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getLineIDQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getLineIDQuery)) {
             preparedStatement.setInt(songIDParameter, songID);
             preparedStatement.setInt(linePositionParameter, linePosition);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                lineID = resultSet.getInt(DatabaseConstants.ColumnLabels.LinesTable.LINE_ID);
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                while (resultSet.next()) {
+                    lineID = resultSet.getInt(DatabaseConstants.ColumnLabels.LinesTable.LINE_ID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LINE_ID, e);
             throw new DataAccessException();
@@ -185,18 +173,16 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
             for (SongLyrics line : songPart.getComponents()) {
 
-                PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery);
+                try (PreparedStatement preparedStatement = connection.prepareStatement(addLineQuery)){
+                    preparedStatement.setInt(songIDParameter, song.getID());
+                    preparedStatement.setString(contentParameter, line.toString());
+                    preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
+                    preparedStatement.setInt(linePositionParameter, linePosition);
 
-                preparedStatement.setInt(songIDParameter, song.getID());
-                preparedStatement.setString(contentParameter, line.toString());
-                preparedStatement.setString(songPartParameter, songPart.getType().toString().toLowerCase());
-                preparedStatement.setInt(linePositionParameter, linePosition);
+                    preparedStatement.execute();
+                    linePosition++;
+                }
 
-                preparedStatement.execute();
-
-                preparedStatement.close();
-
-                linePosition++;
             }
         }
 
@@ -222,24 +208,21 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
 
         int isDeletedValue = 0;
 
-        try {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(songLyricsQuery)) {
 
-            PreparedStatement preparedStatement = connection.prepareStatement(songLyricsQuery);
             preparedStatement.setInt(songIDParameter, songID);
             preparedStatement.setInt(isDeletedParameter, isDeletedValue);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<List<String>> listOfLyricsPartsAsStringValues = new ArrayList<>();
 
-            List<List<String>> listOfLyricsPartsAsStringValues = new ArrayList<>();
+                while (resultSet.next()) {
+                    listOfLyricsPartsAsStringValues.add(Arrays.asList(resultSet.getString(DatabaseConstants.ColumnLabels.LinesTable.SONG_PART),
+                            resultSet.getString(DatabaseConstants.ColumnLabels.LinesTable.CONTENT)));
+                }
 
-            while (resultSet.next()) {
-                listOfLyricsPartsAsStringValues.add(Arrays.asList(resultSet.getString(DatabaseConstants.ColumnLabels.LinesTable.SONG_PART),
-                        resultSet.getString(DatabaseConstants.ColumnLabels.LinesTable.CONTENT)));
+                songLyrics = buildLyricsFromStringValues(listOfLyricsPartsAsStringValues);
             }
-
-            songLyrics = buildLyricsFromStringValues(listOfLyricsPartsAsStringValues);
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LYRICS_OF_SONG, e);
             throw new DataAccessException();
@@ -255,7 +238,7 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
      *                                        1. The first value is a part of the song which contains a specific line.
      *                                        2. The second value is a content of the line.
      *                                        For example:
-     *                                        "chorus", "I've become so numb" — means that the entry contains the line
+     *                                        "chorus", "I've become so numb"  means that the entry contains the line
      *                                        "I've become so numb" which belongs to the chorus.
      * @return Lyrics of the song.
      */
@@ -318,14 +301,18 @@ public class LinesDataAccessObject extends AbstractDataAccessObject {
                         break;
                     }
                 default:
-                    break;
+                    if (lyricsPart == null) {
+                        lyricsPart = new SongLyricsComposite();
+                        lyricsPart.setType(SongLyricsPartType.OTHER);
+                        break;
+                    }
             }
 
             lyricsPart.add(new Line(content));
 
             int nextIndex = index + 1;
 
-            String nextType = null;
+            String nextType = "";
 
             if (nextIndex != listOfLyricsPartsAsStringValues.size()) {
                 nextType = listOfLyricsPartsAsStringValues.get(nextIndex).get(lyricsPartType);

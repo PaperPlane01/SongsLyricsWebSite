@@ -13,7 +13,7 @@ public class Comment {
     /**
      * ID of the comment.
      */
-    private int ID;
+    private int id;
 
     /**
      * Author of the comment.
@@ -48,8 +48,8 @@ public class Comment {
      * @param songID
      * @param content
      */
-    public Comment(int ID, User author, int songID, String content) {
-        this.ID = ID;
+    public Comment(int id, User author, int songID, String content) {
+        this.id = id;
         this.author = author;
         this.songID = songID;
         this.content = content;
@@ -60,15 +60,15 @@ public class Comment {
      * @return ID of the comment.
      */
     public int getID() {
-        return ID;
+        return id;
     }
 
     /**
      * Modifies ID of the comment.
-     * @param ID New ID to be set.
+     * @param id New ID to be set.
      */
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     /**

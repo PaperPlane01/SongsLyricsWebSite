@@ -68,6 +68,7 @@ public class ResponseConstants {
         public static final String FAILED_TO_LOAD_DATA = "labels.errors.failedtoloaddata";
         public static final String ERROR_WHILE_RATING_SONG = "labels.errors.errorwhileratingsong";
         public static final String REGISTRATION_SUCCESS = "labels.registrationsuccess";
+        public static final String SERVER_PROBLEMS = "labels.serverproblems";
     }
 
     public class Pages {

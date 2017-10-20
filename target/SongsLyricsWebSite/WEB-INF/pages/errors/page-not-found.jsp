@@ -20,9 +20,11 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <fmt:bundle basename="labels">
-                <fmt:message key="labels.errors.pagenotfound"/>
-            </fmt:bundle>
+            <h3>
+                <fmt:bundle basename="labels">
+                    <fmt:message key="labels.errors.pagenotfound"/>
+                </fmt:bundle>
+            </h3>
         </div>
     </div>
 </div>

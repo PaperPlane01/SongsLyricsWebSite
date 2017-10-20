@@ -33,7 +33,7 @@ public class NotApprovedSongsCommand implements ActionCommand {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page = new String();
+        String page = "";
 
         if (request.getSession().getAttribute(RequestConstants.SessionAttributes.USER) != null) {
             User user = (User) request.getSession().getAttribute(RequestConstants.SessionAttributes.USER);

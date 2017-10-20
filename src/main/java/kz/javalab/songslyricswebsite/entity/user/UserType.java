@@ -12,7 +12,7 @@ public enum UserType {
         String moderatorKey = "labels.userroles.moderator";
         String commonUserKey = "labels.userroles.common";
 
-        String result = new String();
+        String result = "";
 
         switch (this) {
             case MODERATOR:

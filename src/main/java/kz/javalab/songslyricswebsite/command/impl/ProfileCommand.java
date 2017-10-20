@@ -107,7 +107,7 @@ public class ProfileCommand implements ActionCommand {
      * @throws InvalidUserIDException Thrown if user ID is invalid.
      */
     private void sendToProfilePage(HttpServletRequest request, HttpServletResponse response, User user) throws ServletException, IOException, InvalidUserIDException, DataAccessException {
-        String page = new String();
+        String page = "";
         UsersManager usersManager = new UsersManager();
         SongsManager songsManager = new SongsManager();
         CommentsManager commentsManager = new CommentsManager();

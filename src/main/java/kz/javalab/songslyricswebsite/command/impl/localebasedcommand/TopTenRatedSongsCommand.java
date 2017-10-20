@@ -55,9 +55,4 @@ public class TopTenRatedSongsCommand extends LocaleBasedCommand {
         }
 
     }
-
-    @Override
-    protected void sendJsonResponse(Object responseData, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseData, response);
-    }
 }

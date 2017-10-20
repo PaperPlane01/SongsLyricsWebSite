@@ -43,7 +43,6 @@ public class AddSongCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SONG_HAS_BEEN_ADDED));
             sendJsonResponse(responseMap, response);
         } catch (SongAddingException | DataAccessException e) {
-            e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_ADDING_SONG));
             sendJsonResponse(responseMap, response);
@@ -52,7 +51,6 @@ public class AddSongCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCH_SONG_ALREADY_EXISTS));
             sendJsonResponse(responseMap, response);
         } catch (LyricsParsingException e) {
-            e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_SONG_LYRICS));
             sendJsonResponse(responseMap, response);
@@ -86,15 +84,5 @@ public class AddSongCommand extends LocaleBasedCommand {
             sendJsonResponse(responseMap, response);
         }
 
-    }
-
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
-
-    @Override
-    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseObject, response);
     }
 }

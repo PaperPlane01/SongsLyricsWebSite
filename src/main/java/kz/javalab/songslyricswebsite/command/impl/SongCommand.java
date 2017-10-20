@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl;
 
-
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
@@ -83,7 +82,6 @@ public class SongCommand implements ActionCommand {
 
                     if (userHasRatedSong) {
                         int userRatingOfSong = songsRatingsManager.getUserRatingOfSong(currentUser.getID(), song.getID());
-                        System.out.println(userHasRatedSong);
                         request.setAttribute(RequestConstants.RequestAttributes.USER_RATING, userRatingOfSong);
                     }
                 }

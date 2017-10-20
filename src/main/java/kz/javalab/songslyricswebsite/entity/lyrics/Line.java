@@ -17,7 +17,7 @@ public class Line implements SongLyrics {
     /**
      * Type of this song lyrics part. It is common for all <Code>Line</Code> instances.
      */
-    private static final SongLyricsPartType TYPE = SongLyricsPartType.LINE;
+    private final SongLyricsPartType TYPE = SongLyricsPartType.LINE;
 
     /**
      * Constructs a <Code>Line</Code> instance.

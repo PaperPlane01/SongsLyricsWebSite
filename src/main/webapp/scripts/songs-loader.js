@@ -36,7 +36,7 @@ function SongsManager() {
         $.each(songs, function (index, song) {
             let displayedIndex = index + 1;
             $("#top-ten-rated-songs-list").append(
-                "<li class=\"list-group-item song-link\">" + displayedIndex  + ". " + "<a href=\"" + window.location + "controller?command=song&songID=" + song.ID + "\">" + song.title + "</a></li>"
+                "<li class=\"list-group-item song-link\">" + displayedIndex  + ". " + "<a href=\"" + window.location + "controller?command=song&songID=" + song.id + "\">" + song.title + "</a></li>"
             )
         })
     };
@@ -45,7 +45,7 @@ function SongsManager() {
         $("#top-ten-rated-songs-loader").css('display', 'none');
         $("#top-ten-rated-songs-message").css('display', 'block');
         $("#top-ten-rated-songs-message").html("<span style = \"color:red\">" + message + "</span>");
-    }
+    };
 
     this.loadRecentlyAddedSongs = function () {
         $.post(
@@ -75,7 +75,7 @@ function SongsManager() {
         $.each(songs, function (index, song) {
             let displayedIndex = index + 1;
             $("#recently-added-songs-list").append(
-                "<li class=\"list-group-item song-link\">" + displayedIndex  + ". " + "<a href=\"" + window.location + "controller?command=song&songID=" + song.ID + "\">" + song.title + "</a></li>"
+                "<li class=\"list-group-item song-link\">" + displayedIndex  + ". " + "<a href=\"" + window.location + "controller?command=song&songID=" + song.id + "\">" + song.title + "</a></li>"
             )
         })
     };
@@ -84,7 +84,7 @@ function SongsManager() {
         $("#recently-added-songs-loader").css('display', 'none');
         $("#recently-added-songs-message").css('display', 'block');
         $("#recently-added-songs-message").html("<span style = \"color:red\">" + message + "</span>");
-    }
+    };
 
     this._hideLoadingRecentlyAddedSongsErrorMessage = function () {
         $("#recently-added-songs-message").css('display', 'none');

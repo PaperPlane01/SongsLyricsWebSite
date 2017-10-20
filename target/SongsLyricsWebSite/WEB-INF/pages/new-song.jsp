@@ -35,7 +35,7 @@
                     <div class="form-group">
                         <label for="featured-artists">
                             <fmt:bundle basename="labels">
-                                <fmt:message key="labels.songfeaturedartists"/>
+                                <fmt:message key="labels.songfeaturedartists"/> <fmt:message key="labels.separatewithsemicolon"/>
                             </fmt:bundle>:
                         </label>
                         <span class="message" id="featured-artists-message" style="display: none"></span>
@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label for="song-genres">
                             <fmt:bundle basename="labels">
-                                <fmt:message key="labels.songgenres"/>
+                                <fmt:message key="labels.songgenres"/> <fmt:message key="labels.separatewithsemicolon"/>
                             </fmt:bundle>
                         </label>
                         <span class="message" id="song-genres-message" style="display: none"></span>

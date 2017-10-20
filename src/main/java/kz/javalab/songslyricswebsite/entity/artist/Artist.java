@@ -10,7 +10,7 @@ public class Artist {
     /**
      * ID of the artist.
      */
-    private int ID;
+    private int id;
 
     /**
      * Name of the artist.
@@ -21,7 +21,7 @@ public class Artist {
      * Constructs new <Code>Artist</Code> instance.
      */
     public Artist() {
-        this.name = new String();
+        this.name = "";
     }
 
     /**
@@ -34,11 +34,11 @@ public class Artist {
 
     /**
      * Constructs new <Code>Artist</Code> instance with pre-defined name and ID.
-     * @param ID ID of the artist.
+     * @param id ID of the artist.
      * @param name Name of the artist.
      */
-    public Artist(int ID, String name) {
-        this.ID = ID;
+    public Artist(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -47,15 +47,15 @@ public class Artist {
      * @return ID of the artist.
      */
     public int getID() {
-        return ID;
+        return id;
     }
 
     /**
      * Sets new ID to the artist.
-     * @param ID New ID to be set.
+     * @param id New ID to be set.
      */
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     /**
@@ -85,7 +85,7 @@ public class Artist {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Artist artist = (Artist) object;
-        return ID == artist.ID &&
+        return id == artist.id &&
                 Objects.equals(name, artist.name);
     }
 
@@ -95,6 +95,6 @@ public class Artist {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(ID, name);
+        return Objects.hash(id, name);
     }
 }

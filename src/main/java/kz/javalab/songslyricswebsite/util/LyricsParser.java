@@ -223,7 +223,7 @@ public class LyricsParser {
                 }
             }
 
-            String nextLine = new String();
+            String nextLine = "";
 
             if (lineIndex + 1 != lines.size()) {
                 nextLine = lines.get(lineIndex + 1);

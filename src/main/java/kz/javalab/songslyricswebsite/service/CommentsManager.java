@@ -1,7 +1,8 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.connectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.CommentsDataAccessObject;
 import kz.javalab.songslyricswebsite.dataaccessobject.UsersDataAccessObject;
@@ -9,6 +10,7 @@ import kz.javalab.songslyricswebsite.entity.comment.Comment;
 import kz.javalab.songslyricswebsite.entity.user.User;
 import kz.javalab.songslyricswebsite.entity.user.UserType;
 import kz.javalab.songslyricswebsite.exception.*;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,6 +25,8 @@ public class CommentsManager {
      * <Code>RequestWrapper</Code> which contains data sent by user.
      */
     private RequestWrapper requestWrapper;
+
+    private static Logger logger = Logger.getLogger(CommentsManager.class);
 
     /**
      * Constructs <Code>CommentsManager</Code> instance.
@@ -121,12 +125,12 @@ public class CommentsManager {
             commentsDataAccessObject.addCommentToDatabase(comment, connection);
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_ADDING_COMMENT, e);
             try {
                 connection.rollback();
                 throw new CommentAddingException();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                 throw new CommentAddingException();
             }
         } finally {
@@ -169,12 +173,12 @@ public class CommentsManager {
             commentsDataAccessObject.markCommentAsDeleted(commentID, connection);
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_DELETING_COMMENT, e);
             try {
                 connection.rollback();
                 throw new CommentDeletingException();
             } catch (SQLException e1) {
-                e1.printStackTrace();
+                logger.error(LoggingConstants.EXCEPTION_WHILE_ROLLING_TRANSACTION_BACK, e1);
                 throw new CommentDeletingException();
             }
         } finally {

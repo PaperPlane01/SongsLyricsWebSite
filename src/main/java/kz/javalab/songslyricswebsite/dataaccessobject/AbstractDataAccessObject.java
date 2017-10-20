@@ -24,16 +24,14 @@ public abstract class AbstractDataAccessObject {
             preparedStatement.setInt(index + 1, parameters[index]);
         }
 
-        ResultSet resultSet = preparedStatement.executeQuery();
-
         boolean result = false;
 
-        if (resultSet.next()) {
-            result = true;
-        }
+        try (ResultSet resultSet = preparedStatement.executeQuery();) {
 
-        resultSet.close();
-        preparedStatement.close();
+            if (resultSet.next()) {
+                result = true;
+            }
+        }
 
         return result;
     }
@@ -53,8 +51,6 @@ public abstract class AbstractDataAccessObject {
         preparedStatement.setInt(entityIDParameter, entityID);
 
         preparedStatement.execute();
-
-        preparedStatement.close();
     }
 
     /**
@@ -69,7 +65,6 @@ public abstract class AbstractDataAccessObject {
         }
 
         preparedStatement.execute();
-        preparedStatement.close();
     }
 
     /**
@@ -84,13 +79,42 @@ public abstract class AbstractDataAccessObject {
 
         preparedStatement.setString(stringValueParameter, value);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+        boolean result = false;
 
-        boolean result = resultSet.next();
-
-        resultSet.close();
-        preparedStatement.close();
+        try (ResultSet resultSet = preparedStatement.executeQuery();) {
+            result = resultSet.next();
+        }
 
         return result;
+    }
+
+    protected ResultSet getResultSetOfPreparedStatementWithMultipleIntegerValues(PreparedStatement preparedStatement, int... values) throws SQLException {
+        for (int index = 0; index < values.length; index++) {
+            preparedStatement.setInt(index + 1, values[index]);
+        };
+
+        return preparedStatement.executeQuery();
+    }
+
+    /**
+     * Converts integer to boolean.
+     * @param integer Integer number which is to be converted to boolean. Must be 0 or 1.
+     * @return Boolean value.
+     */
+    protected boolean convertIntToBoolean(int integer) {
+        boolean booleanValue = false;
+
+        switch (integer) {
+            case 0:
+                booleanValue = false;
+                break;
+            case 1:
+                booleanValue = true;
+                break;
+            default:
+                break;
+        }
+
+        return booleanValue;
     }
 }

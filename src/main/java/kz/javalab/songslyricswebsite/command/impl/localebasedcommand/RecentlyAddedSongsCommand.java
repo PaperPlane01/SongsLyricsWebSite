@@ -52,13 +52,4 @@ public class RecentlyAddedSongsCommand extends LocaleBasedCommand {
         }
     }
 
-    @Override
-    protected void sendJsonResponse(Object responseData, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseData, response);
-    }
-
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
 }

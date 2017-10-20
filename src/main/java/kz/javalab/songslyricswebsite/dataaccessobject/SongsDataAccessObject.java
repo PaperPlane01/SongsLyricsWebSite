@@ -38,19 +38,14 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 "FROM songs";
         int lastSongID = 0;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(lastSongIDQuery);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                lastSongID = resultSet.getInt("max(song_id)");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(lastSongIDQuery)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()) {
+                    lastSongID = resultSet.getInt("max(song_id)");
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LAST_SONG_ID, e);
             throw new DataAccessException();
         }
 
@@ -70,10 +65,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 "WHERE song_id = ?";
 
 
-        PreparedStatement preparedStatement = connection.prepareStatement(alterSongNameQuery);
-
-        updateStringValueByEntityID(preparedStatement, songID, newSongName);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(alterSongNameQuery)) {
+            updateStringValueByEntityID(preparedStatement, songID, newSongName);
+        }
     }
 
     /**
@@ -88,9 +82,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 "SET artist_id = ?\n" +
                 "WHERE song_id = ?";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(alterArtistIDQuery);
-        executePreparedStatementWithMultipleIntegerValues(preparedStatement, newArtistID, songID);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(alterArtistIDQuery)) {
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, newArtistID, songID);
+        }
     }
 
     /**
@@ -105,10 +99,9 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 "SET youtube_link = ?\n" +
                 "WHERE song_id = ?";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(alterYouTubeLinkQuery);
-
-        updateStringValueByEntityID(preparedStatement, songID, newYouTubeLink);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(alterYouTubeLinkQuery)) {
+            updateStringValueByEntityID(preparedStatement, songID, newYouTubeLink);
+        }
     }
 
     /**
@@ -128,21 +121,15 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
         int limitParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getRecentlyAddedSongIDsQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getRecentlyAddedSongIDsQuery)) {
             preparedStatement.setInt(limitParameter, numberOfSongs);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Integer songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
-                songIDs.add(songID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Integer songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
+                    songIDs.add(songID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
-
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_LIST_OF_RECENTLY_ADDED_SONGS, e);
             throw new DataAccessException();
@@ -172,19 +159,15 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         int songNameParameter = 1;
         int artistNameParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery)) {
             preparedStatement.setString(songNameParameter, songName);
             preparedStatement.setString(artistNameParameter, artistName);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                result = true;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    result = true;
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE, e);
             throw new DataAccessException();
@@ -206,9 +189,7 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         String checkSongQuery = "SELECT song_id FROM songs\n" +
                 "WHERE song_id = ?";
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(checkSongQuery)) {
             result = checkEntityExistence(preparedStatement, songID);
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_CHECKING_SONG_EXISTENCE_BY_SONG_ID);
@@ -234,19 +215,15 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
         int artistIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getSongsByArtistID);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getSongsByArtistID)) {
             preparedStatement.setInt(artistIDParameter, artistID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
-                songIDs.add(songID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
+                    songIDs.add(songID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_PERFORMED_BY_ARTIST, e);
             throw new DataAccessException();
@@ -267,19 +244,15 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         String listOfNotApprovedSongsQuery = "SELECT song_id FROM songs\n" +
                 "WHERE is_approved = 0";
 
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(listOfNotApprovedSongsQuery);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(listOfNotApprovedSongsQuery) ) {
 
-            while (resultSet.next()) {
-                int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
-                songIDs.add(songID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
+                    songIDs.add(songID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_NOT_APPROVED_SONGS, e);
             throw new DataAccessException();
@@ -302,22 +275,13 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         String getListOfSongsContributedByUserQuery = "SELECT song_id FROM songs\n" +
                 "WHERE contributed_user_id = ?";
 
-        int userIDParameter = 1;
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getListOfSongsContributedByUserQuery);
-
-            preparedStatement.setInt(userIDParameter, userID);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
-                songIDs.add(songID);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getListOfSongsContributedByUserQuery);) {
+            try (ResultSet resultSet = getResultSetOfPreparedStatementWithMultipleIntegerValues(preparedStatement, userID)) {
+                while (resultSet.next()) {
+                    int songID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID);
+                    songIDs.add(songID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_CONTRIBUTED_BY_USER, e);
             throw new DataAccessException();
@@ -352,23 +316,22 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
         int hasFeaturingValue = 1;
         int doesntHaveFeaturingValue = 0;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery);;
-        preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
-        preparedStatement.setString(songNameParameter, song.getName());
-        preparedStatement.setInt(isApprovedParameter, isApprovedValue);
-        preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addSongQuery)) {
+            preparedStatement.setInt(artistIDParameter, song.getArtist().getID());
+            preparedStatement.setString(songNameParameter, song.getName());
+            preparedStatement.setInt(isApprovedParameter, isApprovedValue);
+            preparedStatement.setString(youTubeLinkParameter, song.getYouTubeVideoID());
 
-        if (song.hasFeaturedArtists()) {
-            preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
-        } else {
-            preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
+            if (song.hasFeaturedArtists()) {
+                preparedStatement.setInt(hasFeaturingParameter, hasFeaturingValue);
+            } else {
+                preparedStatement.setInt(hasFeaturingParameter, doesntHaveFeaturingValue);
+            }
+
+            preparedStatement.setInt(contributedUserIDParameter, song.getContributedUser().getID());
+
+            preparedStatement.execute();
         }
-
-        preparedStatement.setInt(contributedUserIDParameter, song.getContributedUser().getID());
-
-        preparedStatement.execute();
-        preparedStatement.close();
-
     }
 
     /**
@@ -383,16 +346,13 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
                 "WHERE song_id = ?";
 
 
-        PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(approveSongQuery)) {
+            int songIDParameter = 1;
 
-        int songIDParameter = 1;
+            preparedStatement.setInt(songIDParameter, songID);
 
-        preparedStatement.setInt(songIDParameter, songID);
-
-        preparedStatement.execute();
-
-        preparedStatement.close();
-
+            preparedStatement.execute();
+        }
     }
 
     /**
@@ -409,34 +369,29 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
         Map<String, Object> data = new LinkedHashMap<>();
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getSongDataQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getSongDataQuery)) {
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int artistID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.ARTIST_ID);
+                    String songName = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.SONG_NAME);
+                    String youTubeVideoID = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK);
+                    int approvedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED);
+                    boolean approved = convertIntToBoolean(approvedValue);
+                    int hasFeaturingsValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING);
+                    boolean hasFeaturings = convertIntToBoolean(hasFeaturingsValue);
+                    int contributedUserID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID);
 
-            if (resultSet.next()) {
-                int artistID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.ARTIST_ID);
-                String songName = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.SONG_NAME);
-                String youTubeVideoID = resultSet.getString(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK);
-                int approvedValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED);
-                boolean approved = convertIntToBoolean(approvedValue);
-                int hasFeaturingsValue = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING);
-                boolean hasFeaturings = convertIntToBoolean(hasFeaturingsValue);
-                int contributedUserID = resultSet.getInt(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID);
-
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID, songID);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.ARTIST_ID, artistID);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.SONG_NAME, songName);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED, approved);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK, youTubeVideoID);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING, hasFeaturings);
-                data.put(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID, contributedUserID);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.SONG_ID, songID);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.ARTIST_ID, artistID);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.SONG_NAME, songName);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.IS_APPROVED, approved);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.YOUTUBE_LINK, youTubeVideoID);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.HAS_FEATURING, hasFeaturings);
+                    data.put(DatabaseConstants.ColumnLabels.SongsTable.CONTRIBUTED_USER_ID, contributedUserID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_SONG_DATA, e);
             throw new DataAccessException();
@@ -444,27 +399,4 @@ public class SongsDataAccessObject extends AbstractDataAccessObject {
 
         return data;
     }
-
-    /**
-     * Converts integer to boolean.
-     * @param integer Integer number which is to be converted to boolean. Must be 0 or 1.
-     * @return Boolean value.
-     */
-    private boolean convertIntToBoolean(int integer) {
-        boolean booleanValue = false;
-
-        switch (integer) {
-            case 0:
-                booleanValue = false;
-                break;
-            case 1:
-                booleanValue = true;
-                break;
-            default:
-                break;
-        }
-
-        return booleanValue;
-    }
-
 }

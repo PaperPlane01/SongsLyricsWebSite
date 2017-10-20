@@ -1,8 +1,9 @@
-package kz.javalab.songslyricswebsite.conntectionpool;
+package kz.javalab.songslyricswebsite.connectionpool;
 
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.resource.DatabaseConfiguration;
 import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -77,6 +78,7 @@ public class ConnectionPool {
      * Creates initialized <code>ConnectionPool</code> instance.
      */
     private ConnectionPool() {
+        logger.info(LoggingConstants.INITIALIZING_CONNECTION_POOL);
         this.databaseURL = DatabaseConfiguration.getDatabaseURL();
         this.maxSize = DatabaseConfiguration.getMaxSize();
         this.userName = DatabaseConfiguration.getUsername();
@@ -84,9 +86,11 @@ public class ConnectionPool {
         this.driverName = DatabaseConfiguration.getDriverName();
         this.connections = new ArrayBlockingQueue<>(maxSize);
 
+        logger.info(LoggingConstants.CREATING_CONNECTIONS);
         while (!isConnectionPoolFull()) {
             connections.add(createNewConnection());
         }
+        logger.info(LoggingConstants.CONNECTION_POOL_HAS_BEEN_INITIALIZED);
     }
 
 
@@ -137,7 +141,7 @@ public class ConnectionPool {
         try {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-           logger.error(LoggingConstants.EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_FALSE, e);
+           logger.error(LoggingConstants.EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_TRUE, e);
         }
 
         connections.add(connection);
@@ -147,6 +151,7 @@ public class ConnectionPool {
      * Closes all connections of the connection pool.
      */
     public void closeConnections() {
+        logger.info(LoggingConstants.CLOSING_CONNECTIONS);
         for (Connection connection : connections) {
             try {
                 connection.close();
@@ -154,6 +159,7 @@ public class ConnectionPool {
                 logger.error(LoggingConstants.EXCEPTION_WHILE_CLOSING_CONNECTION);
             }
         }
+        logger.info(LoggingConstants.CONNECTIONS_HAVE_BEEN_CLOSED);
     }
 
 }

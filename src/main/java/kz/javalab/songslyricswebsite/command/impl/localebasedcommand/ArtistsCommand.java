@@ -1,6 +1,5 @@
 package kz.javalab.songslyricswebsite.command.impl.localebasedcommand;
 
-import kz.javalab.songslyricswebsite.command.JSONCommand;
 import kz.javalab.songslyricswebsite.command.LocaleBasedCommand;
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
 import kz.javalab.songslyricswebsite.constant.ResponseConstants;
@@ -51,13 +50,4 @@ public class ArtistsCommand extends LocaleBasedCommand {
 
     }
 
-    @Override
-    protected void sendJsonResponse(Object responseData, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseData, response);
-    }
-
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
 }

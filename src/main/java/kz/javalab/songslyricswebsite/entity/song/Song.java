@@ -16,7 +16,7 @@ public class Song {
     /**
      * ID of the song.
      */
-    private int ID;
+    private int id;
 
     /**
      * Name of the song.
@@ -76,7 +76,7 @@ public class Song {
      * @return ID of the song.
      */
     public int getID() {
-        return ID;
+        return id;
     }
 
     /**
@@ -84,7 +84,7 @@ public class Song {
      * @param ID New ID to be set.
      */
     public void setID(int ID) {
-        this.ID = ID;
+        this.id = ID;
     }
 
     /**

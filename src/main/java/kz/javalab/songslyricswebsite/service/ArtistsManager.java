@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.connectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
 import kz.javalab.songslyricswebsite.dataaccessobject.ArtistDataAccessObject;
 import kz.javalab.songslyricswebsite.entity.artist.Artist;

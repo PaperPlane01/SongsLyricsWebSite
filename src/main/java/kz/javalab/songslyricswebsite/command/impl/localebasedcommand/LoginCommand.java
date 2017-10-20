@@ -33,7 +33,7 @@ public class LoginCommand extends LocaleBasedCommand {
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ResourceBundle labels = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("labels", getLocaleFromRequest(request));
         Map<String, String> responseMap = new LinkedHashMap<>();
 
         RequestWrapper requestWrapper = new RequestWrapper(request);
@@ -44,34 +44,29 @@ public class LoginCommand extends LocaleBasedCommand {
             usersManager.doLogin();
 
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.SUCCESS);
-            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_SUCCESS));
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.LOGIN_SUCCESS));
 
             sendJsonResponse(responseMap, response);
         } catch (WrongPasswordException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
-            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_FAILED));
-            responseMap.put(ResponseConstants.Messages.REASON, labels.getString(ResponseConstants.Messages.WRONG_PASSWORD));
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.LOGIN_FAILED));
+            responseMap.put(ResponseConstants.Messages.REASON, resourceBundle.getString(ResponseConstants.Messages.WRONG_PASSWORD));
 
             sendJsonResponse(responseMap, response);
         } catch (WrongUsernameException e) {
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
-            responseMap.put(ResponseConstants.Messages.MESSAGE, labels.getString(ResponseConstants.Messages.LOGIN_FAILED));
-            responseMap.put(ResponseConstants.Messages.REASON, labels.getString(ResponseConstants.Messages.WRONG_USERNAME));
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.LOGIN_FAILED));
+            responseMap.put(ResponseConstants.Messages.REASON, resourceBundle.getString(ResponseConstants.Messages.WRONG_USERNAME));
 
             sendJsonResponse(responseMap, response);
         } catch (DataAccessException e) {
-            e.printStackTrace();
+            responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
+            responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.LOGIN_FAILED));
+            responseMap.put(ResponseConstants.Messages.REASON, resourceBundle.getString(ResponseConstants.Messages.SERVER_PROBLEMS));
+
+            sendJsonResponse(responseMap, response);
         }
 
     }
 
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
-
-    @Override
-    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseObject, response);
-    }
 }

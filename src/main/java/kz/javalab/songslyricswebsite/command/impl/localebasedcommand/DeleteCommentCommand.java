@@ -44,7 +44,6 @@ public class DeleteCommentCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCCESSFUL_COMMENT_DELETING));
             sendJsonResponse(responseMap, response);
         } catch (CommentDeletingException e) {
-            e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.ERROR_WHILE_DELETING_COMMENT));
             sendJsonResponse(responseMap, response);
@@ -55,14 +54,5 @@ public class DeleteCommentCommand extends LocaleBasedCommand {
         }
     }
 
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
-
-    @Override
-    protected void sendJsonResponse(Object responseData, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseData, response);
-    }
 }
 

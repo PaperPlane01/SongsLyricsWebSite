@@ -39,10 +39,9 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
                 "VALUES\n" +
                 "(?, ?)";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatchQuery);
-
-        executePreparedStatementWithMultipleIntegerValues(preparedStatement, songID, genreID);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(addSongGenreMatchQuery)) {
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, songID, genreID);
+        }
     }
 
     /**
@@ -58,10 +57,9 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
 
         int matchDeletedValue = 1;
 
-        PreparedStatement preparedStatement = connection.prepareStatement(markAsDeletedQuery);
-
-        executePreparedStatementWithMultipleIntegerValues(preparedStatement, matchDeletedValue, matchID);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(markAsDeletedQuery)) {
+            executePreparedStatementWithMultipleIntegerValues(preparedStatement, matchDeletedValue, matchID);
+        }
     }
 
     /**
@@ -80,20 +78,15 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
         int songIDParameter = 1;
         int genreIDParameter = 2;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getMatchID);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getMatchID)) {
             preparedStatement.setInt(songIDParameter, songID);
             preparedStatement.setInt(genreIDParameter, genreID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                songGenreMatchID = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresOfSongsTable.MATCH_ID);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    songGenreMatchID = resultSet.getInt(DatabaseConstants.ColumnLabels.GenresOfSongsTable.MATCH_ID);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_SONG_GENRE_MATCH_ID, e);
             throw new DataAccessException();
@@ -121,20 +114,15 @@ public class GenresOfSongsDataAccessObject extends AbstractDataAccessObject {
                 "WHERE songs.song_id = ?";
         int songIDParameter = 1;
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(getGenresOfSongQuery);
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getGenresOfSongQuery)) {
             preparedStatement.setInt(songIDParameter, songID);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String genre = resultSet.getString(DatabaseConstants.ColumnLabels.GenresTable.GENRE_NAME);
-                genres.add(genre);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    String genre = resultSet.getString(DatabaseConstants.ColumnLabels.GenresTable.GENRE_NAME);
+                    genres.add(genre);
+                }
             }
-
-            resultSet.close();
-            preparedStatement.close();
         } catch (SQLException e) {
             logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_GENRES_OF_SONGS, e);
             throw new DataAccessException();

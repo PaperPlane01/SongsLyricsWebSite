@@ -51,5 +51,16 @@ public class LoggingConstants {
     public static final String EXCEPTION_WHILE_UPDATING_SONG = "Exception while updating song";
     public static final String EXCEPTION_WHILE_CREATING_CONNECTION = "Exception while creating connection";
     public static final String EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_FALSE = "Exception while setting autocommit to false";
+    public static final String EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_TRUE = "Exception while setting autocommit to true";
     public static final String EXCEPTION_WHILE_CLOSING_CONNECTION = "Exception while closing connection";
+    public static final String EXCEPTION_WHILE_GETTING_LAST_SONG_ID = "Exception while getting last song ID";
+    public static final String EXCEPTION_WHILE_CHECKING_IF_USER_HAS_RATED_SONG = "Exception while checking if user has rated song";
+    public static final String EXCEPTION_WHILE_UPDATING_SONG_RATING = "Exception while updating song rating.";
+    public static final String EXCEPTION_WHILE_ADDING_COMMENT = "Exception while adding comment.";
+    public static final String EXCEPTION_WHILE_DELETING_COMMENT = "Exception while deleting comment.";
+    public static final String INITIALIZING_CONNECTION_POOL = "Initializing connection pool...";
+    public static final String CREATING_CONNECTIONS = "Creating connections...";
+    public static final String CONNECTION_POOL_HAS_BEEN_INITIALIZED = "Connection pool has been initialized.";
+    public static final String CLOSING_CONNECTIONS = "Closing connections...";
+    public static final String CONNECTIONS_HAVE_BEEN_CLOSED = "Connections have been closed.";
 }

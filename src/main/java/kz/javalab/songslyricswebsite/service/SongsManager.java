@@ -1,7 +1,7 @@
 package kz.javalab.songslyricswebsite.service;
 
 import kz.javalab.songslyricswebsite.command.requestwrapper.RequestWrapper;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.connectionpool.ConnectionPool;
 import kz.javalab.songslyricswebsite.constant.DatabaseConstants;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.constant.RequestConstants;
@@ -184,6 +184,7 @@ public class SongsManager {
     private void updateFeaturings(Song updatedSong, Song oldSong, Connection connection) throws SQLException, DataAccessException {
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
         FeaturingsDataAccessObject featuringsDataAccessObject = new FeaturingsDataAccessObject();
+        List<Integer> idsOfFeaturingArtists = featuringsDataAccessObject.getIDsOfFeaturedArtists(oldSong.getID(), connection);
 
         if (updatedSong.hasFeaturedArtists()) {
             for (Artist featuredArtist : updatedSong.getFeaturedArtists()) {
@@ -192,8 +193,10 @@ public class SongsManager {
                 }
 
                 featuredArtist.setID(artistDataAccessObject.getArtistID(featuredArtist, connection));
-                featuringsDataAccessObject.addNewFeaturing(featuredArtist.getID(), updatedSong.getID(), connection);
 
+                if (!idsOfFeaturingArtists.contains(featuredArtist.getID())) {
+                    featuringsDataAccessObject.addNewFeaturing(featuredArtist.getID(), updatedSong.getID(), connection);
+                }
             }
 
             if (oldSong.hasFeaturedArtists()) {
@@ -759,7 +762,7 @@ public class SongsManager {
      * @param songID ID of the song which is to be checked.
      * @param connection Connection to be used.
      * @return <Code>True</Code> if there is a song with such ID, <Code>False</Code> if not.
-     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data. 
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data.
      */
     private boolean checkIfSongExists(int songID, Connection connection) throws DataAccessException {
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();

@@ -60,14 +60,4 @@ public class BlockUserCommand extends LocaleBasedCommand {
             sendJsonResponse(responseMap, response);
         }
     }
-
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
-
-    @Override
-    protected void sendJsonResponse(Object responseData, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseData, response);
-    }
 }

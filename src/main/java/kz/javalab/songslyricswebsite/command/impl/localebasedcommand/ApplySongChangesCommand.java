@@ -45,7 +45,6 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.SUCCESSFUL_SONG_MODIFYING));
             sendJsonResponse(responseMap, response);
         } catch (LyricsParsingException e) {
-            e.printStackTrace();
             responseMap.put(ResponseConstants.Status.STATUS, ResponseConstants.Status.FAILURE);
             responseMap.put(ResponseConstants.Messages.MESSAGE, resourceBundle.getString(ResponseConstants.Messages.INVALID_SONG_LYRICS));
             sendJsonResponse(responseMap, response);
@@ -88,13 +87,4 @@ public class ApplySongChangesCommand extends LocaleBasedCommand {
         }
     }
 
-    @Override
-    protected Locale getLocaleFromRequest(HttpServletRequest request) {
-        return super.getLocaleFromRequest(request);
-    }
-
-    @Override
-    protected void sendJsonResponse(Object responseObject, HttpServletResponse response) throws IOException {
-        super.sendJsonResponse(responseObject, response);
-    }
 }

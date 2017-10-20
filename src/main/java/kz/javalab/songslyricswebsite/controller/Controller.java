@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServlet;
 
 import kz.javalab.songslyricswebsite.command.ActionCommand;
 import kz.javalab.songslyricswebsite.command.factory.ActionFactory;
-import kz.javalab.songslyricswebsite.conntectionpool.ConnectionPool;
+import kz.javalab.songslyricswebsite.connectionpool.ConnectionPool;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
