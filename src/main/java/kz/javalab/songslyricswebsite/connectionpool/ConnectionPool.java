@@ -3,7 +3,6 @@ package kz.javalab.songslyricswebsite.connectionpool;
 import kz.javalab.songslyricswebsite.constant.LoggingConstants;
 import kz.javalab.songslyricswebsite.resource.DatabaseConfiguration;
 import org.apache.log4j.Logger;
-import sun.rmi.runtime.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -61,17 +60,11 @@ public class ConnectionPool {
      * @return Instance of <code>ConnectionPool</code>.
      */
     public static ConnectionPool getInstance() {
-        ConnectionPool localInstance = instance;
-        if (localInstance == null) {
-            synchronized (ConnectionPool.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new ConnectionPool();
-                }
-            }
+        if (instance == null) {
+            instance = new ConnectionPool();
         }
 
-        return localInstance;
+        return instance;
     }
 
     /**
@@ -87,9 +80,11 @@ public class ConnectionPool {
         this.connections = new ArrayBlockingQueue<>(maxSize);
 
         logger.info(LoggingConstants.CREATING_CONNECTIONS);
+
         while (!isConnectionPoolFull()) {
             connections.add(createNewConnection());
         }
+
         logger.info(LoggingConstants.CONNECTION_POOL_HAS_BEEN_INITIALIZED);
     }
 

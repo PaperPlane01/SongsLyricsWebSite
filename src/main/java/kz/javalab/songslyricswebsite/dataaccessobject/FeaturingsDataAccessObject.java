@@ -127,4 +127,34 @@ public class FeaturingsDataAccessObject extends AbstractDataAccessObject {
 
         return featuredArtistsIDs;
     }
+
+    /**
+     * Returns IDs of songs featured by the specific artist.
+     * @param artistID ID of artist.
+     * @param connection Connection to be used.
+     * @return IDs of songs featured by the specific artist.
+     * @throws DataAccessException Thrown if some error occurred when attempted to retrieve data from database.
+     */
+    public List<Integer> getIDsOfSongsFeaturedByArtist(int artistID, Connection connection) throws DataAccessException {
+        List<Integer> songsIDs = new ArrayList<>();
+
+        String listOfSongsIDsQuery = "SELECT song_id FROM featurings\n" +
+                "WHERE artist_id = ?";
+        int artistIDParameter = 1;
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(listOfSongsIDsQuery)) {
+            preparedStatement.setInt(artistIDParameter, artistID);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    songsIDs.add(resultSet.getInt(DatabaseConstants.ColumnLabels.FeaturingsTable.SONG_ID));
+                }
+            }
+        } catch (SQLException e) {
+            logger.error(LoggingConstants.EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_FEATURED_BY_ARTIST);
+            throw new DataAccessException();
+        }
+
+        return songsIDs;
+    }
 }

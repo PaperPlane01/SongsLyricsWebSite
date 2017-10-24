@@ -50,7 +50,6 @@ public class LoggingConstants {
     public static final String EXCEPTION_WHILE_APPROVING_SONG = "Exception while approving song";
     public static final String EXCEPTION_WHILE_UPDATING_SONG = "Exception while updating song";
     public static final String EXCEPTION_WHILE_CREATING_CONNECTION = "Exception while creating connection";
-    public static final String EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_FALSE = "Exception while setting autocommit to false";
     public static final String EXCEPTION_WHILE_SETTING_AUTOCOMMIT_TO_TRUE = "Exception while setting autocommit to true";
     public static final String EXCEPTION_WHILE_CLOSING_CONNECTION = "Exception while closing connection";
     public static final String EXCEPTION_WHILE_GETTING_LAST_SONG_ID = "Exception while getting last song ID";
@@ -63,4 +62,6 @@ public class LoggingConstants {
     public static final String CONNECTION_POOL_HAS_BEEN_INITIALIZED = "Connection pool has been initialized.";
     public static final String CLOSING_CONNECTIONS = "Closing connections...";
     public static final String CONNECTIONS_HAVE_BEEN_CLOSED = "Connections have been closed.";
+    public static final String EXCEPTION_WHILE_ENCODING_PASSWORD = "Exception while encoding password.";
+    public static final String EXCEPTION_WHILE_GETTING_IDS_OF_SONGS_FEATURED_BY_ARTIST = "Exception while getting IDs of songs featured by artist.";
 }

@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -588,7 +589,7 @@ public class SongsManager {
         Connection connection = ConnectionPool.getInstance().getConnection();
 
         SongsDataAccessObject songsDataAccessObject = new SongsDataAccessObject();
-
+        FeaturingsDataAccessObject featuringsDataAccessObject = new FeaturingsDataAccessObject();
         ArtistDataAccessObject artistDataAccessObject = new ArtistDataAccessObject();
 
         String artistName = requestWrapper.getRequestParameter(RequestConstants.RequestParameters.ARTIST_NAME);
@@ -598,6 +599,11 @@ public class SongsManager {
         artist.setID(artistDataAccessObject.getArtistID(artist, connection));
 
         List<Integer> songIDs = songsDataAccessObject.getIDsOfSongsPerformedByArtist(artist.getID(), connection);
+        List<Integer> featuredSongsIDs = featuringsDataAccessObject.getIDsOfSongsFeaturedByArtist(artist.getID(), connection);
+
+        if (!featuredSongsIDs.isEmpty()) {
+            songIDs.addAll(featuredSongsIDs);
+        }
 
         List<Song> songsByArtist =  new ArrayList<>();
         boolean withLyrics = false;

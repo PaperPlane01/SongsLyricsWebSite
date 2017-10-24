@@ -1,5 +1,8 @@
 package kz.javalab.songslyricswebsite.entity.password;
 
+import kz.javalab.songslyricswebsite.constant.LoggingConstants;
+import org.apache.log4j.Logger;
+
 import java.security.MessageDigest;
 
 import java.io.UnsupportedEncodingException;
@@ -15,6 +18,8 @@ public class Password {
      * Hashed password encoded with MD5 algorithm.
      */
     private String hashedPassword;
+
+    private static final Logger logger = Logger.getLogger(Password.class);
 
     /**
      * Constructs <Code>Password</Code> instance.
@@ -78,6 +83,7 @@ public class Password {
             messageDigest.update(notEncodedPassword.getBytes(charSet));
             result = new BigInteger(signum, messageDigest.digest()).toString(radix);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            logger.error(LoggingConstants.EXCEPTION_WHILE_ENCODING_PASSWORD, e);
         }
 
         return result;

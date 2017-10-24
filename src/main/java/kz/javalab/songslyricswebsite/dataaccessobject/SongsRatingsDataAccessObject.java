@@ -191,11 +191,11 @@ public class SongsRatingsDataAccessObject extends AbstractDataAccessObject {
     }
 
     /**
-     *
-     * @param userID
-     * @param songID
-     * @param connection
-     * @return
+     * Returns ID of vote.
+     * @param userID ID of user.
+     * @param songID ID of song.
+     * @param connection Connection to be used.
+     * @return ID of vote.
      */
     private int getVoteID(int userID, int songID, Connection connection) throws DataAccessException {
         int voteID = 0;

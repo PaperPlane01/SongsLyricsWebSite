@@ -7,7 +7,6 @@ import kz.javalab.songslyricswebsite.exception.DataAccessException;
 import org.apache.log4j.Logger;
 
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -111,17 +110,13 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
      */
     public void addArtistToDatabase(Artist artist, Connection connection) throws SQLException {
 
-        int lastID = getLastArtistID(connection);
+        String addArtistQuery = "INSERT INTO artists (artist_name, artist_letter)\n" +
+                    "VALUES (?, ?)";
 
-        String addArtistQuery = "INSERT INTO artists (artist_id, artist_name, artist_letter)\n" +
-                    "VALUES (?, ?, ?)";
-
-        int artistIDParameter = 1;
-        int artistNameParameter = 2;
-        int artistLetterParameter = 3;
+        int artistNameParameter = 1;
+        int artistLetterParameter = 2;
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(addArtistQuery);) {
-            preparedStatement.setInt(artistIDParameter,lastID + 1);
             preparedStatement.setString(artistNameParameter, artist.getName());
             preparedStatement.setString(artistLetterParameter, (new Character(artist.getName().charAt(0))).toString());
             preparedStatement.execute();
@@ -216,25 +211,5 @@ public class ArtistDataAccessObject extends AbstractDataAccessObject {
         }
 
         return result;
-    }
-
-    /**
-     * Retrieves last artist ID from the database.
-     * @param connection Connection to be used.
-     * @return Last artist ID
-     */
-    private int getLastArtistID(Connection connection) throws SQLException {
-        int lastID = 0;
-        String getLastArtistIDQuery = "SELECT max(artist_id) FROM artists";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(getLastArtistIDQuery)){
-            try (ResultSet resultSet = preparedStatement.executeQuery();){
-                while (resultSet.next()) {
-                    lastID = resultSet.getInt("max(artist_id)");
-                }
-            }
-        }
-
-        return lastID;
     }
 }
